@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useContext} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,9 +9,12 @@ import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton';
 import {SettingsRounded} from "@mui/icons-material";
 import {Box, Tooltip} from "@mui/material";
+import {ResourceContext} from "../../context";
 
 
 export const ResourceTable: any = () => {
+
+    const {resources} = useContext(ResourceContext);
 
     return (
         <Box>
@@ -25,24 +29,27 @@ export const ResourceTable: any = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        <TableRow
-                            hover={true}
-                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                        >
-                            <TableCell align="left" component="th" scope="row">
-                                Adobe K12 Utdanning
-                            </TableCell>
-                            <TableCell align="left">lisens</TableCell>
-                            <TableCell align="left">1000</TableCell>
-                            <TableCell align="left">
-                                <Tooltip title={"Se detaljer"}>
-                                    <IconButton>
-                                        <SettingsRounded color={"primary"}/>
-                                    </IconButton
-                                    >
-                                </Tooltip>
-                            </TableCell>
-                        </TableRow>
+                        {resources?.map((resources) => (
+                            <TableRow
+                                key={resources.id}
+                                hover={true}
+                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                            >
+                                <TableCell align="left" component="th" scope="row">
+                                    {resources.resourceName}
+                                </TableCell>
+                                <TableCell align="left">{resources.resourceType}</TableCell>
+                                <TableCell align="left">{resources.resourceLimit}</TableCell>
+                                <TableCell align="left">
+                                    <Tooltip title={"Se detaljer"}>
+                                        <IconButton>
+                                            <SettingsRounded color={"primary"}/>
+                                        </IconButton
+                                        >
+                                    </Tooltip>
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
             </TableContainer>
