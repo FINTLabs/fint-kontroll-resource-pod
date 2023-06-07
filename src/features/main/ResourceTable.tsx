@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import {SettingsRounded} from "@mui/icons-material";
 import {Box, Tooltip} from "@mui/material";
 import {ResourceContext} from "../../context";
+import ToolBar from "./ToolBar";
 
 
 export const ResourceTable: any = () => {
@@ -19,6 +20,7 @@ export const ResourceTable: any = () => {
     return (
         <Box>
             <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"resourceTable"}>
+                <ToolBar/>
                 <Table aria-label="Users-table">
                     <TableHead>
                         <TableRow sx={{fontWeight: 'bold'}}>
