@@ -1,5 +1,5 @@
 import React, {createContext, ReactNode, useEffect, useState,} from "react";
-import {contextDefaultValues, IResource, ResourceContextState} from "./types";
+import {contextDefaultValues, IResource, IOrgUnit, IOrgUnitPage, IUnitTree, ResourceContextState} from "./types";
 import ResourceRepository from "../repositories/ResourceRepository";
 
 export const ResourceContext = createContext<ResourceContextState>(
@@ -13,6 +13,12 @@ type Props = {
 const ResourceProvider = ({children}: Props) => {
     const [basePath, setBasePath] = useState<string>(contextDefaultValues.basePath);
     const [resources, setResources] = useState<IResource[] | null>(contextDefaultValues.resources);
+    const [orgUnitPage] = useState<IOrgUnitPage | null>(contextDefaultValues.orgUnitPage);
+    const [orgUnits] = useState<IOrgUnit[]>(contextDefaultValues.orgUnits);
+    const [orgName, setOrgName] = useState<string>(contextDefaultValues.orgName);
+    const [organisationUnitId, setOrganisationUnitId] = useState<number>(contextDefaultValues.organisationUnitId);
+    const [unitTree, setUnitTree] = useState<IUnitTree | null>(contextDefaultValues.unitTree);
+    const [selected, setSelected] = useState<number[]>(contextDefaultValues.selected);
 
 
     useEffect(() => {
@@ -41,12 +47,42 @@ const ResourceProvider = ({children}: Props) => {
         getResources()
     }, [basePath]);
 
+    useEffect(() => {
+        const getUnitTree = () => {
+            if (basePath) {
+                ResourceRepository.getUnitTree(basePath)
+                    .then(response => {
+                        console.log("Returned org data: ", response.data);
+                        setUnitTree(response.data);
+                    })
+                    .catch((err) => console.error(err))
+            }
+        }
+        getUnitTree();
+    }, [basePath]);
+
+    const updateOrganisationUnitId = (id: number) => {
+        setOrganisationUnitId(id);
+    }
+
+    const getOrgName = (orgName: string) => {
+        setOrgName(orgName)
+    }
 
     return (
         <ResourceContext.Provider
             value={{
                 basePath,
                 resources,
+                orgUnits,
+                orgName,
+                orgUnitPage,
+                organisationUnitId,
+                unitTree,
+                selected,
+                getOrgName,
+                updateOrganisationUnitId,
+                setSelected,
             }}
         >
             {children}

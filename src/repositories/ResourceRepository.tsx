@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {IResource} from "../context/types";
+import {IResource, IUnitTree} from "../context/types";
 
 
 const getBaseUrl = () => {
@@ -11,9 +11,15 @@ const getResources = (basePath: string) => {
     return axios.get<IResource[]>(url);
 }
 
+const getUnitTree = (basePath: string) => {
+    const url = `${basePath === '/' ? '' : basePath}/api/orgunits/`;
+    return axios.get<IUnitTree>(url)
+}
+
 const UserRepository = {
     getBaseUrl,
     getResources,
+    getUnitTree,
 };
 
 export default UserRepository;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,17 +11,28 @@ import {SettingsRounded} from "@mui/icons-material";
 import {Box, Tooltip} from "@mui/material";
 import {ResourceContext} from "../../context";
 import ToolBar from "./ToolBar";
+import DialogUnit from "./DialogUnit";
 
 
 export const ResourceTable: any = () => {
 
     const {resources} = useContext(ResourceContext);
+    const [openDialog, setOpenDialog] = useState(false);
+
+    const handleTypeSelect = () => {
+        setOpenDialog(false);
+        console.log("selected");
+    }
 
     return (
         <Box>
+            <DialogUnit
+                onClose={handleTypeSelect}
+                open={openDialog}
+            />
             <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"resourceTable"}>
-                <ToolBar/>
-                <Table aria-label="Users-table">
+                <ToolBar onShowDialog={() => setOpenDialog(true)}/>
+                <Table aria-label="resource-table">
                     <TableHead>
                         <TableRow sx={{fontWeight: 'bold'}}>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Ressurs</TableCell>
