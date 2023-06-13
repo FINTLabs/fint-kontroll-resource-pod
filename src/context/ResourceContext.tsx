@@ -1,5 +1,13 @@
 import React, {createContext, ReactNode, useEffect, useState,} from "react";
-import {contextDefaultValues, IResource, IOrgUnit, IOrgUnitPage, IUnitTree, ResourceContextState} from "./types";
+import {
+    contextDefaultValues,
+    IResource,
+    IOrgUnit,
+    IOrgUnitPage,
+    IUnitTree,
+    ResourceContextState,
+    IValidForOrgUnit
+} from "./types";
 import ResourceRepository from "../repositories/ResourceRepository";
 
 export const ResourceContext = createContext<ResourceContextState>(
@@ -19,6 +27,7 @@ const ResourceProvider = ({children}: Props) => {
     const [organisationUnitId, setOrganisationUnitId] = useState<number>(contextDefaultValues.organisationUnitId);
     const [unitTree, setUnitTree] = useState<IUnitTree | null>(contextDefaultValues.unitTree);
     const [selected, setSelected] = useState<number[]>(contextDefaultValues.selected);
+    const [validForOrgUnits] = useState<IValidForOrgUnit[] | null>(contextDefaultValues.validForOrgUnits);
 
 
     useEffect(() => {
@@ -72,6 +81,7 @@ const ResourceProvider = ({children}: Props) => {
     return (
         <ResourceContext.Provider
             value={{
+                validForOrgUnits,
                 basePath,
                 resources,
                 orgUnits,

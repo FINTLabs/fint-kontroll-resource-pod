@@ -4,6 +4,16 @@ export interface IResource {
     resourceType: string;
     resourceLimit: number;
     resourceId: string;
+    validForOrgUnits: IValidForOrgUnit[];
+}
+
+export interface IValidForOrgUnit {
+    id: number;
+    resourceId: string;
+    orgunitId: string;
+    orgUnitName: string;
+    resourceLimit: number;
+
 }
 
 export interface IOrgUnit {
@@ -38,6 +48,7 @@ export interface IUnitTree {
 export type ResourceContextState = {
     basePath: string;
     resources: IResource[] | null;
+    validForOrgUnits: IValidForOrgUnit[] | null;
     orgUnits: IOrgUnit[];
     orgName: string;
     orgUnitPage: IOrgUnitPage | null;
@@ -47,6 +58,7 @@ export type ResourceContextState = {
     unitTree: IUnitTree | null;
     selected: number[];
     setSelected: (selected: number[]) => void;
+
 };
 
 export const contextDefaultValues: ResourceContextState = {
@@ -64,5 +76,5 @@ export const contextDefaultValues: ResourceContextState = {
     selected: [],
     setSelected(selected: number[]): void {
     },
-
+    validForOrgUnits: [],
 };

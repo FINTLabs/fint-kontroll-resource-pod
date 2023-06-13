@@ -7,12 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton';
-import {SettingsRounded} from "@mui/icons-material";
+import {ArrowCircleRightOutlined} from "@mui/icons-material";
 import {Box, Tooltip} from "@mui/material";
 import {ResourceContext} from "../../context";
 import ToolBar from "./ToolBar";
 import DialogUnit from "./DialogUnit";
-
+import {Link} from "react-router-dom";
 
 export const ResourceTable: any = () => {
 
@@ -23,6 +23,10 @@ export const ResourceTable: any = () => {
         setOpenDialog(false);
         console.log("selected");
     }
+
+    const handleClick = (): void => {
+        // searchValue("");
+    };
 
     return (
         <Box>
@@ -38,6 +42,7 @@ export const ResourceTable: any = () => {
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Ressurs</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Type</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Antall</TableCell>
+                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Enhet</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}></TableCell>
                         </TableRow>
                     </TableHead>
@@ -53,12 +58,17 @@ export const ResourceTable: any = () => {
                                 </TableCell>
                                 <TableCell align="left">{resources.resourceType}</TableCell>
                                 <TableCell align="left">{resources.resourceLimit}</TableCell>
+                                <TableCell align="left">{resources.validForOrgUnits[0].orgUnitName}</TableCell>
                                 <TableCell align="left">
                                     <Tooltip title={"Se detaljer"}>
-                                        <IconButton>
-                                            <SettingsRounded color={"primary"}/>
-                                        </IconButton
-                                        >
+                                        <IconButton
+                                            id={`iconUserInfo-${resources.id}`}
+                                            aria-label="informasjon"
+                                            component={Link}
+                                            to={`info/${resources.id}`}
+                                            onClick={handleClick}>
+                                            <ArrowCircleRightOutlined color={"primary"}/>
+                                        </IconButton>
                                     </Tooltip>
                                 </TableCell>
                             </TableRow>

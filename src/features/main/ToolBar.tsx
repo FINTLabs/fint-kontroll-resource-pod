@@ -31,11 +31,11 @@ function CustomTableToolbar(props: CustomTableToolbarProps) {
             <SearchField/>
             <Button
                 id={'selectUnitsIcon'}
-                variant="outlined"
-                endIcon={<Apartment/>}
+                variant="text"
+                startIcon={<Apartment/>}
                 onClick={onShowDialog}
                 sx={style.changeOrgButton}
-                style={{ fontSize: '1em' }}
+                style={{ fontWeight: 'normal' }}
             >
                 Velg enhet
             </Button>
