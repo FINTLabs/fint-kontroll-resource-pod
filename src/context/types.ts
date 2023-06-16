@@ -1,19 +1,36 @@
 export interface IResource {
     id: number;
+    resourceId: string;
     resourceName: string;
     resourceType: string;
     resourceLimit: number;
-    resourceId: string;
-    validForOrgUnits: IValidForOrgUnit[];
+    validForOrgUnits: IResourceItem[];
 }
 
-export interface IValidForOrgUnit {
+/*
+export interface IResourceDetails {
+    id: number;
+    resourceId: string;
+    resourceName: string;
+    resourceType: string;
+    resourceLimit: number;
+    validForOrgUnits: IResourceItem[];
+}
+*/
+
+export interface IResourceItem {
     id: number;
     resourceId: string;
     orgunitId: string;
     orgUnitName: string;
     resourceLimit: number;
 
+}
+
+export interface IResourcePage {
+    totalPages: number | any;
+    currentPage: number;
+    resources: IResource[];
 }
 
 export interface IOrgUnit {
@@ -48,7 +65,7 @@ export interface IUnitTree {
 export type ResourceContextState = {
     basePath: string;
     resources: IResource[] | null;
-    validForOrgUnits: IValidForOrgUnit[] | null;
+    validForOrgUnits: IResourceItem[] | null;
     orgUnits: IOrgUnit[];
     orgName: string;
     orgUnitPage: IOrgUnitPage | null;
@@ -58,6 +75,12 @@ export type ResourceContextState = {
     unitTree: IUnitTree | null;
     selected: number[];
     setSelected: (selected: number[]) => void;
+    resourceDetails: IResource | null;
+    resourceItem: IResourceItem | null;
+    resourcePage: IResourcePage | null;
+    currentPage: number;
+    searchString: string;
+    getResourceById: (id: string) => void;
 
 };
 
@@ -77,4 +100,11 @@ export const contextDefaultValues: ResourceContextState = {
     setSelected(selected: number[]): void {
     },
     validForOrgUnits: [],
+    resourceDetails: null,
+    resourceItem: null,
+    resourcePage: null,
+    currentPage: 0,
+    searchString: "",
+    getResourceById(): void {
+    },
 };

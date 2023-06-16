@@ -6,7 +6,7 @@ import {
     IOrgUnitPage,
     IUnitTree,
     ResourceContextState,
-    IValidForOrgUnit
+    IResourceItem, IResourcePage
 } from "./types";
 import ResourceRepository from "../repositories/ResourceRepository";
 
@@ -27,7 +27,12 @@ const ResourceProvider = ({children}: Props) => {
     const [organisationUnitId, setOrganisationUnitId] = useState<number>(contextDefaultValues.organisationUnitId);
     const [unitTree, setUnitTree] = useState<IUnitTree | null>(contextDefaultValues.unitTree);
     const [selected, setSelected] = useState<number[]>(contextDefaultValues.selected);
-    const [validForOrgUnits] = useState<IValidForOrgUnit[] | null>(contextDefaultValues.validForOrgUnits);
+    const [validForOrgUnits] = useState<IResourceItem[] | null>(contextDefaultValues.validForOrgUnits);
+    const [resourceItem] = useState<IResourceItem | null>(contextDefaultValues.resourceItem);
+    const [resourceDetails, setResourceDetails] = useState<IResource | null>(contextDefaultValues.resourceDetails);
+    const [resourcePage, setResourcePage] = useState<IResourcePage | null>(contextDefaultValues.resourcePage);
+    const [currentPage, setCurrentPage] = useState<number>(contextDefaultValues.currentPage);
+    const [searchString, setSearchString] = useState<string>("");
 
 
     useEffect(() => {
@@ -70,6 +75,31 @@ const ResourceProvider = ({children}: Props) => {
         getUnitTree();
     }, [basePath]);
 
+    const getResourceById = (uri: string) => {
+        ResourceRepository.getResourceById(uri)
+            .then(response => {
+                setResourceDetails(response.data)
+                }
+            )
+            .catch((err) => {
+                console.error(err);
+            })
+    }
+
+    useEffect(() => {
+        const getResourcePage = () => {
+            if (basePath) {
+                ResourceRepository.getResourcePage(basePath, currentPage, selected, searchString)
+                    .then(response => setResourcePage(response.data))
+                    .catch((err) => console.error(err))
+            }
+        }
+
+        if (searchString.length >= 3 || searchString.length === 0) {
+            getResourcePage();
+        }
+    }, [basePath, currentPage, organisationUnitId, searchString, selected]);
+
     const updateOrganisationUnitId = (id: number) => {
         setOrganisationUnitId(id);
     }
@@ -93,6 +123,12 @@ const ResourceProvider = ({children}: Props) => {
                 getOrgName,
                 updateOrganisationUnitId,
                 setSelected,
+                resourceItem,
+                resourceDetails,
+                resourcePage,
+                currentPage,
+                searchString,
+                getResourceById,
             }}
         >
             {children}

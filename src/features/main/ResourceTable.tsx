@@ -16,7 +16,7 @@ import {Link} from "react-router-dom";
 
 export const ResourceTable: any = () => {
 
-    const {resources} = useContext(ResourceContext);
+    const {resourcePage} = useContext(ResourceContext);
     const [openDialog, setOpenDialog] = useState(false);
 
     const handleTypeSelect = () => {
@@ -42,12 +42,11 @@ export const ResourceTable: any = () => {
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Ressurs</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Type</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Antall</TableCell>
-                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Enhet</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {resources?.map((resources) => (
+                        {resourcePage?.resources.map((resources) => (
                             <TableRow
                                 key={resources.id}
                                 hover={true}
@@ -58,14 +57,14 @@ export const ResourceTable: any = () => {
                                 </TableCell>
                                 <TableCell align="left">{resources.resourceType}</TableCell>
                                 <TableCell align="left">{resources.resourceLimit}</TableCell>
-                                <TableCell align="left">{resources.validForOrgUnits[0].orgUnitName}</TableCell>
+                                {/*<TableCell align="left">{resources.validForOrgUnits[0].orgUnitName}</TableCell>*/}
                                 <TableCell align="left">
                                     <Tooltip title={"Se detaljer"}>
                                         <IconButton
                                             id={`iconUserInfo-${resources.id}`}
                                             aria-label="informasjon"
                                             component={Link}
-                                            to={`info/${resources.id}`}
+                                            to={`/ressurser/info/${resources.id}`}
                                             onClick={handleClick}>
                                             <ArrowCircleRightOutlined color={"primary"}/>
                                         </IconButton>
