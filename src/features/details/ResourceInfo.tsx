@@ -8,7 +8,7 @@ import {ResourceContext} from "../../context";
 
 function UserInfo() {
 
-    const {resources, resourceItem, resourceDetails} = useContext(ResourceContext);
+    const {resourceDetails} = useContext(ResourceContext);
 
     return (
         <Box sx={{flexGrow: 1, maxWidth: 752}}>
@@ -18,14 +18,6 @@ function UserInfo() {
                 <Grid item xs={12} md={6}>
                     <List>
                         <ListItem>
-                            <ListItemAvatar>
-                                <Avatar sx={{
-                                    border: '1px solid #4b727a',
-                                    backgroundColor: 'transparent'
-                                }}>
-                                    {<FlutterDash sx={{color: '#4b727a'}}/>}
-                                </Avatar>
-                            </ListItemAvatar>
                             <ListItemText
                                 id={'resourceName'}
                                 primary={resourceDetails?.resourceName}
@@ -33,89 +25,29 @@ function UserInfo() {
                             />
                         </ListItem>
                         <ListItem>
-                            <ListItemAvatar>
-                                <Avatar sx={{
-                                    border: '1px solid #4b727a',
-                                    backgroundColor: 'transparent'
-                                }}>
-                                    {<FlutterDash sx={{color: '#4b727a'}}/>}
-                                </Avatar>
-                            </ListItemAvatar>
                             <ListItemText
                                 id={'userNameText'}
-                                 primary={resourceDetails?.resourceLimit}
+                                 primary={resourceDetails?.resourceType}
                                 secondary={'Ressurstype'}
                             />
                         </ListItem>
                         <ListItem>
-                            <ListItemAvatar>
-                                <Avatar sx={{
-                                    border: '1px solid #4b727a',
-                                    backgroundColor: 'transparent'
-                                }}>
-                                    {<FlutterDash sx={{color: '#4b727a'}}/>}
-                                </Avatar>
-                            </ListItemAvatar>
                             <ListItemText
                                 id={'orgUnitText'}
-                                 primary={resourceDetails?.resourceName}
+                                 primary={resourceDetails?.applicationAccessType}
                                 secondary={'Applikasjonstilgangstype'}
                             />
                         </ListItem>
                         <ListItem>
-                            <ListItemAvatar>
-                                <Avatar sx={{
-                                    border: '1px solid #4b727a',
-                                    backgroundColor: 'transparent'
-                                }}>
-                                    {<FlutterDash sx={{color: '#4b727a'}}/>}
-                                </Avatar>
-                            </ListItemAvatar>
                             <ListItemText
-                                 // primary={userDetailed?.mobilePhone}
+                                primary={resourceDetails?.applicationAccessRole}
                                 secondary={'Tilgangsrolle'}
                             />
                         </ListItem>
                         <ListItem>
-                            <ListItemAvatar>
-                                <Avatar sx={{
-                                    border: '1px solid #4b727a',
-                                    backgroundColor: 'transparent'
-                                }}>
-                                    {<FlutterDash sx={{color: '#4b727a'}}/>}
-                                </Avatar>
-                            </ListItemAvatar>
                             <ListItemText
-                                // primary={userDetailed?.email}
+                                primary={resourceDetails?.accessType}
                                 secondary={'Tilgangstype'}
-                            />
-                        </ListItem>
-                        <ListItem>
-                            <ListItemAvatar>
-                                <Avatar sx={{
-                                    border: '1px solid #4b727a',
-                                    backgroundColor: 'transparent'
-                                }}>
-                                    {<FlutterDash sx={{color: '#4b727a'}}/>}
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText
-                                // primary={userDetailed?.email}
-                                secondary={'Plattform'}
-                            />
-                        </ListItem>
-                        <ListItem>
-                            <ListItemAvatar>
-                                <Avatar sx={{
-                                    border: '1px solid #4b727a',
-                                    backgroundColor: 'transparent'
-                                }}>
-                                    {<FlutterDash sx={{color: '#4b727a'}}/>}
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText
-                                // primary={userDetailed?.email}
-                                secondary={'Ressurseier-organisasjon'}
                             />
                         </ListItem>
                     </List>

@@ -6,7 +6,7 @@ import {
     IOrgUnitPage,
     IUnitTree,
     ResourceContextState,
-    IResourceItem, IResourcePage
+    IResourceItem, IResourcePage, IUserPage, IUserItem
 } from "./types";
 import ResourceRepository from "../repositories/ResourceRepository";
 
@@ -33,6 +33,11 @@ const ResourceProvider = ({children}: Props) => {
     const [resourcePage, setResourcePage] = useState<IResourcePage | null>(contextDefaultValues.resourcePage);
     const [currentPage, setCurrentPage] = useState<number>(contextDefaultValues.currentPage);
     const [searchString, setSearchString] = useState<string>("");
+    const [users] = useState<IUserItem[]>(contextDefaultValues.users);
+    const [page, setPage] = useState<IUserPage | null>(contextDefaultValues.page);
+    const [userType, setUserType] = useState<string>(contextDefaultValues.userType);
+    const [currentUserPage, setCurrentUserPage] = useState<number>(contextDefaultValues.currentPage);
+    const [size, setSize] = useState<number>(contextDefaultValues.size);
 
 
     useEffect(() => {
@@ -100,12 +105,30 @@ const ResourceProvider = ({children}: Props) => {
         }
     }, [basePath, currentPage, organisationUnitId, searchString, selected]);
 
+    useEffect(() => {
+        const getUserPage = () => {
+            if (basePath) {
+                ResourceRepository.getUserPage(basePath, currentPage, size, userType, selected, searchString)
+                    .then(response => setPage(response.data))
+                    .catch((err) => console.error(err))
+            }
+        }
+
+        if (searchString.length >= 3 || searchString.length === 0) {
+            getUserPage();
+        }
+    }, [basePath, currentUserPage, size, userType, organisationUnitId, searchString, selected]);
+
     const updateOrganisationUnitId = (id: number) => {
         setOrganisationUnitId(id);
     }
 
     const getOrgName = (orgName: string) => {
         setOrgName(orgName)
+    }
+
+    const searchValue = (searchString: string) => {
+        setSearchString(searchString)
     }
 
     return (
@@ -129,6 +152,13 @@ const ResourceProvider = ({children}: Props) => {
                 currentPage,
                 searchString,
                 getResourceById,
+                searchValue,
+                users,
+                userType,
+                page,
+                currentUserPage,
+                size,
+                setSize,
             }}
         >
             {children}

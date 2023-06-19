@@ -4,19 +4,34 @@ export interface IResource {
     resourceName: string;
     resourceType: string;
     resourceLimit: number;
+    applicationAccessType: string;
+    applicationAccessRole: string;
+    accessType: string;
     validForOrgUnits: IResourceItem[];
+}
+export interface IUser {
+    "id": string;
+    "fullName": string;
+    "userName": string;
+    "organisationUnitName": string;
+    "mobilePhone": string;
+    "email": string;
 }
 
-/*
-export interface IResourceDetails {
-    id: number;
-    resourceId: string;
-    resourceName: string;
-    resourceType: string;
-    resourceLimit: number;
-    validForOrgUnits: IResourceItem[];
+export interface IUserItem {
+    "id": number;
+    "fullName": string;
+    "organisationUnitName": string;
+    "organisationUnitId": number;
+    "userType": string;
 }
-*/
+
+export interface IUserPage {
+    totalItems: number;
+    totalPages: number | any;
+    currentPage: number;
+    users: IUserItem[];
+}
 
 export interface IResourceItem {
     id: number;
@@ -81,6 +96,13 @@ export type ResourceContextState = {
     currentPage: number;
     searchString: string;
     getResourceById: (id: string) => void;
+    searchValue: (searchString: string) => void;
+    users: IUserItem[];
+    userType: string;
+    page: IUserPage | null;
+    currentUserPage: number;
+    size: number;
+    setSize: (size: number) => void;
 
 };
 
@@ -106,5 +128,14 @@ export const contextDefaultValues: ResourceContextState = {
     currentPage: 0,
     searchString: "",
     getResourceById(): void {
+    },
+    searchValue: () => {
+    },
+    users: [],
+    userType: "",
+    page: null,
+    currentUserPage: 0,
+    size: 5,
+    setSize(size: number): void {
     },
 };
