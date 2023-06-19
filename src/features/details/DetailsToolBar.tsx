@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import UserSearch from './UserSearch'
-//import FilterType from "./FilterType";
+import UserType from './UserType';
 import {ResourceContext} from "../../context";
 
 
@@ -24,6 +24,7 @@ function CustomTableToolbar() {
             >
                 {resourceDetails?.resourceName}
             </Typography>
+            <UserType/>
             <UserSearch/>
         </Toolbar>
     );

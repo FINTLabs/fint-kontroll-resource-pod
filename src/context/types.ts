@@ -9,6 +9,7 @@ export interface IResource {
     accessType: string;
     validForOrgUnits: IResourceItem[];
 }
+
 export interface IUser {
     "id": string;
     "fullName": string;
@@ -103,6 +104,8 @@ export type ResourceContextState = {
     currentUserPage: number;
     size: number;
     setSize: (size: number) => void;
+    updateUserType: (userType: string) => void;
+    updateCurrentUserPage: (currentUserPage: number) => void;
 
 };
 
@@ -137,5 +140,9 @@ export const contextDefaultValues: ResourceContextState = {
     currentUserPage: 0,
     size: 5,
     setSize(size: number): void {
+    },
+    updateUserType(): void {
+    },
+    updateCurrentUserPage(): void {
     },
 };

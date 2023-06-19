@@ -1,12 +1,15 @@
 import React, {createContext, ReactNode, useEffect, useState,} from "react";
 import {
     contextDefaultValues,
-    IResource,
     IOrgUnit,
     IOrgUnitPage,
+    IResource,
+    IResourceItem,
+    IResourcePage,
     IUnitTree,
-    ResourceContextState,
-    IResourceItem, IResourcePage, IUserPage, IUserItem
+    IUserItem,
+    IUserPage,
+    ResourceContextState
 } from "./types";
 import ResourceRepository from "../repositories/ResourceRepository";
 
@@ -83,7 +86,7 @@ const ResourceProvider = ({children}: Props) => {
     const getResourceById = (uri: string) => {
         ResourceRepository.getResourceById(uri)
             .then(response => {
-                setResourceDetails(response.data)
+                    setResourceDetails(response.data)
                 }
             )
             .catch((err) => {
@@ -131,6 +134,14 @@ const ResourceProvider = ({children}: Props) => {
         setSearchString(searchString)
     }
 
+    const updateUserType = (userType: string) => {
+        setUserType(userType)
+    }
+
+    const updateCurrentUserPage = (currentUserPage: number) => {
+        setCurrentUserPage(currentUserPage)
+    }
+
     return (
         <ResourceContext.Provider
             value={{
@@ -159,6 +170,8 @@ const ResourceProvider = ({children}: Props) => {
                 currentUserPage,
                 size,
                 setSize,
+                updateUserType,
+                updateCurrentUserPage
             }}
         >
             {children}

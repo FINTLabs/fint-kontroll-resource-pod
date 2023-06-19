@@ -40,7 +40,6 @@ export const UserTable: any = () => {
                     <TableHead>
                         <TableRow sx={{fontWeight: 'bold'}}>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Navn</TableCell>
-                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Enhet</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Brukertype</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}></TableCell>
                         </TableRow>
@@ -55,9 +54,8 @@ export const UserTable: any = () => {
                                 <TableCell align="left" component="th" scope="row">
                                     {user.fullName}
                                 </TableCell>
-                                <TableCell align="left">{user.organisationUnitName}</TableCell>
                                 <TableCell align="left">{user.userType}</TableCell>
-                                <TableCell align="left">
+                                <TableCell align="right">
                                     <Button
                                         id={`iconAddResource-${user.id}`}
                                         variant={"outlined"}
@@ -73,7 +71,6 @@ export const UserTable: any = () => {
                             </TableRow>
                         ))}
                     </TableBody>
-
                 </Table>
             </TableContainer>
         </Box>
