@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useContext} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,15 +8,42 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {Box, Button} from "@mui/material";
 import {ResourceContext} from "../../context";
+import axios from "axios";
+import {ICreateAssignment} from "../../context/types";
 
 
-export const UserTable: any = () => {
+export const UserTable: any = (props: { resourceId: string }) => {
 
-    const {currentUserPage, searchValue, page} = useContext(ResourceContext);
+    const {
+        searchValue,
+        basePath,
+        page,
+        createAssignment,
+    } = useContext(ResourceContext);
 
-    const handleClick = (): void => {
+    const [assignments, setAssignments] = useState<ICreateAssignment[]>([]);
+    const [userId, setUserId] = useState<string>();
+
+    useEffect(() => {
+        axios.get(`${basePath === '/' ? '' : basePath}/api/assignments?size=1000`)
+            .then(response => {
+                setAssignments(response.data.assignments);
+                console.log(response.data.assignments)
+            })
+
+    }, [userId])
+
+    const isAssigned = (userId: string) => {
+        return assignments.filter((el) => el.userRef === userId).length > 0;
+    }
+
+    const handleClick = (resourceRef: string, userRef: string, organizationUnitId: string = '36'): void => {
+        // console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
+        setUserId(userRef)
+        createAssignment(resourceRef, userRef, organizationUnitId);
         searchValue("");
     };
+
 
     // const handleChangePage = (
     //     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -60,12 +87,11 @@ export const UserTable: any = () => {
                                         id={`iconAddResource-${user.id}`}
                                         variant={"outlined"}
                                         aria-label="Legg til ressurs"
-                                        // component={Link}
-                                        // to={``}
-                                        onClick={handleClick}
+                                        onClick={() => handleClick(props.resourceId, user.id.toString(), "36")}
                                         color={"primary"}
+                                        disabled={isAssigned(user.id.toString())}
                                     >
-                                        Tildel
+                                        {isAssigned(user.id.toString()) ? 'Tildelt' : 'Tildel'}
                                     </Button>
                                 </TableCell>
                             </TableRow>

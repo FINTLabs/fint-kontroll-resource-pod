@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {IResource, IResourcePage, IUnitTree, IUserPage} from "../context/types";
+import {ICreateAssignment, IResource, IResourcePage, IUnitTree, IUserPage} from "../context/types";
 
 
 const getBaseUrl = () => {
@@ -18,7 +18,7 @@ const getUnitTree = (basePath: string) => {
 
 const getResourceById = (uri: string) => axios.get<IResource>(uri);
 
-const getResourcePage = (basePath: string, resourcePage: number, organisationUnitId: number[], searchString: string) => {
+const getResourcePage = (basePath: string, resourcePage: number, userType: string, organisationUnitId: number[], searchString: string) => {
     const baseUrl = `${basePath === '/' ? '' : basePath}/api/resources/`;
     let queryParams = [];
 
@@ -27,9 +27,9 @@ const getResourcePage = (basePath: string, resourcePage: number, organisationUni
         queryParams.push(`search=${searchString}`);
     }
 
-    /*if (userType) {
+    if (userType) {
         queryParams.push(`userType=${userType}`);
-    }*/
+    }
 
     if (organisationUnitId && organisationUnitId.length > 0) {
         queryParams.push(`orgUnits=${organisationUnitId}`);
@@ -74,6 +74,15 @@ const getUserPage = (basePath: string, page: number, size: number, userType: str
     return axios.get<IUserPage>(url);
 }
 
+const createAssignment = (basePath: string, resourceRef: string, userRef: string, organizationUnitId: string) => {
+    const url = `${basePath === '/' ? '' : basePath}/api/assignments/`;
+    console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
+    return axios.post<ICreateAssignment>(url, {
+        resourceRef: resourceRef,
+        userRef: userRef,
+        organizationUnitId: organizationUnitId,
+    })
+}
 
 const UserRepository = {
     getBaseUrl,
@@ -82,6 +91,7 @@ const UserRepository = {
     getResourcePage,
     getResourceById,
     getUserPage,
+    createAssignment,
 };
 
 export default UserRepository;

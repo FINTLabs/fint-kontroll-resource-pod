@@ -25,7 +25,7 @@ function DetailsContainer() {
             <Box sx={style.table}>
                 <DetailsToolBar/>
                 <ResourceInfo/>
-                <UserTable/>
+                <UserTable resourceId={id}/>
             </Box>
         </Box>
     );

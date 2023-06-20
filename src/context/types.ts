@@ -78,7 +78,15 @@ export interface IUnitTree {
     orgUnits: IUnitItem[];
 }
 
+export interface ICreateAssignment {
+    resourceRef: string;
+    userRef: string;
+    organizationUnitId: string;
+}
+
 export type ResourceContextState = {
+    // assignment: ICreateAssignment | null;
+    createAssignment: (resourceRef: string, userRef: string, organizationUnitId: string) => void,
     basePath: string;
     resources: IResource[] | null;
     validForOrgUnits: IResourceItem[] | null;
@@ -106,43 +114,61 @@ export type ResourceContextState = {
     setSize: (size: number) => void;
     updateUserType: (userType: string) => void;
     updateCurrentUserPage: (currentUserPage: number) => void;
+    resourceRef: string;
+    setResourceRef: (resourceRef: string) => void;
+    userRef: string;
+    setUserRef: (userRef: string) => void;
+    organizationUnitId: string;
+    setOrganizationUnitId: (organizationUnitId: string) => void;
 
 };
 
 export const contextDefaultValues: ResourceContextState = {
-    basePath: "/",
-    resources: [],
-    orgUnits: [],
-    orgName: "",
-    orgUnitPage: null,
-    organisationUnitId: 0,
-    getOrgName(): void {
-    },
-    updateOrganisationUnitId(): void {
-    },
-    unitTree: null,
-    selected: [],
-    setSelected(selected: number[]): void {
-    },
-    validForOrgUnits: [],
-    resourceDetails: null,
-    resourceItem: null,
-    resourcePage: null,
-    currentPage: 0,
-    searchString: "",
-    getResourceById(): void {
-    },
-    searchValue: () => {
-    },
-    users: [],
-    userType: "",
-    page: null,
-    currentUserPage: 0,
-    size: 5,
-    setSize(size: number): void {
-    },
-    updateUserType(): void {
-    },
-    updateCurrentUserPage(): void {
-    },
-};
+        basePath: "/",
+        resources: [],
+        orgUnits: [],
+        orgName: "",
+        orgUnitPage: null,
+        organisationUnitId: 0,
+        getOrgName(): void {
+        },
+        updateOrganisationUnitId(): void {
+        },
+        unitTree: null,
+        selected: [],
+        setSelected(selected: number[]): void {
+        },
+        validForOrgUnits: [],
+        resourceDetails: null,
+        resourceItem: null,
+        resourcePage: null,
+        currentPage: 0,
+        searchString: "",
+        getResourceById(): void {
+        },
+        searchValue: () => {
+        },
+        users: [],
+        userType: "",
+        page: null,
+        currentUserPage: 0,
+        size: 40,
+        setSize(size: number): void {
+        },
+        updateUserType(): void {
+        },
+        updateCurrentUserPage(): void {
+        },
+        createAssignment(): void {
+        },
+        resourceRef: "",
+        setResourceRef(resourceRef: string): void {
+        },
+        userRef: "",
+        setUserRef(userRef: string): void {
+        },
+        organizationUnitId: "",
+        setOrganizationUnitId(organizationUnitId: string): void {
+        },
+    }
+;

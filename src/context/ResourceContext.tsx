@@ -41,6 +41,23 @@ const ResourceProvider = ({children}: Props) => {
     const [userType, setUserType] = useState<string>(contextDefaultValues.userType);
     const [currentUserPage, setCurrentUserPage] = useState<number>(contextDefaultValues.currentPage);
     const [size, setSize] = useState<number>(contextDefaultValues.size);
+    const [resourceRef, setResourceRef] = useState<string>(contextDefaultValues.resourceRef);
+    const [userRef, setUserRef] = useState<string>(contextDefaultValues.userRef);
+    const [organizationUnitId, setOrganizationUnitId] = useState<string>(contextDefaultValues.organizationUnitId);
+
+
+    const createAssignment = (resourceRef: string, userRef: string, organizationUnitId: string) => {
+        console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
+
+        ResourceRepository.createAssignment(basePath, resourceRef, userRef, organizationUnitId)
+            .then(response => {
+                    console.log("Dette er responsen", response)
+                }
+            )
+            .catch((err) => {
+                console.error(err);
+            })
+    }
 
 
     useEffect(() => {
@@ -97,7 +114,7 @@ const ResourceProvider = ({children}: Props) => {
     useEffect(() => {
         const getResourcePage = () => {
             if (basePath) {
-                ResourceRepository.getResourcePage(basePath, currentPage, selected, searchString)
+                ResourceRepository.getResourcePage(basePath, currentPage, userType, selected, searchString)
                     .then(response => setResourcePage(response.data))
                     .catch((err) => console.error(err))
             }
@@ -120,7 +137,7 @@ const ResourceProvider = ({children}: Props) => {
         if (searchString.length >= 3 || searchString.length === 0) {
             getUserPage();
         }
-    }, [basePath, currentUserPage, size, userType, organisationUnitId, searchString, selected]);
+    }, [basePath, currentPage, size, userType, organisationUnitId, searchString, selected]);
 
     const updateOrganisationUnitId = (id: number) => {
         setOrganisationUnitId(id);
@@ -171,7 +188,14 @@ const ResourceProvider = ({children}: Props) => {
                 size,
                 setSize,
                 updateUserType,
-                updateCurrentUserPage
+                updateCurrentUserPage,
+                resourceRef,
+                setResourceRef,
+                userRef,
+                setUserRef,
+                organizationUnitId,
+                setOrganizationUnitId,
+                createAssignment,
             }}
         >
             {children}
