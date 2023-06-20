@@ -2,8 +2,17 @@ import React from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SearchField from "./SearchField";
+import {Button} from "@mui/material";
+import style from "../../template/style";
+import {Apartment} from "@mui/icons-material";
 
-function CustomTableToolbar() {
+interface CustomTableToolbarProps {
+    onShowDialog: (event: React.MouseEvent<unknown>) => void;
+}
+
+function CustomTableToolbar(props: CustomTableToolbarProps) {
+
+    const {onShowDialog} = props;
 
     return (
         <Toolbar
@@ -20,6 +29,16 @@ function CustomTableToolbar() {
                 Ressurser
             </Typography>
             <SearchField/>
+            <Button
+                id={'selectUnitsIcon'}
+                variant="text"
+                startIcon={<Apartment/>}
+                onClick={onShowDialog}
+                sx={style.changeOrgButton}
+                style={{ fontWeight: 'normal' }}
+            >
+                Velg enhet
+            </Button>
 
             {/*<Tooltip title={"Velg organisasjonsenhet"}>
                 <IconButton

@@ -20,6 +20,12 @@ const style = {
         display: "flex",
         flexDirection: "column",
     },
+    changeOrgButton: {
+        textTransform: 'none',
+       // height: 56,
+        width: 300,
+        color: 'grey',
+    },
 }
 
 export default style;

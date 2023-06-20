@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,21 +7,36 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton';
-import {SettingsRounded} from "@mui/icons-material";
+import {ArrowCircleRightOutlined} from "@mui/icons-material";
 import {Box, Tooltip} from "@mui/material";
 import {ResourceContext} from "../../context";
 import ToolBar from "./ToolBar";
-
+import DialogUnit from "./DialogUnit";
+import {Link} from "react-router-dom";
 
 export const ResourceTable: any = () => {
 
-    const {resources} = useContext(ResourceContext);
+    const {resourcePage} = useContext(ResourceContext);
+    const [openDialog, setOpenDialog] = useState(false);
+
+    const handleTypeSelect = () => {
+        setOpenDialog(false);
+        console.log("selected");
+    }
+
+    const handleClick = (): void => {
+        // searchValue("");
+    };
 
     return (
         <Box>
+            <DialogUnit
+                onClose={handleTypeSelect}
+                open={openDialog}
+            />
             <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"resourceTable"}>
-                <ToolBar/>
-                <Table aria-label="Users-table">
+                <ToolBar onShowDialog={() => setOpenDialog(true)}/>
+                <Table aria-label="resource-table">
                     <TableHead>
                         <TableRow sx={{fontWeight: 'bold'}}>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Ressurs</TableCell>
@@ -31,7 +46,7 @@ export const ResourceTable: any = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {resources?.map((resources) => (
+                        {resourcePage?.resources.map((resources) => (
                             <TableRow
                                 key={resources.id}
                                 hover={true}
@@ -42,12 +57,17 @@ export const ResourceTable: any = () => {
                                 </TableCell>
                                 <TableCell align="left">{resources.resourceType}</TableCell>
                                 <TableCell align="left">{resources.resourceLimit}</TableCell>
+                                {/*<TableCell align="left">{resources.validForOrgUnits[0].orgUnitName}</TableCell>*/}
                                 <TableCell align="left">
                                     <Tooltip title={"Se detaljer"}>
-                                        <IconButton>
-                                            <SettingsRounded color={"primary"}/>
-                                        </IconButton
-                                        >
+                                        <IconButton
+                                            id={`iconUserInfo-${resources.id}`}
+                                            aria-label="informasjon"
+                                            component={Link}
+                                            to={`/ressurser/info/${resources.id}`}
+                                            onClick={handleClick}>
+                                            <ArrowCircleRightOutlined color={"primary"}/>
+                                        </IconButton>
                                     </Tooltip>
                                 </TableCell>
                             </TableRow>
