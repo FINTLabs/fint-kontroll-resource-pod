@@ -8,38 +8,53 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {Box, Button} from "@mui/material";
 import {ResourceContext} from "../../context";
+import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
 import {ICreateAssignment} from "../../context/types";
+import {Done} from "@mui/icons-material";
 
 
-export const UserTable: any = (props: { resourceId: string }) => {
+export const UserTable: any = (props: { resourceId: string, assignId: number }) => {
 
     const {
         searchValue,
         basePath,
         page,
         createAssignment,
+        deleteAssignment,
+        // getAssignments,
+        //  assignments,
     } = useContext(ResourceContext);
 
     const [assignments, setAssignments] = useState<ICreateAssignment[]>([]);
-    const [userId, setUserId] = useState<string>();
+    const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
 
     useEffect(() => {
+        refreshAssignments()
+        setUpdatingAssignment(false)
+    }, [updatingAssignment])
+
+    const refreshAssignments = () => {
         axios.get(`${basePath === '/' ? '' : basePath}/api/assignments?size=1000`)
             .then(response => {
                 setAssignments(response.data.assignments);
-                console.log(response.data.assignments)
             })
-
-    }, [userId])
+    }
 
     const isAssigned = (userId: string) => {
         return assignments.filter((el) => el.userRef === userId).length > 0;
     }
 
-    const handleClick = (resourceRef: string, userRef: string, organizationUnitId: string = '36'): void => {
-        // console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
-        setUserId(userRef)
+    const deleteAssignmentByUserId = (userId: string) => {
+        setUpdatingAssignment(true)
+        const iCreateAssignments = assignments.filter((el) => el.userRef === userId);
+        if (iCreateAssignments.length > 0) {
+            deleteAssignment(iCreateAssignments[0].id)
+        }
+    }
+
+    const assign = (resourceRef: string, userRef: string, organizationUnitId: string = '36'): void => {
+        setUpdatingAssignment(true)
         createAssignment(resourceRef, userRef, organizationUnitId);
         searchValue("");
     };
@@ -82,17 +97,32 @@ export const UserTable: any = (props: { resourceId: string }) => {
                                     {user.fullName}
                                 </TableCell>
                                 <TableCell align="left">{user.userType}</TableCell>
+
                                 <TableCell align="right">
                                     <Button
                                         id={`iconAddResource-${user.id}`}
-                                        variant={"outlined"}
+                                        variant={"text"}
                                         aria-label="Legg til ressurs"
-                                        onClick={() => handleClick(props.resourceId, user.id.toString(), "36")}
+                                        onClick={() => assign(props.resourceId, user.id.toString(), "36")}
                                         color={"primary"}
+                                        endIcon={<Done/>}
                                         disabled={isAssigned(user.id.toString())}
                                     >
                                         {isAssigned(user.id.toString()) ? 'Tildelt' : 'Tildel'}
                                     </Button>
+
+                                    {isAssigned(user.id.toString()) ?
+                                        <Button
+                                            id={`iconAddResource-${user.id}`}
+                                            variant={"text"}
+                                            aria-label="Slett ressurs"
+                                            color={"error"}
+                                            endIcon={<DeleteIcon/>}
+                                            sx={{marginLeft: 2}}
+                                            onClick={() => deleteAssignmentByUserId(user.id.toString())}
+                                        >
+                                            slett
+                                        </Button> : ''}
                                 </TableCell>
                             </TableRow>
                         ))}

@@ -48,7 +48,7 @@ const theme = createTheme({
                             color: "primary",
                             textTransform: 'none',
                             fontSize: 16,
-                            fontWeight: 600,
+                            fontWeight: 500,
                         }
                     },
 

@@ -10,15 +10,6 @@ export interface IResource {
     validForOrgUnits: IResourceItem[];
 }
 
-export interface IUser {
-    "id": string;
-    "fullName": string;
-    "userName": string;
-    "organisationUnitName": string;
-    "mobilePhone": string;
-    "email": string;
-}
-
 export interface IUserItem {
     "id": number;
     "fullName": string;
@@ -79,14 +70,25 @@ export interface IUnitTree {
 }
 
 export interface ICreateAssignment {
+    id: number;
     resourceRef: string;
     userRef: string;
     organizationUnitId: string;
 }
 
+export interface IAssignment {
+    id: number;
+    resourceRef: string;
+    userRef: string;
+    organizationUnitId: string;
+    assignments: ICreateAssignment[];
+}
+
 export type ResourceContextState = {
-    // assignment: ICreateAssignment | null;
+    assignment: ICreateAssignment | null;
+    assignments: ICreateAssignment[];
     createAssignment: (resourceRef: string, userRef: string, organizationUnitId: string) => void,
+    deleteAssignment: (id: number) => void,
     basePath: string;
     resources: IResource[] | null;
     validForOrgUnits: IResourceItem[] | null;
@@ -114,13 +116,8 @@ export type ResourceContextState = {
     setSize: (size: number) => void;
     updateUserType: (userType: string) => void;
     updateCurrentUserPage: (currentUserPage: number) => void;
-    resourceRef: string;
-    setResourceRef: (resourceRef: string) => void;
-    userRef: string;
-    setUserRef: (userRef: string) => void;
-    organizationUnitId: string;
-    setOrganizationUnitId: (organizationUnitId: string) => void;
-
+    getAssignmentById: (id: string) => void;
+    getAssignments: () => void;
 };
 
 export const contextDefaultValues: ResourceContextState = {
@@ -146,6 +143,8 @@ export const contextDefaultValues: ResourceContextState = {
         searchString: "",
         getResourceById(): void {
         },
+        getAssignmentById(): void {
+        },
         searchValue: () => {
         },
         users: [],
@@ -161,14 +160,11 @@ export const contextDefaultValues: ResourceContextState = {
         },
         createAssignment(): void {
         },
-        resourceRef: "",
-        setResourceRef(resourceRef: string): void {
+        deleteAssignment(): void {
         },
-        userRef: "",
-        setUserRef(userRef: string): void {
+        getAssignments(): void {
         },
-        organizationUnitId: "",
-        setOrganizationUnitId(organizationUnitId: string): void {
-        },
+        assignment: null,
+        assignments: [],
     }
 ;
