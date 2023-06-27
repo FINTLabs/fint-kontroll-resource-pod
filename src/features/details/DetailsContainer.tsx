@@ -7,6 +7,7 @@ import DetailsToolBar from "./DetailsToolBar";
 import {useParams} from "react-router-dom";
 import {ResourceContext} from "../../context";
 import {UserTable} from "./UserTable";
+import {AssignedUsersTable} from "./AssignedUsersTable"
 
 function DetailsContainer() {
 
@@ -26,6 +27,7 @@ function DetailsContainer() {
                 <DetailsToolBar/>
                 <ResourceInfo/>
                 <UserTable resourceId={id}/>
+                <AssignedUsersTable resourceId={id}/>
             </Box>
         </Box>
     );

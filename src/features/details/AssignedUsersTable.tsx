@@ -8,25 +8,17 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {Box, Button, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
-import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
-import {contextDefaultValues, ICreateAssignment, IUserItem} from "../../context/types";
-import {Done} from "@mui/icons-material";
+import {ICreateAssignment} from "../../context/types";
 import DeleteDialog from "./DeleteDialog";
+import DeleteIcon from '@mui/icons-material/Delete';
 import TablePaginationActions from "./UserTableFooter";
 
-export const UserTable: any = (props: { resourceId: string, assignId: number, userId: number, userFullName: string}) => {
+
+export const AssignedUsersTable: any = (props: { resourceId: string, assignId: number, userId: number, userFullName: string }) => {
 
     const {
-        searchValue,
-        basePath,
-        page,
-        createAssignment,
-        deleteAssignment,
-        updateCurrentUserPage,
-        size,
-        setSize,
-        currentUserPage
+        size, currentUserPage, updateCurrentUserPage, searchValue, setSize, basePath, page, deleteAssignment,
     } = useContext(ResourceContext);
 
     const [assignments, setAssignments] = useState<ICreateAssignment[]>([]);
@@ -40,28 +32,19 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
     }, [updatingAssignment])
 
     const refreshAssignments = () => {
-        axios.get(`${basePath === '/' ? '' : basePath}/api/assignments`)
+        axios.get(`${basePath === '/' ? '' : basePath}/api/assignments?size=1000`)
             .then(response => {
                 setAssignments(response.data.assignments);
             })
     }
 
-    const assign = (resourceRef: string, userRef: string, organizationUnitId: string = '36'): void => {
-        setUpdatingAssignment(true)
-        createAssignment(resourceRef, userRef, organizationUnitId);
-        searchValue("");
-    };
-
-
-     const isAssigned = (userId: string) => {
-         return assignments.filter((el) => el.userRef === userId).length > 0;
-     }
 
     const deleteAssignmentByUserId = (userId: string) => {
         setDeleteDialogOpen(true)
         setAssignedUserToRemove(userId)
 
     }
+
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
@@ -96,6 +79,10 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
         setAssignedUserToRemove(undefined)
     };
 
+    const isAssigned = (userId: string) => {
+        return assignments.filter((el) => el.userRef === userId).length > 0;
+    }
+
     return (
         <Box>
             <DeleteDialog open={deleteDialogOpen} userId={""} userFullName={""} onConfirm={onRemoveAssignmentConfirmed}
@@ -116,40 +103,35 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
                                 hover={true}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
-                                <TableCell align="left" component="th" scope="row">
-                                    {user.fullName}
-                                </TableCell>
-                                <TableCell align="left">{user.userType}</TableCell>
-
-                                <TableCell align="right">
-                                    <Button
-                                        id={`iconAddResource-${user.id}`}
-                                        variant={"text"}
-                                        aria-label="Legg til ressurs"
-                                        onClick={() => assign(props.resourceId, user.id.toString(), "36")}
-                                        color={"primary"}
-                                        endIcon={<Done/>}
-                                        disabled={isAssigned(user.id.toString())}
-                                    >
-                                        {isAssigned(user.id.toString()) ? 'Tildelt' : 'Tildel'}
-                                    </Button>
-
-                                    {isAssigned(user.id.toString()) ?
-                                        <Button
-                                            id={`iconAddResource-${user.id}`}
-                                            variant={"text"}
-                                            aria-label="Slett ressurs"
-                                            color={"error"}
-                                            endIcon={<DeleteIcon/>}
-                                            sx={{marginLeft: 2}}
-                                            onClick={() => deleteAssignmentByUserId(user.id.toString())}
-                                        >
-                                            slett
-                                        </Button> : ''}
-                                </TableCell>
+                                {isAssigned(user.id.toString()) ?
+                                    <>
+                                        <TableCell align="left" component="th" scope="row">
+                                            {user.fullName}
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            {user.userType}
+                                        </TableCell>
+                                        <TableCell
+                                            align="right">
+                                            <Button
+                                                id={`iconAddResource-${user.id}`}
+                                                variant={"text"}
+                                                aria-label="Slett ressurs"
+                                                color={"error"}
+                                                endIcon={<DeleteIcon/>}
+                                                sx={{marginLeft: 2}}
+                                                onClick={() => deleteAssignmentByUserId(user.id.toString())}
+                                            >
+                                                slett
+                                            </Button>
+                                        </TableCell>
+                                    </>
+                                    : ''}
                             </TableRow>
+
                         ))}
                     </TableBody>
+
                     <TableFooter>
                         <TableRow>
                             <TablePagination

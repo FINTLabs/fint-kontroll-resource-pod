@@ -157,7 +157,7 @@ const ResourceProvider = ({children}: Props) => {
     useEffect(() => {
         const getUserPage = () => {
             if (basePath) {
-                ResourceRepository.getUserPage(basePath, currentPage, size, userType, selected, searchString)
+                ResourceRepository.getUserPage(basePath, currentUserPage, size, userType, selected, searchString)
                     .then(response => setPage(response.data))
                     .catch((err) => console.error(err))
             }
@@ -166,7 +166,7 @@ const ResourceProvider = ({children}: Props) => {
         if (searchString.length >= 3 || searchString.length === 0) {
             getUserPage();
         }
-    }, [basePath, currentPage, size, userType, organisationUnitId, searchString, selected]);
+    }, [basePath, currentUserPage, size, userType, organisationUnitId, searchString, selected]);
 
     const updateOrganisationUnitId = (id: number) => {
         setOrganisationUnitId(id);

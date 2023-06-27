@@ -151,7 +151,7 @@ export const contextDefaultValues: ResourceContextState = {
         userType: "",
         page: null,
         currentUserPage: 0,
-        size: 40,
+        size: 5,
         setSize(size: number): void {
         },
         updateUserType(): void {
