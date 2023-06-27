@@ -10,11 +10,11 @@ import {Box, Button} from "@mui/material";
 import {ResourceContext} from "../../context";
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
-import {ICreateAssignment} from "../../context/types";
+import {contextDefaultValues, ICreateAssignment, IUserItem} from "../../context/types";
 import {Done} from "@mui/icons-material";
+import DeleteDialog from "./DeleteDialog";
 
-
-export const UserTable: any = (props: { resourceId: string, assignId: number }) => {
+export const UserTable: any = (props: { resourceId: string, assignId: number, userId: number, userFullName: string}) => {
 
     const {
         searchValue,
@@ -22,12 +22,12 @@ export const UserTable: any = (props: { resourceId: string, assignId: number }) 
         page,
         createAssignment,
         deleteAssignment,
-        // getAssignments,
-        //  assignments,
     } = useContext(ResourceContext);
 
     const [assignments, setAssignments] = useState<ICreateAssignment[]>([]);
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false)
+    const [assignedUserToRemove, setAssignedUserToRemove] = useState<string | undefined>(undefined)
 
     useEffect(() => {
         refreshAssignments()
@@ -41,23 +41,22 @@ export const UserTable: any = (props: { resourceId: string, assignId: number }) 
             })
     }
 
-    const isAssigned = (userId: string) => {
-        return assignments.filter((el) => el.userRef === userId).length > 0;
-    }
-
-    const deleteAssignmentByUserId = (userId: string) => {
-        setUpdatingAssignment(true)
-        const iCreateAssignments = assignments.filter((el) => el.userRef === userId);
-        if (iCreateAssignments.length > 0) {
-            deleteAssignment(iCreateAssignments[0].id)
-        }
-    }
-
     const assign = (resourceRef: string, userRef: string, organizationUnitId: string = '36'): void => {
         setUpdatingAssignment(true)
         createAssignment(resourceRef, userRef, organizationUnitId);
         searchValue("");
     };
+
+
+     const isAssigned = (userId: string) => {
+         return assignments.filter((el) => el.userRef === userId).length > 0;
+     }
+
+    const deleteAssignmentByUserId = (userId: string) => {
+        setDeleteDialogOpen(true)
+        setAssignedUserToRemove(userId)
+
+    }
 
 
     // const handleChangePage = (
@@ -75,8 +74,28 @@ export const UserTable: any = (props: { resourceId: string, assignId: number }) 
     //     updateCurrentPage(0);
     // };
 
+    const onRemoveAssignmentConfirmed = () => {
+        setDeleteDialogOpen(false)
+
+        setUpdatingAssignment(true)
+        console.log("assignedUserToRemove", assignedUserToRemove)
+
+        const userAssignments = assignments.filter((el) => el.userRef === assignedUserToRemove);
+        if (userAssignments.length > 0) {
+            deleteAssignment(userAssignments[0].id)
+        }
+
+    };
+
+    const onRemoveAssignmentCancel = () => {
+        setDeleteDialogOpen(false)
+        setAssignedUserToRemove(undefined)
+    };
+
     return (
         <Box>
+            <DeleteDialog open={deleteDialogOpen} userId={""} userFullName={""} onConfirm={onRemoveAssignmentConfirmed}
+                          onCancel={onRemoveAssignmentCancel}/>
             <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"userTable"}>
                 <Table aria-label="Users-table">
                     <TableHead>

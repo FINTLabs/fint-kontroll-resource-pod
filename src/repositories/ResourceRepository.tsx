@@ -1,6 +1,5 @@
 import axios from 'axios';
-import {IAssignment, ICreateAssignment, IResource, IResourcePage, IUnitTree, IUserPage} from "../context/types";
-
+import {ICreateAssignment, IResource, IResourcePage, IUnitTree, IUserPage} from "../context/types";
 
 const getBaseUrl = () => {
     return axios.get('api/layout/configuration');
@@ -80,6 +79,7 @@ const getAssignments = (basePath: string) => {
     const url = `${basePath === '/' ? '' : basePath}/api/assignments/`;
     return axios.get<ICreateAssignment[]>(url);
 }
+
 const createAssignment = (basePath: string, resourceRef: string, userRef: string, organizationUnitId: string) => {
     const url = `${basePath === '/' ? '' : basePath}/api/assignments/`;
     console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
