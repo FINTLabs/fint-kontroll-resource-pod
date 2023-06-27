@@ -45,7 +45,6 @@ const ResourceProvider = ({children}: Props) => {
     const [assignment, setAssignment] = useState<ICreateAssignment | null>(contextDefaultValues.assignment);
     const [assignments, setAssignments] = useState<ICreateAssignment[]>(contextDefaultValues.assignments);
 
-
     const getAssignments = () => {
         if (basePath) {
             ResourceRepository.getAssignments(basePath)

@@ -14,8 +14,7 @@ import DeleteDialog from "./DeleteDialog";
 import DeleteIcon from '@mui/icons-material/Delete';
 import TablePaginationActions from "./UserTableFooter";
 
-
-export const AssignedUsersTable: any = (props: { resourceId: string, assignId: number, userId: number, userFullName: string }) => {
+export const AssignedUsersTable: any = (props: { resourceId: string, userId: number, userFullName: string }) => {
 
     const {
         size, currentUserPage, updateCurrentUserPage, searchValue, setSize, basePath, page, deleteAssignment,
@@ -42,9 +41,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
     const deleteAssignmentByUserId = (userId: string) => {
         setDeleteDialogOpen(true)
         setAssignedUserToRemove(userId)
-
     }
-
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
@@ -80,7 +77,10 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
     };
 
     const isAssigned = (userId: string) => {
-        return assignments.filter((el) => el.userRef === userId).length > 0;
+        return assignments
+            .filter((el) => el.userRef === userId)
+            .filter((el) => el.resourceRef === props.resourceId)
+            .length > 0;
     }
 
     return (

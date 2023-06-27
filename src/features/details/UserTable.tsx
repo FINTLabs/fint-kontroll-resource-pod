@@ -15,7 +15,7 @@ import {Done} from "@mui/icons-material";
 import DeleteDialog from "./DeleteDialog";
 import TablePaginationActions from "./UserTableFooter";
 
-export const UserTable: any = (props: { resourceId: string, assignId: number, userId: number, userFullName: string}) => {
+export const UserTable: any = (props: { resourceId: string, assignId: number, userId: number}) => {
 
     const {
         searchValue,
@@ -26,7 +26,7 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
         updateCurrentUserPage,
         size,
         setSize,
-        currentUserPage
+        currentUserPage,
     } = useContext(ResourceContext);
 
     const [assignments, setAssignments] = useState<ICreateAssignment[]>([]);
@@ -54,7 +54,10 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
 
 
      const isAssigned = (userId: string) => {
-         return assignments.filter((el) => el.userRef === userId).length > 0;
+         return assignments
+             .filter((el) => el.userRef === userId)
+             .filter((el) => el.resourceRef === props.resourceId)
+             .length > 0;
      }
 
     const deleteAssignmentByUserId = (userId: string) => {

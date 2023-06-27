@@ -45,7 +45,8 @@ const getResourcePage = (basePath: string, resourcePage: number, userType: strin
     return axios.get<IResourcePage>(url);
 }
 
-const getUserPage = (basePath: string, page: number, size: number, userType: string, organisationUnitId: number[], searchString: string) => {
+const getUserPage = (basePath: string, page: number, size: number,
+                     userType: string, organisationUnitId: number[], searchString: string) => {
     const baseUrl = `${basePath === '/' ? '' : basePath}/api/users/`;
     let queryParams = [];
 

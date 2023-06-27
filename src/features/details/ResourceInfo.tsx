@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import {FlutterDash} from "@mui/icons-material";
 import {ResourceContext} from "../../context";
 
-function UserInfo() {
+function ResourceInfo() {
 
     const {resourceDetails} = useContext(ResourceContext);
 
@@ -57,4 +57,4 @@ function UserInfo() {
     );
 }
 
-export default UserInfo;
+export default ResourceInfo;
