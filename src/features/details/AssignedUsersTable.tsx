@@ -17,7 +17,13 @@ import TablePaginationActions from "./UserTableFooter";
 export const AssignedUsersTable: any = (props: { resourceId: string, userId: number, userFullName: string }) => {
 
     const {
-        size, currentUserPage, updateCurrentUserPage, searchValue, setSize, basePath, page, deleteAssignment,
+        size,
+        currentUserPage,
+        updateCurrentUserPage,
+        setSize,
+        basePath,
+        page,
+        deleteAssignment
     } = useContext(ResourceContext);
 
     const [assignments, setAssignments] = useState<ICreateAssignment[]>([]);
@@ -25,10 +31,6 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
     const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false)
     const [assignedUserToRemove, setAssignedUserToRemove] = useState<string | undefined>(undefined)
 
-    useEffect(() => {
-        refreshAssignments()
-        setUpdatingAssignment(false)
-    }, [updatingAssignment])
 
     const refreshAssignments = () => {
         axios.get(`${basePath === '/' ? '' : basePath}/api/assignments?size=1000`)
@@ -37,6 +39,10 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
             })
     }
 
+    useEffect(() => {
+        refreshAssignments()
+        setUpdatingAssignment(false)
+    }, [updatingAssignment])
 
     const deleteAssignmentByUserId = (userId: string) => {
         setDeleteDialogOpen(true)
@@ -68,7 +74,6 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
         if (userAssignments.length > 0) {
             deleteAssignment(userAssignments[0].id)
         }
-
     };
 
     const onRemoveAssignmentCancel = () => {
@@ -79,13 +84,12 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
     const isAssigned = (userId: string) => {
         return assignments
             .filter((el) => el.userRef === userId)
-            .filter((el) => el.resourceRef === props.resourceId)
-            .length > 0;
+            .filter((el) => el.resourceRef === props.resourceId).length > 0;
     }
 
     return (
         <Box>
-            <DeleteDialog open={deleteDialogOpen} userId={""} userFullName={""} onConfirm={onRemoveAssignmentConfirmed}
+            <DeleteDialog open={deleteDialogOpen} userId={""} onConfirm={onRemoveAssignmentConfirmed}
                           onCancel={onRemoveAssignmentCancel}/>
             <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"userTable"}>
                 <Table aria-label="Users-table">
@@ -126,12 +130,10 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
                                             </Button>
                                         </TableCell>
                                     </>
-                                    : ''}
+                                    : null}
                             </TableRow>
-
                         ))}
                     </TableBody>
-
                     <TableFooter>
                         <TableRow>
                             <TablePagination

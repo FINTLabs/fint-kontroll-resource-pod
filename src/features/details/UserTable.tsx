@@ -10,12 +10,12 @@ import {Box, Button, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
-import {contextDefaultValues, ICreateAssignment, IUserItem} from "../../context/types";
+import {ICreateAssignment} from "../../context/types";
 import {Done} from "@mui/icons-material";
 import DeleteDialog from "./DeleteDialog";
 import TablePaginationActions from "./UserTableFooter";
 
-export const UserTable: any = (props: { resourceId: string, assignId: number, userId: number}) => {
+export const UserTable: any = (props: { resourceId: string, assignId: number, userId: number }) => {
 
     const {
         searchValue,
@@ -52,18 +52,16 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
         searchValue("");
     };
 
-
-     const isAssigned = (userId: string) => {
-         return assignments
-             .filter((el) => el.userRef === userId)
-             .filter((el) => el.resourceRef === props.resourceId)
-             .length > 0;
-     }
+    const isAssigned = (userId: string) => {
+        return assignments
+            .filter((el) => el.userRef === userId)
+            .filter((el) => el.resourceRef === props.resourceId)
+            .length > 0;
+    }
 
     const deleteAssignmentByUserId = (userId: string) => {
         setDeleteDialogOpen(true)
         setAssignedUserToRemove(userId)
-
     }
 
     const handleChangePage = (
@@ -91,7 +89,6 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
         if (userAssignments.length > 0) {
             deleteAssignment(userAssignments[0].id)
         }
-
     };
 
     const onRemoveAssignmentCancel = () => {
@@ -101,7 +98,7 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
 
     return (
         <Box>
-            <DeleteDialog open={deleteDialogOpen} userId={""} userFullName={""} onConfirm={onRemoveAssignmentConfirmed}
+            <DeleteDialog open={deleteDialogOpen} userId={""} onConfirm={onRemoveAssignmentConfirmed}
                           onCancel={onRemoveAssignmentCancel}/>
             <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"userTable"}>
                 <Table aria-label="Users-table">
