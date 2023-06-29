@@ -35,16 +35,15 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
     const [assignedUserToRemove, setAssignedUserToRemove] = useState<string | undefined>(undefined)
 
     useEffect(() => {
-        refreshAssignments()
+        const refreshAssignments = () => {
+            axios.get(`${basePath === '/' ? '' : basePath}/api/assignments`)
+                .then(response => {
+                    setAssignments(response.data.assignments);
+                })
+        }
         setUpdatingAssignment(false)
-    }, [updatingAssignment])
-
-    const refreshAssignments = () => {
-        axios.get(`${basePath === '/' ? '' : basePath}/api/assignments`)
-            .then(response => {
-                setAssignments(response.data.assignments);
-            })
-    }
+        refreshAssignments()
+    }, [updatingAssignment, basePath])
 
     const assign = (resourceRef: string, userRef: string, organizationUnitId: string = '36'): void => {
         setUpdatingAssignment(true)

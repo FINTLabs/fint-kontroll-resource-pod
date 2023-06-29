@@ -1,7 +1,6 @@
 import React, {createContext, ReactNode, useEffect, useState,} from "react";
 import {
     contextDefaultValues,
-    ICreateAssignment,
     IOrgUnit,
     IOrgUnitPage,
     IResource,
@@ -35,23 +34,13 @@ const ResourceProvider = ({children}: Props) => {
     const [resourceItem] = useState<IResourceItem | null>(contextDefaultValues.resourceItem);
     const [resourceDetails, setResourceDetails] = useState<IResource | null>(contextDefaultValues.resourceDetails);
     const [resourcePage, setResourcePage] = useState<IResourcePage | null>(contextDefaultValues.resourcePage);
-    const [currentPage, setCurrentPage] = useState<number>(contextDefaultValues.currentPage);
+    const [currentPage] = useState<number>(contextDefaultValues.currentPage);
     const [searchString, setSearchString] = useState<string>("");
     const [users] = useState<IUserItem[]>(contextDefaultValues.users);
     const [page, setPage] = useState<IUserPage | null>(contextDefaultValues.page);
     const [userType, setUserType] = useState<string>(contextDefaultValues.userType);
     const [currentUserPage, setCurrentUserPage] = useState<number>(contextDefaultValues.currentPage);
     const [size, setSize] = useState<number>(contextDefaultValues.size);
-    const [assignment, setAssignment] = useState<ICreateAssignment | null>(contextDefaultValues.assignment);
-    const [assignments, setAssignments] = useState<ICreateAssignment[]>(contextDefaultValues.assignments);
-
-    const getAssignments = () => {
-        if (basePath) {
-            ResourceRepository.getAssignments(basePath)
-                .then(response => setAssignments(response.data))
-                .catch((err) => console.error(err))
-        }
-    };
 
     const createAssignment = (resourceRef: string, userRef: string, organizationUnitId: string) => {
         console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
@@ -70,17 +59,6 @@ const ResourceProvider = ({children}: Props) => {
         ResourceRepository.deleteAssignment(basePath, id)
             .then(response => {
                     console.log("Dette er responsen", response)
-                }
-            )
-            .catch((err) => {
-                console.error(err);
-            })
-    }
-
-    const getAssignmentById = (uri: string) => {
-        ResourceRepository.getAssignmentById(uri)
-            .then(response => {
-                    setAssignment(response.data)
                 }
             )
             .catch((err) => {
@@ -151,7 +129,7 @@ const ResourceProvider = ({children}: Props) => {
         if (searchString.length >= 3 || searchString.length === 0) {
             getResourcePage();
         }
-    }, [basePath, currentPage, organisationUnitId, searchString, selected]);
+    }, [basePath, currentPage, userType, organisationUnitId, searchString, selected]);
 
     useEffect(() => {
         const getUserPage = () => {
@@ -208,7 +186,6 @@ const ResourceProvider = ({children}: Props) => {
                 currentPage,
                 searchString,
                 getResourceById,
-                getAssignmentById,
                 searchValue,
                 users,
                 userType,
@@ -220,9 +197,6 @@ const ResourceProvider = ({children}: Props) => {
                 updateCurrentUserPage,
                 createAssignment,
                 deleteAssignment,
-                getAssignments,
-                assignment,
-                assignments,
             }}
         >
             {children}

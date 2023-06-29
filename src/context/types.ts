@@ -76,17 +76,7 @@ export interface ICreateAssignment {
     organizationUnitId: string;
 }
 
-export interface IAssignment {
-    id: number;
-    resourceRef: string;
-    userRef: string;
-    organizationUnitId: string;
-    assignments: ICreateAssignment[];
-}
-
 export type ResourceContextState = {
-    assignment: ICreateAssignment | null;
-    assignments: ICreateAssignment[];
     createAssignment: (resourceRef: string, userRef: string, organizationUnitId: string) => void,
     deleteAssignment: (id: number) => void,
     basePath: string;
@@ -116,8 +106,6 @@ export type ResourceContextState = {
     setSize: (size: number) => void;
     updateUserType: (userType: string) => void;
     updateCurrentUserPage: (currentUserPage: number) => void;
-    getAssignmentById: (id: string) => void;
-    getAssignments: () => void;
 };
 
 export const contextDefaultValues: ResourceContextState = {
@@ -143,8 +131,6 @@ export const contextDefaultValues: ResourceContextState = {
         searchString: "",
         getResourceById(): void {
         },
-        getAssignmentById(): void {
-        },
         searchValue: () => {
         },
         users: [],
@@ -162,9 +148,5 @@ export const contextDefaultValues: ResourceContextState = {
         },
         deleteAssignment(): void {
         },
-        getAssignments(): void {
-        },
-        assignment: null,
-        assignments: [],
     }
 ;

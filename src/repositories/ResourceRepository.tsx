@@ -17,8 +17,6 @@ const getUnitTree = (basePath: string) => {
 
 const getResourceById = (uri: string) => axios.get<IResource>(uri);
 
-const getAssignmentById = (uri: string) => axios.get<ICreateAssignment>(uri);
-
 const getResourcePage = (basePath: string, resourcePage: number, userType: string, organisationUnitId: number[], searchString: string) => {
     const baseUrl = `${basePath === '/' ? '' : basePath}/api/resources/`;
     let queryParams = [];
@@ -76,11 +74,6 @@ const getUserPage = (basePath: string, page: number, size: number,
     return axios.get<IUserPage>(url);
 }
 
-const getAssignments = (basePath: string) => {
-    const url = `${basePath === '/' ? '' : basePath}/api/assignments/`;
-    return axios.get<ICreateAssignment[]>(url);
-}
-
 const createAssignment = (basePath: string, resourceRef: string, userRef: string, organizationUnitId: string) => {
     const url = `${basePath === '/' ? '' : basePath}/api/assignments/`;
     console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
@@ -107,8 +100,6 @@ const UserRepository = {
     getUserPage,
     createAssignment,
     deleteAssignment,
-    getAssignmentById,
-    getAssignments,
 };
 
 export default UserRepository;
