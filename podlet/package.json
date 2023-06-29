@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "node podlet.js"
+  },
   "dependencies": {
     "@fintlabs/fint-podium-react-podlet": "^3.1.0",
     "@podium/podlet": "^4.4.69",
