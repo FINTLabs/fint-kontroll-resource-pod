@@ -1,6 +1,6 @@
-import { createTheme } from '@mui/material/styles';
+import {createTheme} from '@mui/material/styles';
 //import type {} from '@mui/lab/themeAugmentation';
-import { nbNO } from '@mui/material/locale';
+import {nbNO} from '@mui/material/locale';
 
 const theme = createTheme({
         palette: {
@@ -29,12 +29,11 @@ const theme = createTheme({
                 "Nunito Sans", 'sans-serif'
             ].join(',')
         },
-
         components: {
             MuiButton: {
                 variants: [
                     {
-                        props: { variant: "contained" },
+                        props: {variant: "contained"},
                         style: {
                             color: "primary",
                             textTransform: 'none',
@@ -43,12 +42,12 @@ const theme = createTheme({
                         }
                     },
                     {
-                        props: { variant: "text" },
+                        props: {variant: "text"},
                         style: {
                             color: "primary",
                             textTransform: 'none',
                             fontSize: 16,
-                            fontWeight: 600,
+                            fontWeight: 500,
                         }
                     },
 

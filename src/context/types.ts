@@ -10,15 +10,6 @@ export interface IResource {
     validForOrgUnits: IResourceItem[];
 }
 
-export interface IUser {
-    "id": string;
-    "fullName": string;
-    "userName": string;
-    "organisationUnitName": string;
-    "mobilePhone": string;
-    "email": string;
-}
-
 export interface IUserItem {
     "id": number;
     "fullName": string;
@@ -79,14 +70,15 @@ export interface IUnitTree {
 }
 
 export interface ICreateAssignment {
+    id: number;
     resourceRef: string;
     userRef: string;
     organizationUnitId: string;
 }
 
 export type ResourceContextState = {
-    // assignment: ICreateAssignment | null;
     createAssignment: (resourceRef: string, userRef: string, organizationUnitId: string) => void,
+    deleteAssignment: (id: number) => void,
     basePath: string;
     resources: IResource[] | null;
     validForOrgUnits: IResourceItem[] | null;
@@ -114,13 +106,6 @@ export type ResourceContextState = {
     setSize: (size: number) => void;
     updateUserType: (userType: string) => void;
     updateCurrentUserPage: (currentUserPage: number) => void;
-    resourceRef: string;
-    setResourceRef: (resourceRef: string) => void;
-    userRef: string;
-    setUserRef: (userRef: string) => void;
-    organizationUnitId: string;
-    setOrganizationUnitId: (organizationUnitId: string) => void;
-
 };
 
 export const contextDefaultValues: ResourceContextState = {
@@ -152,7 +137,7 @@ export const contextDefaultValues: ResourceContextState = {
         userType: "",
         page: null,
         currentUserPage: 0,
-        size: 40,
+        size: 5,
         setSize(size: number): void {
         },
         updateUserType(): void {
@@ -161,14 +146,7 @@ export const contextDefaultValues: ResourceContextState = {
         },
         createAssignment(): void {
         },
-        resourceRef: "",
-        setResourceRef(resourceRef: string): void {
-        },
-        userRef: "",
-        setUserRef(userRef: string): void {
-        },
-        organizationUnitId: "",
-        setOrganizationUnitId(organizationUnitId: string): void {
+        deleteAssignment(): void {
         },
     }
 ;

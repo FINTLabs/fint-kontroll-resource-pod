@@ -46,7 +46,8 @@ export const ResourceTable: any = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {resourcePage?.resources.map((resources) => (
+                        {resourcePage?.resources
+                            .map((resources) => (
                             <TableRow
                                 key={resources.id}
                                 hover={true}

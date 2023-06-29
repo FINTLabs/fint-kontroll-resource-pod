@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {ICreateAssignment, IResource, IResourcePage, IUnitTree, IUserPage} from "../context/types";
 
-
 const getBaseUrl = () => {
     return axios.get('api/layout/configuration');
 }
@@ -44,7 +43,8 @@ const getResourcePage = (basePath: string, resourcePage: number, userType: strin
     return axios.get<IResourcePage>(url);
 }
 
-const getUserPage = (basePath: string, page: number, size: number, userType: string, organisationUnitId: number[], searchString: string) => {
+const getUserPage = (basePath: string, page: number, size: number,
+                     userType: string, organisationUnitId: number[], searchString: string) => {
     const baseUrl = `${basePath === '/' ? '' : basePath}/api/users/`;
     let queryParams = [];
 
@@ -84,6 +84,13 @@ const createAssignment = (basePath: string, resourceRef: string, userRef: string
     })
 }
 
+const deleteAssignment = (basePath: string, id: number) => {
+    const url = `${basePath === '/' ? '' : basePath}/api/assignments/${id}`;
+    console.log("Repository id", id)
+    return axios.delete<ICreateAssignment>(url,
+    )
+}
+
 const UserRepository = {
     getBaseUrl,
     getResources,
@@ -92,6 +99,7 @@ const UserRepository = {
     getResourceById,
     getUserPage,
     createAssignment,
+    deleteAssignment,
 };
 
 export default UserRepository;

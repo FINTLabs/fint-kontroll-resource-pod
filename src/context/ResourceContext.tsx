@@ -34,17 +34,13 @@ const ResourceProvider = ({children}: Props) => {
     const [resourceItem] = useState<IResourceItem | null>(contextDefaultValues.resourceItem);
     const [resourceDetails, setResourceDetails] = useState<IResource | null>(contextDefaultValues.resourceDetails);
     const [resourcePage, setResourcePage] = useState<IResourcePage | null>(contextDefaultValues.resourcePage);
-    const [currentPage, setCurrentPage] = useState<number>(contextDefaultValues.currentPage);
+    const [currentPage] = useState<number>(contextDefaultValues.currentPage);
     const [searchString, setSearchString] = useState<string>("");
     const [users] = useState<IUserItem[]>(contextDefaultValues.users);
     const [page, setPage] = useState<IUserPage | null>(contextDefaultValues.page);
     const [userType, setUserType] = useState<string>(contextDefaultValues.userType);
     const [currentUserPage, setCurrentUserPage] = useState<number>(contextDefaultValues.currentPage);
     const [size, setSize] = useState<number>(contextDefaultValues.size);
-    const [resourceRef, setResourceRef] = useState<string>(contextDefaultValues.resourceRef);
-    const [userRef, setUserRef] = useState<string>(contextDefaultValues.userRef);
-    const [organizationUnitId, setOrganizationUnitId] = useState<string>(contextDefaultValues.organizationUnitId);
-
 
     const createAssignment = (resourceRef: string, userRef: string, organizationUnitId: string) => {
         console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
@@ -59,6 +55,16 @@ const ResourceProvider = ({children}: Props) => {
             })
     }
 
+    const deleteAssignment = (id: number) => {
+        ResourceRepository.deleteAssignment(basePath, id)
+            .then(response => {
+                    console.log("Dette er responsen", response)
+                }
+            )
+            .catch((err) => {
+                console.error(err);
+            })
+    }
 
     useEffect(() => {
         const getBasePath = () => {
@@ -123,12 +129,12 @@ const ResourceProvider = ({children}: Props) => {
         if (searchString.length >= 3 || searchString.length === 0) {
             getResourcePage();
         }
-    }, [basePath, currentPage, organisationUnitId, searchString, selected]);
+    }, [basePath, currentPage, userType, organisationUnitId, searchString, selected]);
 
     useEffect(() => {
         const getUserPage = () => {
             if (basePath) {
-                ResourceRepository.getUserPage(basePath, currentPage, size, userType, selected, searchString)
+                ResourceRepository.getUserPage(basePath, currentUserPage, size, userType, selected, searchString)
                     .then(response => setPage(response.data))
                     .catch((err) => console.error(err))
             }
@@ -137,7 +143,7 @@ const ResourceProvider = ({children}: Props) => {
         if (searchString.length >= 3 || searchString.length === 0) {
             getUserPage();
         }
-    }, [basePath, currentPage, size, userType, organisationUnitId, searchString, selected]);
+    }, [basePath, currentUserPage, size, userType, organisationUnitId, searchString, selected]);
 
     const updateOrganisationUnitId = (id: number) => {
         setOrganisationUnitId(id);
@@ -189,13 +195,8 @@ const ResourceProvider = ({children}: Props) => {
                 setSize,
                 updateUserType,
                 updateCurrentUserPage,
-                resourceRef,
-                setResourceRef,
-                userRef,
-                setUserRef,
-                organizationUnitId,
-                setOrganizationUnitId,
                 createAssignment,
+                deleteAssignment,
             }}
         >
             {children}
