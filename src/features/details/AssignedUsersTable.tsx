@@ -69,7 +69,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
         setUpdatingAssignment(true)
         console.log("assignedUserToRemove", assignedUserToRemove)
 
-        const userAssignments = assignments.filter((el) => el.userRef === assignedUserToRemove);
+        const userAssignments = assignments.filter((el) => el.userRef.toString() === assignedUserToRemove);
         if (userAssignments.length > 0) {
             deleteAssignment(userAssignments[0].id)
         }
@@ -82,12 +82,12 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
 
     const isAssigned = (userId: string) => {
         return assignments
-            .filter((el) => el.userRef === userId)
-            .filter((el) => el.resourceRef === props.resourceId).length > 0;
+            .filter((el) => el.userRef.toString() === userId)
+            .filter((el) => el.resourceRef.toString() === props.resourceId).length > 0;
     }
 
     const getAssignedUsers = () => {
-        return page?.users.filter((user) => isAssigned(user.id.toString())).length || 0
+        return page?.users.filter((user) => isAssigned(user.id.toString()))
     }
 
     return (
@@ -104,7 +104,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {page?.users.filter((user) => isAssigned(user.id.toString())).map((user) => (
+                        {getAssignedUsers()?.map((user) => (
                             <TableRow
                                 key={user.id}
                                 hover={true}
@@ -139,7 +139,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
                                 id={"pagination"}
                                 rowsPerPageOptions={[5, 10, 25, 50]}
                                 colSpan={4}
-                                count={getAssignedUsers()}
+                                count={getAssignedUsers()?.length || 0}
                                 rowsPerPage={size}
                                 page={currentUserPage}
                                 SelectProps={{
