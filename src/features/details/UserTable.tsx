@@ -53,8 +53,8 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
 
     const isAssigned = (userId: string) => {
         return assignments
-            .filter((el) => el.userRef === userId)
-            .filter((el) => el.resourceRef === props.resourceId)
+            .filter((el) => el.userRef.toString() === userId)
+            .filter((el) => el.resourceRef.toString() === props.resourceId)
             .length > 0;
     }
 
@@ -67,7 +67,6 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
         event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number,
     ) => {
-        console.log("new page:", newPage)
         updateCurrentUserPage(newPage)
     };
 
@@ -82,9 +81,8 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
         setDeleteDialogOpen(false)
 
         setUpdatingAssignment(true)
-        console.log("assignedUserToRemove", assignedUserToRemove)
 
-        const userAssignments = assignments.filter((el) => el.userRef === assignedUserToRemove);
+        const userAssignments = assignments.filter((el) => el.userRef.toString() === assignedUserToRemove);
         if (userAssignments.length > 0) {
             deleteAssignment(userAssignments[0].id)
         }
