@@ -141,7 +141,9 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
                                             sx={{marginLeft: 2}}
                                             onClick={() => deleteAssignmentByUserId(user.id.toString())}
                                         >
+
                                             Slett
+
                                         </Button> : null}
                                 </TableCell>
                             </TableRow>
