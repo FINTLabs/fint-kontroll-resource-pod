@@ -65,7 +65,7 @@ export const ResourceTable: any = () => {
                                             id={`iconResourceInfo-${resources.id}`}
                                             aria-label="informasjon"
                                             component={Link}
-                                            to={`/ressurser/info/${resources.id}`}
+                                            to={`info/${resources.id}`}
                                             onClick={handleClick}>
                                             <ArrowCircleRightOutlined color={"primary"}/>
                                         </IconButton>
