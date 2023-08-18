@@ -73,6 +73,7 @@ const DialogUnit = ({open, onClose}) => {
                 >
                     {unitTree?.orgUnits?.map((node) => {
                         if (node.parentRef !== node.organisationUnitId) {
+                            console.log('Herehere', renderTree(node))
                             return null;
                         }
                         return renderTree(node);

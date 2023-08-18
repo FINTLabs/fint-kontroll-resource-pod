@@ -41,6 +41,7 @@ const ResourceProvider = ({children}: Props) => {
     const [userType, setUserType] = useState<string>(contextDefaultValues.userType);
     const [currentUserPage, setCurrentUserPage] = useState<number>(contextDefaultValues.currentPage);
     const [size, setSize] = useState<number>(contextDefaultValues.size);
+    const [isAggregate, setIsAggregate] = useState<boolean>(contextDefaultValues.isAggregate);
 
     const createAssignment = (resourceRef: string, userRef: string, organizationUnitId: string) => {
         console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
@@ -120,7 +121,7 @@ const ResourceProvider = ({children}: Props) => {
     useEffect(() => {
         const getResourcePage = () => {
             if (basePath) {
-                ResourceRepository.getResourcePage(basePath, currentPage, userType, selected, searchString)
+                ResourceRepository.getResourcePage(basePath, currentPage, userType, selected, searchString, isAggregate)
                     .then(response => setResourcePage(response.data))
                     .catch((err) => console.error(err))
             }
@@ -129,7 +130,7 @@ const ResourceProvider = ({children}: Props) => {
         if (searchString.length >= 3 || searchString.length === 0) {
             getResourcePage();
         }
-    }, [basePath, currentPage, userType, organisationUnitId, searchString, selected]);
+    }, [basePath, currentPage, userType, organisationUnitId, searchString, selected, isAggregate]);
 
     useEffect(() => {
         const getUserPage = () => {
@@ -197,6 +198,8 @@ const ResourceProvider = ({children}: Props) => {
                 updateCurrentUserPage,
                 createAssignment,
                 deleteAssignment,
+                isAggregate,
+                setIsAggregate,
             }}
         >
             {children}
