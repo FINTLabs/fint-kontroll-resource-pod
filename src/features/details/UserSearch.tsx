@@ -28,7 +28,7 @@ export default function SearchFieldUser() {
     return (
         <FormControl style={{minWidth: 220}} sx={{ml: '2rem', my: '1rem'}}>
             <TextField
-                id="outlined-search"
+                id="outlined-search-user"
                 label="Søk etter bruker"
                 role="search"
                 onChange={handleChange}

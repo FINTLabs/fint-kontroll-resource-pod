@@ -1,0 +1,29 @@
+{
+  "totalPages": 1,
+  "size": 50,
+  "assignments": [
+    {
+      "id": 12,
+      "resourceRef": 1,
+      "userRef": 3,
+      "roleRef": null,
+      "organizationUnitId": "36"
+    },
+    {
+      "id": 13,
+      "resourceRef": 1,
+      "userRef": 7,
+      "roleRef": null,
+      "organizationUnitId": "36"
+    },
+    {
+      "id": 14,
+      "resourceRef": 1,
+      "userRef": 442,
+      "roleRef": null,
+      "organizationUnitId": "36"
+    }
+  ],
+  "totalItems": 4,
+  "currentPage": 0
+}

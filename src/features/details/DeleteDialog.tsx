@@ -17,6 +17,7 @@ const AlertDialog = (props: {
     return (
         <div>
             <Dialog
+                id="delete-dialog"
                 open={props.open}
                 onClose={props.onConfirm}
                 aria-labelledby="alert-dialog-title"
@@ -32,7 +33,7 @@ const AlertDialog = (props: {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={props.onCancel}>Avbryt</Button>
-                    <Button color={"error"} onClick={props.onConfirm} autoFocus>
+                    <Button id="delete-button" color={"error"} onClick={props.onConfirm} autoFocus>
                         Slett
                     </Button>
                 </DialogActions>
