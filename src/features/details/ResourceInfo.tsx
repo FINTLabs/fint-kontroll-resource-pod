@@ -52,6 +52,40 @@ function ResourceInfo() {
                             </ListItem>
                         </List>
                     </Grid>
+                    <Grid item xs={12} md={6}>
+                        <List>
+                            <ListItem>
+                                <ListItemText
+                                    primary={resourceDetails?.resourceLimit}
+                                    secondary={'Grense for antall'}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText
+                                    primary={resourceDetails?.platform.join(', ')}
+                                    secondary={'plattform'}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText
+                                    primary={resourceDetails?.resourceOwnerOrgUnitName}
+                                    secondary={'Ressurseier'}
+                                />
+                            </ListItem>
+                            {/*<ListItem>
+                                <ListItemText
+                                    primary={resourceDetails?.validForOrgUnits[]}
+                                    secondary={'Ressurseier'}
+                                />
+                            </ListItem>*/}
+                            <ListItem>
+                                <ListItemText
+                                    primary={resourceDetails?.validForRoles}
+                                    secondary={'Gyldig for rolle'}
+                                />
+                            </ListItem>
+                        </List>
+                    </Grid>
                 </Grid>
             </Paper>
         </Box>

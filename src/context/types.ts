@@ -7,7 +7,11 @@ export interface IResource {
     applicationAccessType: string;
     applicationAccessRole: string;
     accessType: string;
+    "platform": [],
+    "resourceOwnerOrgUnitId": string,
+    "resourceOwnerOrgUnitName": string,
     validForOrgUnits: IResourceItem[];
+    validForRoles: string;
 }
 
 export interface IUserItem {
