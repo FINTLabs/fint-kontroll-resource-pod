@@ -120,7 +120,7 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
 
                                 <TableCell align="right">
                                     <Button
-                                        id={`iconAddResource-${user.id}`}
+                                        id={`buttonAddAssignment-${user.id}`}
                                         variant={"text"}
                                         aria-label="Legg til ressurs"
                                         onClick={() => assign(props.resourceId, user.id.toString(), "36")}
@@ -133,7 +133,7 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
 
                                     {isAssigned(user.id.toString()) ?
                                         <Button
-                                            id={`iconAddResource-${user.id}`}
+                                            id={`buttonDeleteAssignment-${user.id}`}
                                             variant={"text"}
                                             aria-label="Slett ressurs"
                                             color={"error"}
@@ -141,7 +141,9 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
                                             sx={{marginLeft: 2}}
                                             onClick={() => deleteAssignmentByUserId(user.id.toString())}
                                         >
-                                            slett
+
+                                            Slett
+
                                         </Button> : null}
                                 </TableCell>
                             </TableRow>

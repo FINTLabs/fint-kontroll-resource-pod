@@ -17,31 +17,37 @@ const getUnitTree = (basePath: string) => {
 
 const getResourceById = (uri: string) => axios.get<IResource>(uri);
 
-const getResourcePage = (basePath: string, resourcePage: number, userType: string, organisationUnitId: number[], searchString: string) => {
-    const baseUrl = `${basePath === '/' ? '' : basePath}/api/resources/`;
-    let queryParams = [];
+const getResourcePage =
+    (basePath: string, resourcePage: number, userType: string, organisationUnitId: number[],
+     searchString: string, isAggregated: boolean) => {
+        const baseUrl = `${basePath === '/' ? '' : basePath}/api/resources/`;
+        let queryParams = [];
 
-    const sanitizedQueryString = searchString.trim();
-    if (sanitizedQueryString.length !== 0) {
-        queryParams.push(`search=${searchString}`);
+        const sanitizedQueryString = searchString.trim();
+        if (sanitizedQueryString.length !== 0) {
+            queryParams.push(`search=${searchString}`);
+        }
+
+        if (userType) {
+            queryParams.push(`userType=${userType}`);
+        }
+
+        if (isAggregated) {
+            queryParams.push(`aggroles=${isAggregated}`);
+        }
+
+        if (organisationUnitId && organisationUnitId.length > 0) {
+            queryParams.push(`orgUnits=${organisationUnitId}`);
+        }
+
+        if (resourcePage) {
+            queryParams.push(`resourcePage=${resourcePage}`);
+        }
+
+        const url = `${baseUrl}${queryParams.length > 0 ? '?' : ''}${queryParams.join('&')}`;
+
+        return axios.get<IResourcePage>(url);
     }
-
-    if (userType) {
-        queryParams.push(`userType=${userType}`);
-    }
-
-    if (organisationUnitId && organisationUnitId.length > 0) {
-        queryParams.push(`orgUnits=${organisationUnitId}`);
-    }
-
-    if (resourcePage) {
-        queryParams.push(`resourcePage=${resourcePage}`);
-    }
-
-    const url = `${baseUrl}${queryParams.length > 0 ? '?' : ''}${queryParams.join('&')}`;
-
-    return axios.get<IResourcePage>(url);
-}
 
 const getUserPage = (basePath: string, page: number, size: number,
                      userType: string, organisationUnitId: number[], searchString: string) => {

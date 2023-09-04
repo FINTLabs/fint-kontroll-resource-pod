@@ -1,0 +1,35 @@
+{
+  "id": 1,
+  "resourceId": "adobek12",
+  "resourceName": "Adobe K12 Utdanning",
+  "resourceType": "ApplicationResource",
+  "applicationAccessType": "ApplikasjonTilgang",
+  "applicationAccessRole": "Full access",
+  "platform": [
+    "WIN",
+    "Linux"
+  ],
+  "accessType": "device",
+  "resourceLimit": 1000,
+  "resourceOwnerOrgUnitId": "6",
+  "resourceOwnerOrgUnitName": "KOMP Utdanning og kompetanse",
+  "validForOrgUnits": [
+    {
+      "id": 15,
+      "resourceId": "adobek12",
+      "orgunitId": "194",
+      "orgUnitName": "VGMIDT Midtbyen videregående skole",
+      "resourceLimit": 100
+    },
+    {
+      "id": 16,
+      "resourceId": "adobek12",
+      "orgunitId": "198",
+      "orgUnitName": "VGSTOR Storskog videregående skole",
+      "resourceLimit": 200
+    }
+  ],
+  "validForRoles": [
+    "student"
+  ]
+}

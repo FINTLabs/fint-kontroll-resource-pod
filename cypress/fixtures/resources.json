@@ -1,0 +1,28 @@
+{
+  "totalPages": 1,
+  "currentPage": 0,
+  "resources": [
+    {
+      "id": 1,
+      "resourceId": "adobek12",
+      "resourceName": "Adobe K12 Utdanning",
+      "resourceType": "ApplicationResource",
+      "resourceLimit": 1000
+    },
+    {
+      "id": 2,
+      "resourceId": "msproject",
+      "resourceName": "Microsoft Project Enterprise",
+      "resourceType": "ApplicationResource",
+      "resourceLimit": 100
+    },
+    {
+      "id": 3,
+      "resourceId": "mskabal",
+      "resourceName": "Microsoft Kabal",
+      "resourceType": "ApplicationResource",
+      "resourceLimit": 300
+    }
+  ],
+  "totalItems": 3
+}

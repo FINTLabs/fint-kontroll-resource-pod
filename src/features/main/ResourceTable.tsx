@@ -62,7 +62,7 @@ export const ResourceTable: any = () => {
                                 <TableCell align="left">
                                     <Tooltip title={"Se detaljer"}>
                                         <IconButton
-                                            id={`iconUserInfo-${resources.id}`}
+                                            id={`iconResourceInfo-${resources.id}`}
                                             aria-label="informasjon"
                                             component={Link}
                                             to={`info/${resources.id}`}

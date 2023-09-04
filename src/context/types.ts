@@ -7,7 +7,11 @@ export interface IResource {
     applicationAccessType: string;
     applicationAccessRole: string;
     accessType: string;
+    "platform": [],
+    "resourceOwnerOrgUnitId": string,
+    "resourceOwnerOrgUnitName": string,
     validForOrgUnits: IResourceItem[];
+    validForRoles: string;
 }
 
 export interface IUserItem {
@@ -106,6 +110,8 @@ export type ResourceContextState = {
     setSize: (size: number) => void;
     updateUserType: (userType: string) => void;
     updateCurrentUserPage: (currentUserPage: number) => void;
+    isAggregate: boolean;
+    setIsAggregate: (isAggregate: boolean) => void;
 };
 
 export const contextDefaultValues: ResourceContextState = {
@@ -147,6 +153,9 @@ export const contextDefaultValues: ResourceContextState = {
         createAssignment(): void {
         },
         deleteAssignment(): void {
+        },
+        isAggregate: false,
+        setIsAggregate(isAggregate: boolean): void {
         },
     }
 ;

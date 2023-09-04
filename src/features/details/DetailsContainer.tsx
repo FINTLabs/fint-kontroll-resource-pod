@@ -54,6 +54,7 @@ function DetailsContainer() {
                     Brukere
                 </Typography>
                 <Button
+                    id={"button-only-assigned"}
                     variant={"outlined"}
                     aria-label="Toggle"
                     color={"primary"}

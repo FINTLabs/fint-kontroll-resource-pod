@@ -28,7 +28,7 @@ export default function SearchFieldUser() {
     return (
         <FormControl style={{minWidth: 220}} sx={{mx: '2rem', my: '1rem'}}>
             <TextField
-                id="outlined-search"
+                id="outlined-search-resource"
                 label="Søk etter ressurs"
                 role="search"
                 onChange={handleChange}
@@ -45,7 +45,7 @@ export default function SearchFieldUser() {
                                 display: showSearchIcon,
                             }}
                         >
-                            <Search/>
+                            <Search id="showSearchIcon"/>
                         </InputAdornment>
                     ),
                     endAdornment: (
