@@ -1,6 +1,6 @@
 import React, {createContext, ReactNode, useEffect, useState,} from "react";
 import {
-    contextDefaultValues,
+    contextDefaultValues, IAssignment, IAssignmentPage,
     IOrgUnit,
     IOrgUnitPage,
     IResource,
@@ -42,9 +42,27 @@ const ResourceProvider = ({children}: Props) => {
     const [currentUserPage, setCurrentUserPage] = useState<number>(contextDefaultValues.currentPage);
     const [size, setSize] = useState<number>(contextDefaultValues.size);
     const [isAggregate, setIsAggregate] = useState<boolean>(contextDefaultValues.isAggregate);
+    const [assignmentPage, setAssignmentPage] = useState<IAssignmentPage | null>(contextDefaultValues.assignmentPage);
+    const [assignments, setAssignments] = useState<IAssignment[] | null>(contextDefaultValues.assignments);
+    const [currentAssignmentPage, setCurrentAssignmentPage] = useState<number>(contextDefaultValues.currentAssignmentPage);
 
-    const createAssignment = (resourceRef: string, userRef: string, organizationUnitId: string) => {
+
+
+    /*const createAssignment = (resourceRef: string, userRef: string, organizationUnitId: string) => {
         console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
+
+        ResourceRepository.createAssignment(basePath, resourceRef, userRef, organizationUnitId)
+            .then(response => {
+                    console.log("Dette er responsen", response)
+                }
+            )
+            .catch((err) => {
+                console.error(err);
+            })
+    }*/
+
+    const createAssignment = (resourceRef: number, userRef: number, organizationUnitId: string) => {
+       // console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
 
         ResourceRepository.createAssignment(basePath, resourceRef, userRef, organizationUnitId)
             .then(response => {
@@ -94,6 +112,17 @@ const ResourceProvider = ({children}: Props) => {
     }, [basePath]);
 
     useEffect(() => {
+        const getAssignments = () => {
+            if (basePath) {
+                ResourceRepository.getAssignments(basePath)
+                    .then(response => setAssignments(response.data))
+                    .catch((err) => console.error(err))
+            }
+        }
+        getAssignments()
+    }, [basePath]);
+
+    useEffect(() => {
         const getUnitTree = () => {
             if (basePath) {
                 ResourceRepository.getUnitTree(basePath)
@@ -133,6 +162,19 @@ const ResourceProvider = ({children}: Props) => {
     }, [basePath, currentPage, userType, organisationUnitId, searchString, selected, isAggregate]);
 
     useEffect(() => {
+        const getAssignmentPage = () => {
+            if (basePath) {
+                ResourceRepository.getAssignmentPage(basePath, currentPage, size, userType)
+                    .then(response => setAssignmentPage(response.data))
+                    .catch((err) => console.error(err))
+            }
+        }
+            getAssignmentPage();
+
+    }, [basePath, currentPage, size, userType, selected]);
+
+
+    useEffect(() => {
         const getUserPage = () => {
             if (basePath) {
                 ResourceRepository.getUserPage(basePath, currentUserPage, size, userType, selected, searchString)
@@ -164,6 +206,10 @@ const ResourceProvider = ({children}: Props) => {
 
     const updateCurrentUserPage = (currentUserPage: number) => {
         setCurrentUserPage(currentUserPage)
+    }
+
+    const updateCurrentAssignmentPage = (currentAssignmentPage: number) => {
+        setCurrentAssignmentPage(currentAssignmentPage)
     }
 
     return (
@@ -200,6 +246,10 @@ const ResourceProvider = ({children}: Props) => {
                 deleteAssignment,
                 isAggregate,
                 setIsAggregate,
+                assignments,
+                assignmentPage,
+                currentAssignmentPage,
+                updateCurrentAssignmentPage,
             }}
         >
             {children}

@@ -1,5 +1,13 @@
 import axios from 'axios';
-import {ICreateAssignment, IResource, IResourcePage, IUnitTree, IUserPage} from "../context/types";
+import {
+    IAssignment,
+    IAssignmentPage,
+    ICreateAssignment,
+    IResource,
+    IResourcePage,
+    IUnitTree,
+    IUserPage
+} from "../context/types";
 
 const getBaseUrl = () => {
     return axios.get('api/layout/configuration');
@@ -10,12 +18,40 @@ const getResources = (basePath: string) => {
     return axios.get<IResource[]>(url);
 }
 
+const getAssignments = (basePath: string) => {
+    const url = `${basePath === '/' ? '' : basePath}/api/assignments/`;
+    return axios.get<IAssignment[]>(url);
+}
+
 const getUnitTree = (basePath: string) => {
     const url = `${basePath === '/' ? '' : basePath}/api/orgunits/`;
     return axios.get<IUnitTree>(url)
 }
 
 const getResourceById = (uri: string) => axios.get<IResource>(uri);
+
+
+const getAssignmentPage = (basePath: string, assignmentPage: number, size: number, userType: string) => {
+    const baseUrl = `${basePath === '/' ? '' : basePath}/api/assignments/`;
+    let queryParams = [];
+
+    if (size) {
+        queryParams.push(`size=${size}`);
+    }
+
+    if (userType) {
+        queryParams.push(`userType=${userType}`);
+    }
+
+    if (assignmentPage) {
+        queryParams.push(`assignmentPage=${assignmentPage}`);
+    }
+
+    const url = `${baseUrl}${queryParams.length > 0 ? '?' : ''}${queryParams.join('&')}`;
+
+    return axios.get<IAssignmentPage>(url);
+
+}
 
 const getResourcePage =
     (basePath: string, resourcePage: number, userType: string, organisationUnitId: number[],
@@ -80,7 +116,7 @@ const getUserPage = (basePath: string, page: number, size: number,
     return axios.get<IUserPage>(url);
 }
 
-const createAssignment = (basePath: string, resourceRef: string, userRef: string, organizationUnitId: string) => {
+const createAssignment = (basePath: string, resourceRef: number, userRef: number, organizationUnitId: string) => {
     const url = `${basePath === '/' ? '' : basePath}/api/assignments/`;
     console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
     return axios.post<ICreateAssignment>(url, {
@@ -104,8 +140,10 @@ const UserRepository = {
     getResourcePage,
     getResourceById,
     getUserPage,
+    getAssignments,
     createAssignment,
     deleteAssignment,
+    getAssignmentPage,
 };
 
 export default UserRepository;

@@ -41,7 +41,8 @@ export const ResourceTable: any = () => {
                         <TableRow sx={{fontWeight: 'bold'}}>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Ressurs</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Type</TableCell>
-                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Antall</TableCell>
+                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Antall totalt</TableCell>
+                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Antall i bruk</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}></TableCell>
                         </TableRow>
                     </TableHead>
@@ -57,6 +58,7 @@ export const ResourceTable: any = () => {
                                     {resources.resourceName}
                                 </TableCell>
                                 <TableCell align="left">{resources.resourceType}</TableCell>
+                                <TableCell align="left">{resources.resourceLimit}</TableCell>
                                 <TableCell align="left">{resources.resourceLimit}</TableCell>
                                 {/*<TableCell align="left">{resources.validForOrgUnits[0].orgUnitName}</TableCell>*/}
                                 <TableCell align="left">

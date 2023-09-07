@@ -51,7 +51,7 @@ function DetailsContainer() {
                 justifyContent: 'space-between',
             }}>
                 <Typography variant="h2">
-                    Brukere
+                    Tildelinger
                 </Typography>
                 <Button
                     id={"button-only-assigned"}

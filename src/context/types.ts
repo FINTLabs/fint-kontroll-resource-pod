@@ -73,15 +73,36 @@ export interface IUnitTree {
     orgUnits: IUnitItem[];
 }
 
-export interface ICreateAssignment {
+export interface IAssignment {
+    id: number;
+    resourceRef: number;
+    userRef: number;
+    roleRef: number;
+    organizationUnitId: string;
+}
+
+export interface IAssignmentPage {
+    totalItems: number;
+    totalPages: number | any;
+    currentPage: number;
+    assignments: IAssignment[];
+}
+
+/*export interface ICreateAssignment {
     id: number;
     resourceRef: string;
     userRef: string;
     organizationUnitId: string;
+}*/
+export interface ICreateAssignment {
+    id: number;
+    resourceRef: number;
+    userRef: number;
+    organizationUnitId: string;
 }
 
 export type ResourceContextState = {
-    createAssignment: (resourceRef: string, userRef: string, organizationUnitId: string) => void,
+    createAssignment: (resourceRef: number, userRef: number, organizationUnitId: string) => void,
     deleteAssignment: (id: number) => void,
     basePath: string;
     resources: IResource[] | null;
@@ -112,6 +133,10 @@ export type ResourceContextState = {
     updateCurrentUserPage: (currentUserPage: number) => void;
     isAggregate: boolean;
     setIsAggregate: (isAggregate: boolean) => void;
+    assignments: IAssignment[] | null;
+    assignmentPage: IAssignmentPage | null;
+    currentAssignmentPage: number;
+    updateCurrentAssignmentPage: (currentAssignmentPage: number) => void;
 };
 
 export const contextDefaultValues: ResourceContextState = {
@@ -156,6 +181,11 @@ export const contextDefaultValues: ResourceContextState = {
         },
         isAggregate: false,
         setIsAggregate(isAggregate: boolean): void {
+        },
+        assignments: [],
+        assignmentPage: null,
+        currentAssignmentPage: 0,
+        updateCurrentAssignmentPage(): void {
         },
     }
 ;

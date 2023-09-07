@@ -92,7 +92,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
 
     return (
         <Box>
-            <DeleteDialog open={deleteDialogOpen} userId={""} onConfirm={onRemoveAssignmentConfirmed}
+            {/*<DeleteDialog open={deleteDialogOpen} userId={""} onConfirm={onRemoveAssignmentConfirmed}
                           onCancel={onRemoveAssignmentCancel}/>
             <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"assignedUserTable"}>
                 <Table aria-label="Users-table">
@@ -155,7 +155,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
                         </TableRow>
                     </TableFooter>
                 </Table>
-            </TableContainer>
+            </TableContainer>*/}
         </Box>
     );
 };
