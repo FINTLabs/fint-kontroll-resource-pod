@@ -4,6 +4,7 @@ import {useContext} from "react";
 import FormGroup from '@mui/material/FormGroup';
 import Grid from '@mui/material/Grid';
 import {ResourceContext} from "../../context";
+import Typography from "@mui/material/Typography";
 
 function ResourceInfo() {
 
@@ -11,6 +12,13 @@ function ResourceInfo() {
 
     return (
         <Box sx={{mb: 6}}>
+            <Typography
+                sx={{flex: '1 1 100%', pb: 3}}
+                variant="h1"
+                id="tableTitle"
+            >
+                {resourceDetails?.resourceName}
+            </Typography>
             <Paper>
                 <FormGroup row>
                 </FormGroup>

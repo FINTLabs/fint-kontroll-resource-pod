@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 function DetailsContainer() {
 
     const {basePath, getResourceById} = useContext(ResourceContext);
-    const [selectedUsers, setSelectedUser] = useState<boolean>(false)
+  //  const [selectedUsers, setSelectedUser] = useState<boolean>(false)
     const [buttonText, setButtonText] = useState<string>('Se kun tildelte');
 
     const {id} = useParams<string>();
@@ -26,7 +26,7 @@ function DetailsContainer() {
         // eslint-disable-next-line
     }, [])
 
-    const handleClick = () => {
+    /*const handleClick = () => {
         if (selectedUsers) {
             setButtonText('Se kun tildelte')
             setSelectedUser(false)
@@ -35,12 +35,12 @@ function DetailsContainer() {
             setSelectedUser(true)
             setButtonText('Se alle brukere')
         }
-    }
+    }*/
 
     return (
         <Box sx={style.content}>
             <Box sx={style.table}>
-                <DetailsToolBar/>
+
                 <ResourceInfo/>
             </Box>
             <Box sx={{
@@ -53,7 +53,8 @@ function DetailsContainer() {
                 <Typography variant="h2">
                     Tildelinger
                 </Typography>
-                <Button
+                <DetailsToolBar/>
+                {/*<Button
                     id={"button-only-assigned"}
                     variant={"outlined"}
                     aria-label="Toggle"
@@ -62,9 +63,10 @@ function DetailsContainer() {
                     onClick={handleClick}
                 >
                     {buttonText}
-                </Button>
+                </Button>*/}
             </Box>
-            {selectedUsers ? <AssignedUsersTable resourceId={id}/> : <UserTable resourceId={id}/>}
+            <UserTable resourceId={id}/>
+           {/* {selectedUsers ? <AssignedUsersTable resourceId={id}/> : <UserTable resourceId={id}/>}*/}
         </Box>
     );
 }

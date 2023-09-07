@@ -121,6 +121,9 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
                         <TableRow sx={{fontWeight: 'bold'}}>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Navn userRef</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>resourceRef</TableCell>
+                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Brukertype</TableCell>
+                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Gruppetype</TableCell>
+                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Tildelt av</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}></TableCell>
                         </TableRow>
                     </TableHead>
@@ -135,6 +138,9 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
                                     {assignments.userRef}
                                 </TableCell>
                                 <TableCell align="left">{assignments.resourceRef}</TableCell>
+                                <TableCell align="left">Elev</TableCell>
+                                <TableCell align="left">gruppe</TableCell>
+                                <TableCell align="left">Donald Duck</TableCell>
 
                                 <TableCell align="right">
                                     {/*<Button
@@ -224,7 +230,7 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
                             <TablePagination
                                 id={"pagination"}
                                 rowsPerPageOptions={[5, 10, 25, 50]}
-                                colSpan={4}
+                                colSpan={7}
                                 count={assignmentPage ? assignmentPage.totalItems : 0}
                                 rowsPerPage={size}
                                 page={currentAssignmentPage}

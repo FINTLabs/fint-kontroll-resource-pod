@@ -1,29 +1,21 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import UserSearch from './UserSearch'
+import UserSearch from './UserSearch';
 import UserType from './UserType';
-import {ResourceContext} from "../../context";
+import ObjectType from './ObjectType';
 
 
 function CustomTableToolbar() {
-
-    const {resourceDetails} = useContext(ResourceContext);
 
     return (
         <Toolbar
             sx={{
                 pl: {sm: 2},
                 pr: {xs: 1, sm: 1},
+                pb: 2,
             }}
         >
-            <Typography
-                sx={{flex: '1 1 100%'}}
-                variant="h1"
-                id="tableTitle"
-            >
-                {resourceDetails?.resourceName}
-            </Typography>
+            <ObjectType/>
             <UserType/>
             <UserSearch/>
         </Toolbar>

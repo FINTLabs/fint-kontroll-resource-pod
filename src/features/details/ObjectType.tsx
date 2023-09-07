@@ -6,12 +6,7 @@ import TextField from "@mui/material/TextField";
 
 export default function FilterGroupUser() {
 
-    const {userType, updateUserType, updateCurrentUserPage} = useContext(ResourceContext);
-
-    function handleChange(event: SelectChangeEvent) {
-        updateUserType(event.target.value as string);
-        console.log(event.target.value as string + "test")
-    }
+    const {updateCurrentUserPage} = useContext(ResourceContext);
 
     const updatePage = () => {
         updateCurrentUserPage(0)
@@ -19,31 +14,25 @@ export default function FilterGroupUser() {
 
     const options = [
         {value: "", label: "Alle"},
-        {value: "STUDENT", label: "Elev"},
-        {value: "EMPLOYEE", label: "Ansatt"}
+        {value: "Brukere", label: "Brukere"},
+        {value: "Grupper", label: "Grupper"}
     ];
 
     return (
         <FormControl style={{minWidth: 220}} sx={{mx: '2rem', my: '1rem'}}>
-            <InputLabel
-                id="valg-brukertype"
-            >
-                Brukertype
-            </InputLabel>
-            <Select
-                labelId="valg-brukertype"
-                id="brukertype"
-                value={userType}
-                label="Brukertype"
-                onChange={handleChange}
+            <TextField
+                id="outlined-select-currency"
+                select
+                label="Brukere/Grupper"
+                defaultValue="EUR"
+               // helperText="Velg brukere eller grupper"
             >
                 {options.map((option) => (
                     <MenuItem key={option.value} value={option.value} onClick={updatePage}>
                         {option.label}
                     </MenuItem>
                 ))}
-            </Select>
-
+            </TextField>
         </FormControl>
     );
 }
