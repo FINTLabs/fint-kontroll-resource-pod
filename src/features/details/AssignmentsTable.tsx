@@ -8,33 +8,33 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {Box, Button, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
-import axios from "axios";
-import {ICreateAssignment} from "../../context/types";
-import DeleteDialog from "./DeleteDialog";
 import DeleteIcon from '@mui/icons-material/Delete';
+import axios from "axios";
+import {IAssignment} from "../../context/types";
+import DeleteDialog from "./DeleteDialog";
 import TablePaginationActions from "./UserTableFooter";
 
-export const AssignedUsersTable: any = (props: { resourceId: string, userId: number, userFullName: string }) => {
+export const AssignmentsTable: any = (props: { resourceId: string, assignId: number, userId: string }) => {
 
     const {
-        size,
-        currentUserPage,
-        updateCurrentUserPage,
-        setSize,
+        //  searchValue,
         basePath,
-        page,
-        deleteAssignment
+        assignmentPage,
+        deleteAssignment,
+        updateCurrentAssignmentPage,
+        assignmentSize,
+        setAssignmentSize,
+        currentAssignmentPage,
     } = useContext(ResourceContext);
 
-    const [assignments, setAssignments] = useState<ICreateAssignment[]>([]);
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
     const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false)
-    const [assignedUserToRemove, setAssignedUserToRemove] = useState<string | undefined>(undefined)
-
+    const [assignedUserToRemove, setAssignedUserToRemove] = useState<number | undefined>(undefined)
+    const [assignments, setAssignments] = useState<IAssignment[]>([])
 
     useEffect(() => {
         const refreshAssignments = () => {
-            axios.get(`${basePath === '/' ? '' : basePath}/api/assignments?size=1000`)
+            axios.get(`${basePath === '/' ? '' : basePath}/api/assignments`)
                 .then(response => {
                     setAssignments(response.data.assignments);
                 })
@@ -43,9 +43,20 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
         refreshAssignments()
     }, [updatingAssignment, basePath])
 
-    const deleteAssignmentByUserId = (userId: string) => {
+     const isAssigned = (assignId: number) => {
+         return assignments
+             .filter((el) => el.id === assignId)
+             .filter((el) => el.resourceRef.toString() === props.resourceId)
+             .length > 0;
+     }
+
+     const getAssignedUsers = () => {
+         return assignmentPage?.assignments.filter((assignments) => isAssigned(assignments.id))
+     }
+
+    const deleteAssignmentById = (assignmentId: number) => {
         setDeleteDialogOpen(true)
-        setAssignedUserToRemove(userId)
+        setAssignedUserToRemove(assignmentId)
     }
 
     const handleChangePage = (
@@ -53,23 +64,21 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
         newPage: number,
     ) => {
         console.log("new page:", newPage)
-        updateCurrentUserPage(newPage)
+        updateCurrentAssignmentPage(newPage)
     };
 
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
-        setSize(parseInt(event.target.value, 10));
-        updateCurrentUserPage(0);
+        setAssignmentSize(parseInt(event.target.value, 10));
+        updateCurrentAssignmentPage(0);
     };
 
     const onRemoveAssignmentConfirmed = () => {
         setDeleteDialogOpen(false)
-
         setUpdatingAssignment(true)
-        console.log("assignedUserToRemove", assignedUserToRemove)
 
-        const userAssignments = assignments.filter((el) => el.userRef.toString() === assignedUserToRemove);
+        const userAssignments = assignments.filter((el) => el.id === assignedUserToRemove);
         if (userAssignments.length > 0) {
             deleteAssignment(userAssignments[0].id)
         }
@@ -80,54 +89,49 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
         setAssignedUserToRemove(undefined)
     };
 
-    const isAssigned = (userId: string) => {
-        return assignments
-            .filter((el) => el.userRef.toString() === userId)
-            .filter((el) => el.resourceRef.toString() === props.resourceId).length > 0;
-    }
-
-    const getAssignedUsers = () => {
-        return page?.users.filter((user) => isAssigned(user.id.toString()))
-    }
-
     return (
         <Box>
-            {/*<DeleteDialog open={deleteDialogOpen} userId={""} onConfirm={onRemoveAssignmentConfirmed}
+            <DeleteDialog open={deleteDialogOpen} userId={""} assignId={0} onConfirm={onRemoveAssignmentConfirmed}
                           onCancel={onRemoveAssignmentCancel}/>
-            <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"assignedUserTable"}>
+            <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"userTable"}>
                 <Table aria-label="Users-table">
+
                     <TableHead>
                         <TableRow sx={{fontWeight: 'bold'}}>
-                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Navn</TableCell>
+                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Navn userRef</TableCell>
+                            <TableCell align="left" sx={{fontWeight: 'bold'}}>resourceRef</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Brukertype</TableCell>
+                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Gruppetype</TableCell>
+                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Tildelt av</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {getAssignedUsers()?.map((user) => (
+                        {getAssignedUsers()?.map((assignments) => (
                             <TableRow
-                                key={user.id}
+                                key={assignments.id}
                                 hover={true}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
                                 <TableCell align="left" component="th" scope="row">
-                                    {user.fullName}
+                                    {assignments.userRef}
                                 </TableCell>
-                                <TableCell align="left">
-                                    {user.userType}
-                                </TableCell>
-                                <TableCell
-                                    align="right">
+                                <TableCell align="left">{assignments.resourceRef}</TableCell>
+                                <TableCell align="left">Elev</TableCell>
+                                <TableCell align="left">gruppe</TableCell>
+                                <TableCell align="left">Donald Duck</TableCell>
+                                <TableCell align="right">
+
                                     <Button
-                                        id={`iconAddResource-${user.id}`}
+                                        //  id={`buttonDeleteAssignment-${user.id}`}
                                         variant={"text"}
                                         aria-label="Slett ressurs"
                                         color={"error"}
                                         endIcon={<DeleteIcon/>}
                                         sx={{marginLeft: 2}}
-                                        onClick={() => deleteAssignmentByUserId(user.id.toString())}
+                                        onClick={() => deleteAssignmentById(assignments.id)}
                                     >
-                                        slett
+                                        Slett
                                     </Button>
                                 </TableCell>
                             </TableRow>
@@ -136,12 +140,12 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
                     <TableFooter>
                         <TableRow>
                             <TablePagination
-                                id={"pagination"}
+                                id={"paginationAssignment"}
                                 rowsPerPageOptions={[5, 10, 25, 50]}
-                                colSpan={4}
-                                count={getAssignedUsers()?.length || 0}
-                                rowsPerPage={size}
-                                page={currentUserPage}
+                                colSpan={7}
+                                count={assignmentPage ? assignmentPage.totalItems : 0}
+                                rowsPerPage={assignmentSize}
+                                page={currentAssignmentPage}
                                 SelectProps={{
                                     inputProps: {
                                         'aria-label': 'rows per page',
@@ -155,7 +159,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
                         </TableRow>
                     </TableFooter>
                 </Table>
-            </TableContainer>*/}
+            </TableContainer>
         </Box>
     );
 };

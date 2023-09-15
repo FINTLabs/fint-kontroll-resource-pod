@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 const AlertDialog = (props: {
     open: boolean,
     assignId: number,
+    userId: string,
     onConfirm: () => void,
     onCancel: () => void,
 

@@ -1,6 +1,8 @@
 import React, {createContext, ReactNode, useEffect, useState,} from "react";
 import {
-    contextDefaultValues, IAssignment, IAssignmentPage,
+    contextDefaultValues,
+    IAssignment,
+    IAssignmentPage,
     IOrgUnit,
     IOrgUnitPage,
     IResource,
@@ -43,26 +45,12 @@ const ResourceProvider = ({children}: Props) => {
     const [size, setSize] = useState<number>(contextDefaultValues.size);
     const [isAggregate, setIsAggregate] = useState<boolean>(contextDefaultValues.isAggregate);
     const [assignmentPage, setAssignmentPage] = useState<IAssignmentPage | null>(contextDefaultValues.assignmentPage);
-    const [assignments, setAssignments] = useState<IAssignment[] | null>(contextDefaultValues.assignments);
+    const [assignments] = useState<IAssignment[] | null>(contextDefaultValues.assignments);
     const [currentAssignmentPage, setCurrentAssignmentPage] = useState<number>(contextDefaultValues.currentAssignmentPage);
+    const [assignmentSize, setAssignmentSize] = useState<number>(contextDefaultValues.assignmentSize);
 
-
-
-    /*const createAssignment = (resourceRef: string, userRef: string, organizationUnitId: string) => {
-        console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
-
-        ResourceRepository.createAssignment(basePath, resourceRef, userRef, organizationUnitId)
-            .then(response => {
-                    console.log("Dette er responsen", response)
-                }
-            )
-            .catch((err) => {
-                console.error(err);
-            })
-    }*/
-
-    const createAssignment = (resourceRef: number, userRef: number, organizationUnitId: string) => {
-       // console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
+    const createAssignment = (resourceRef: string, userRef: string, organizationUnitId: string) => {
+        // console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
 
         ResourceRepository.createAssignment(basePath, resourceRef, userRef, organizationUnitId)
             .then(response => {
@@ -111,7 +99,7 @@ const ResourceProvider = ({children}: Props) => {
         getResources()
     }, [basePath]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         const getAssignments = () => {
             if (basePath) {
                 ResourceRepository.getAssignments(basePath)
@@ -120,7 +108,7 @@ const ResourceProvider = ({children}: Props) => {
             }
         }
         getAssignments()
-    }, [basePath]);
+    }, [basePath]);*/
 
     useEffect(() => {
         const getUnitTree = () => {
@@ -164,14 +152,14 @@ const ResourceProvider = ({children}: Props) => {
     useEffect(() => {
         const getAssignmentPage = () => {
             if (basePath) {
-                ResourceRepository.getAssignmentPage(basePath, currentPage, size, userType)
+                ResourceRepository.getAssignmentPage(basePath, currentAssignmentPage, assignmentSize, userType)
                     .then(response => setAssignmentPage(response.data))
                     .catch((err) => console.error(err))
             }
         }
-            getAssignmentPage();
+        getAssignmentPage();
 
-    }, [basePath, currentPage, size, userType, selected]);
+    }, [basePath, currentAssignmentPage, assignmentSize, userType, selected]);
 
 
     useEffect(() => {
@@ -250,6 +238,8 @@ const ResourceProvider = ({children}: Props) => {
                 assignmentPage,
                 currentAssignmentPage,
                 updateCurrentAssignmentPage,
+                assignmentSize,
+                setAssignmentSize,
             }}
         >
             {children}

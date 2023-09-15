@@ -1,8 +1,8 @@
 import React from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import UserSearch from './UserSearch';
-import UserType from './UserType';
-import ObjectType from './ObjectType';
+//import UserType from './UserType';
+//import ObjectType from './ObjectType';
 
 
 function CustomTableToolbar() {
@@ -15,8 +15,8 @@ function CustomTableToolbar() {
                 pb: 2,
             }}
         >
-            <ObjectType/>
-            <UserType/>
+            {/*<ObjectType/>
+            <UserType/>*/}
             <UserSearch/>
         </Toolbar>
     );
