@@ -83,7 +83,13 @@ function ResourceInfo() {
                             <ListItem>
                                 <ListItemText
                                     primary={resourceDetails?.resourceLimit}
-                                    secondary={'Grense for antall'}
+                                    secondary={'Totalt antall til tildeling'}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText
+                                    primary={resourceDetails?.resourceLimit}
+                                    secondary={'Antall brukt av denne ressursen'}
                                 />
                             </ListItem>
                             <ListItem>

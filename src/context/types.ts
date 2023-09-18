@@ -76,7 +76,14 @@ export interface IUnitTree {
 export interface IAssignment {
     id: number;
     resourceRef: number;
+    resourceName: string;
     userRef: number;
+    userDisplayname: string;
+    userUsername: string;
+    userType: string;
+    assignerRef: number;
+    assignerDisplayname: string;
+    assignerUsername: string;
     roleRef: number;
     organizationUnitId: string;
 }

@@ -43,16 +43,16 @@ export const AssignmentsTable: any = (props: { resourceId: string, assignId: num
         refreshAssignments()
     }, [updatingAssignment, basePath])
 
-     const isAssigned = (assignId: number) => {
-         return assignments
-             .filter((el) => el.id === assignId)
-             .filter((el) => el.resourceRef.toString() === props.resourceId)
-             .length > 0;
-     }
+    const isAssigned = (assignId: number) => {
+        return assignments
+            .filter((el) => el.id === assignId)
+            .filter((el) => el.resourceRef.toString() === props.resourceId)
+            .length > 0;
+    }
 
-     const getAssignedUsers = () => {
-         return assignmentPage?.assignments.filter((assignments) => isAssigned(assignments.id))
-     }
+    const getAssignedUsers = () => {
+        return assignmentPage?.assignments.filter((assignments) => isAssigned(assignments.id))
+    }
 
     const deleteAssignmentById = (assignmentId: number) => {
         setDeleteDialogOpen(true)
@@ -114,12 +114,12 @@ export const AssignmentsTable: any = (props: { resourceId: string, assignId: num
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
                                 <TableCell align="left" component="th" scope="row">
-                                    {assignments.userRef}
+                                    {assignments.userDisplayname}
                                 </TableCell>
                                 <TableCell align="left">{assignments.resourceRef}</TableCell>
-                                <TableCell align="left">Elev</TableCell>
-                                <TableCell align="left">gruppe</TableCell>
-                                <TableCell align="left">Donald Duck</TableCell>
+                                <TableCell align="left">{assignments.userType}</TableCell>
+                                <TableCell align="left">Hvis gruppe</TableCell>
+                                <TableCell align="left">{assignments.assignerDisplayname}</TableCell>
                                 <TableCell align="right">
 
                                     <Button
