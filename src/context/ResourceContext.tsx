@@ -152,14 +152,17 @@ const ResourceProvider = ({children}: Props) => {
     useEffect(() => {
         const getAssignmentPage = () => {
             if (basePath) {
-                ResourceRepository.getAssignmentPage(basePath, currentAssignmentPage, assignmentSize, userType)
+                ResourceRepository.getAssignmentPage(basePath, currentAssignmentPage, assignmentSize, userType, searchString)
                     .then(response => setAssignmentPage(response.data))
                     .catch((err) => console.error(err))
             }
         }
-        getAssignmentPage();
+        if (searchString.length >= 3 || searchString.length === 0) {
+            getAssignmentPage();
+        }
 
-    }, [basePath, currentAssignmentPage, assignmentSize, userType, selected]);
+
+    }, [basePath, currentAssignmentPage, assignmentSize, userType, selected, searchString]);
 
 
     useEffect(() => {

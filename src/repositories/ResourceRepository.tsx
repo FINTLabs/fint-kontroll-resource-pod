@@ -23,9 +23,14 @@ const getUnitTree = (basePath: string) => {
 const getResourceById = (uri: string) => axios.get<IResource>(uri);
 
 
-const getAssignmentPage = (basePath: string, assignmentPage: number, assignmentSize: number, userType: string) => {
+const getAssignmentPage = (basePath: string, assignmentPage: number, assignmentSize: number, userType: string, searchString: string) => {
     const baseUrl = `${basePath === '/' ? '' : basePath}/api/assignments/`;
     let queryParams = [];
+
+    const sanitizedQueryString = searchString.trim();
+    if (sanitizedQueryString.length !== 0) {
+        queryParams.push(`search=${searchString}`);
+    }
 
     if (assignmentSize) {
         queryParams.push(`size=${assignmentSize}`);

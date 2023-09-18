@@ -2,7 +2,6 @@ import * as React from 'react';
 import {useContext} from 'react';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
 import {ResourceContext} from "../../context";
-import TextField from "@mui/material/TextField";
 
 export default function FilterGroupUser() {
 
