@@ -21,11 +21,21 @@ module.exports = function (app) {
             }
         })
     );
-    app.use(
+    /*app.use(
         createProxyMiddleware('/api/users', {
             target: 'http://localhost:8080',
             changeOrigin: true,
             //pathRewrite: {"^/api5": ""},
+            headers: {
+                Connection: "keep-alive"
+            }
+        })
+    );*/
+    app.use(
+        createProxyMiddleware('/api/users', {
+            target: 'http://localhost:8062/beta/fintlabs-no', // API endpoint 1
+            changeOrigin: true,
+            //pathRewrite: {"^/api1": ""},
             headers: {
                 Connection: "keep-alive"
             }
