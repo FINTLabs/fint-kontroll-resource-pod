@@ -2,16 +2,16 @@ import {Box} from "@mui/material";
 import * as React from "react";
 import {useContext, useEffect} from "react";
 import style from "../../template/style";
-import ResourceInfo from "./ResourceInfo";
-import DetailsToolBar from "./FiltersToolBar";
 import {useParams} from "react-router-dom";
 import {ResourceContext} from "../../context";
-import {AssignmentsTable} from "./AssignmentsTable";
 import Typography from "@mui/material/Typography";
+import {UserTable} from "./UserTable";
+import UserSearch from "../assignment/UserSearch";
+import UserType from "../assignment/UserType";
 
-function DetailsContainer() {
+function AssignmentContainer() {
 
-    const {basePath, getResourceById} = useContext(ResourceContext);
+    const {basePath, getResourceById, resourceDetails} = useContext(ResourceContext);
     const {id} = useParams<string>();
 
     useEffect(() => {
@@ -23,9 +23,7 @@ function DetailsContainer() {
 
     return (
         <Box sx={style.content}>
-            <Box sx={style.table}>
-                <ResourceInfo/>
-            </Box>
+
             <Box sx={{
                 pl: {sm: 2},
                 pr: {xs: 1, sm: 1},
@@ -33,14 +31,22 @@ function DetailsContainer() {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
             }}>
-                <Typography variant="h2">
-                    Tildelinger
-                </Typography>
-                <DetailsToolBar/>
+                <Box>
+                    <Typography variant="h1">
+                        Ny tildeling
+                    </Typography>
+                    <Typography sx={{mt: 1}}>
+                        {resourceDetails?.resourceName}
+                    </Typography>
+                </Box>
+                <Box>
+                    <UserType/>
+                    <UserSearch/>
+                </Box>
             </Box>
-            <AssignmentsTable resourceId={id}/>
+            <UserTable resourceId={id}/>
         </Box>
     );
 }
 
-export default DetailsContainer;
+export default AssignmentContainer;

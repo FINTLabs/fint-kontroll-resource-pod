@@ -10,49 +10,53 @@ import {Box, Button, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
 import axios from "axios";
 import {ICreateAssignment} from "../../context/types";
-import DeleteDialog from "./DeleteDialog";
-import DeleteIcon from '@mui/icons-material/Delete';
-import TablePaginationActions from "./UserTableFooter";
+import {Add} from "@mui/icons-material";
+import TablePaginationActions from "../details/UserTableFooter";
 
-export const AssignedUsersTable: any = (props: { resourceId: string, userId: number, userFullName: string }) => {
+export const UserTable: any = (props: { resourceId: string, assignId: number, userId: string }) => {
 
     const {
-        size,
-        currentUserPage,
-        updateCurrentUserPage,
-        setSize,
+        searchValue,
         basePath,
         page,
-        deleteAssignment
+        createAssignment,
+        updateCurrentUserPage,
+        size,
+        setSize,
+        currentUserPage,
     } = useContext(ResourceContext);
 
-    const [assignments, setAssignments] = useState<ICreateAssignment[]>([]);
+    const [createAssignments, setCreateAssignments] = useState<ICreateAssignment[]>([]);
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
-    const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false)
-    const [assignedUserToRemove, setAssignedUserToRemove] = useState<string | undefined>(undefined)
-
 
     useEffect(() => {
         const refreshAssignments = () => {
-            axios.get(`${basePath === '/' ? '' : basePath}/api/assignments?size=1000`)
+            axios.get(`${basePath === '/' ? '' : basePath}/api/assignments`)
                 .then(response => {
-                    setAssignments(response.data.assignments);
+                    setCreateAssignments(response.data.assignments);
                 })
         }
         setUpdatingAssignment(false)
         refreshAssignments()
     }, [updatingAssignment, basePath])
 
-    const deleteAssignmentByUserId = (userId: string) => {
-        setDeleteDialogOpen(true)
-        setAssignedUserToRemove(userId)
+    const assign = (resourceRef: string, userRef: string, organizationUnitId: string = '36'): void => {
+        setUpdatingAssignment(true)
+        createAssignment(resourceRef, userRef, organizationUnitId);
+        searchValue("");
+    };
+
+    const isAssigned = (userId: string) => {
+        return createAssignments
+            .filter((el) => el.userRef.toString() === userId)
+            .filter((el) => el.resourceRef.toString() === props.resourceId)
+            .length > 0;
     }
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number,
     ) => {
-        console.log("new page:", newPage)
         updateCurrentUserPage(newPage)
     };
 
@@ -63,38 +67,9 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
         updateCurrentUserPage(0);
     };
 
-    const onRemoveAssignmentConfirmed = () => {
-        setDeleteDialogOpen(false)
-
-        setUpdatingAssignment(true)
-        console.log("assignedUserToRemove", assignedUserToRemove)
-
-        const userAssignments = assignments.filter((el) => el.userRef.toString() === assignedUserToRemove);
-        if (userAssignments.length > 0) {
-            deleteAssignment(userAssignments[0].id)
-        }
-    };
-
-    const onRemoveAssignmentCancel = () => {
-        setDeleteDialogOpen(false)
-        setAssignedUserToRemove(undefined)
-    };
-
-    const isAssigned = (userId: string) => {
-        return assignments
-            .filter((el) => el.userRef.toString() === userId)
-            .filter((el) => el.resourceRef.toString() === props.resourceId).length > 0;
-    }
-
-    const getAssignedUsers = () => {
-        return page?.users.filter((user) => isAssigned(user.id.toString()))
-    }
-
     return (
         <Box>
-            <DeleteDialog open={deleteDialogOpen} userId={""} onConfirm={onRemoveAssignmentConfirmed}
-                          onCancel={onRemoveAssignmentCancel}/>
-            <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"assignedUserTable"}>
+            <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"userTable"}>
                 <Table aria-label="Users-table">
                     <TableHead>
                         <TableRow sx={{fontWeight: 'bold'}}>
@@ -104,7 +79,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {getAssignedUsers()?.map((user) => (
+                        {page?.users.map((user) => (
                             <TableRow
                                 key={user.id}
                                 hover={true}
@@ -113,22 +88,21 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
                                 <TableCell align="left" component="th" scope="row">
                                     {user.fullName}
                                 </TableCell>
-                                <TableCell align="left">
-                                    {user.userType}
-                                </TableCell>
-                                <TableCell
-                                    align="right">
+                                <TableCell align="left">{user.userType}</TableCell>
+
+                                <TableCell align="right">
                                     <Button
-                                        id={`iconAddResource-${user.id}`}
+                                        id={`buttonAddAssignment-${user.id}`}
                                         variant={"text"}
-                                        aria-label="Slett ressurs"
-                                        color={"error"}
-                                        endIcon={<DeleteIcon/>}
-                                        sx={{marginLeft: 2}}
-                                        onClick={() => deleteAssignmentByUserId(user.id.toString())}
+                                        aria-label="Legg til ressurs"
+                                        onClick={() => assign(props.resourceId, user.id.toString(), "36")}
+                                        color={"primary"}
+                                        endIcon={<Add/>}
+                                        disabled={isAssigned(user.id.toString())}
                                     >
-                                        slett
+                                        {isAssigned(user.id.toString()) ? 'Tildelt' : 'Tildel'}
                                     </Button>
+
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -138,8 +112,8 @@ export const AssignedUsersTable: any = (props: { resourceId: string, userId: num
                             <TablePagination
                                 id={"pagination"}
                                 rowsPerPageOptions={[5, 10, 25, 50]}
-                                colSpan={4}
-                                count={getAssignedUsers()?.length || 0}
+                                colSpan={7}
+                                count={page ? page.totalItems : 0}
                                 rowsPerPage={size}
                                 page={currentUserPage}
                                 SelectProps={{

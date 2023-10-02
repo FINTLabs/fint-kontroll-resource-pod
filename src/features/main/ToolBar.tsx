@@ -46,16 +46,6 @@ function CustomTableToolbar(props: CustomTableToolbarProps) {
                 Velg enhet
             </Button>
 
-            {/*<Tooltip title={"Velg organisasjonsenhet"}>
-                <IconButton
-                    id={'selectUnitsIcon'}
-                    aria-label="settings"
-                    onClick={onShowDialog}
-                >
-                    <PeopleIcon color={"primary"}/>
-                </IconButton>
-            </Tooltip>*/}
-
             {isAggregate ? (
                 <Tooltip title={"Aggregated"}>
                     <IconButton

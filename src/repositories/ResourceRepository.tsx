@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ICreateAssignment, IResource, IResourcePage, IUnitTree, IUserPage} from "../context/types";
+import {IAssignmentPage, ICreateAssignment, IResource, IResourcePage, IUnitTree, IUserPage} from "../context/types";
 
 const getBaseUrl = () => {
     return axios.get('api/layout/configuration');
@@ -10,12 +10,44 @@ const getResources = (basePath: string) => {
     return axios.get<IResource[]>(url);
 }
 
+/*const getAssignments = (basePath: string) => {
+    const url = `${basePath === '/' ? '' : basePath}/api/assignments/`;
+    return axios.get<IAssignment[]>(url);
+}*/
+
 const getUnitTree = (basePath: string) => {
     const url = `${basePath === '/' ? '' : basePath}/api/orgunits/`;
     return axios.get<IUnitTree>(url)
 }
 
 const getResourceById = (uri: string) => axios.get<IResource>(uri);
+
+
+const getAssignmentPage = (basePath: string, assignmentPage: number, assignmentSize: number, userType: string, searchString: string) => {
+    const baseUrl = `${basePath === '/' ? '' : basePath}/api/assignments/`;
+    let queryParams = [];
+
+    const sanitizedQueryString = searchString.trim();
+    if (sanitizedQueryString.length !== 0) {
+        queryParams.push(`search=${searchString}`);
+    }
+
+    if (assignmentSize) {
+        queryParams.push(`size=${assignmentSize}`);
+    }
+
+    if (userType) {
+        queryParams.push(`userType=${userType}`);
+    }
+
+    if (assignmentPage) {
+        queryParams.push(`page=${assignmentPage}`);
+    }
+
+    const url = `${baseUrl}${queryParams.length > 0 ? '?' : ''}${queryParams.join('&')}`;
+
+    return axios.get<IAssignmentPage>(url);
+}
 
 const getResourcePage =
     (basePath: string, resourcePage: number, userType: string, organisationUnitId: number[],
@@ -51,7 +83,7 @@ const getResourcePage =
 
 const getUserPage = (basePath: string, page: number, size: number,
                      userType: string, organisationUnitId: number[], searchString: string) => {
-    const baseUrl = `${basePath === '/' ? '' : basePath}/api/users/`;
+    const baseUrl = `${basePath === '/' ? '' : basePath}/api/users`;
     let queryParams = [];
 
     const sanitizedQueryString = searchString.trim();
@@ -104,8 +136,10 @@ const UserRepository = {
     getResourcePage,
     getResourceById,
     getUserPage,
+    // getAssignments,
     createAssignment,
     deleteAssignment,
+    getAssignmentPage,
 };
 
 export default UserRepository;

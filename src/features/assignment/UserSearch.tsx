@@ -10,7 +10,7 @@ export default function SearchFieldUser() {
     const [showClearIcon, setShowClearIcon] = useState("none");
     const [showSearchIcon, setShowSearchIcon] = useState("");
 
-    const {searchValue, searchString,} = useContext(ResourceContext);
+    const {searchValue, searchString} = useContext(ResourceContext);
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         setShowClearIcon(event.target.value === "" ? "none" : "flex");

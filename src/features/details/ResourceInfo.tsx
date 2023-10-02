@@ -1,16 +1,42 @@
-import {Box, List, ListItem, ListItemText, Paper} from "@mui/material";
+import {Box, Button, List, ListItem, ListItemText, Paper} from "@mui/material";
 import * as React from "react";
 import {useContext} from "react";
 import FormGroup from '@mui/material/FormGroup';
 import Grid from '@mui/material/Grid';
 import {ResourceContext} from "../../context";
+import Typography from "@mui/material/Typography";
+import {Link} from "react-router-dom";
 
 function ResourceInfo() {
 
     const {resourceDetails} = useContext(ResourceContext);
 
+    const handleClick = (): void => {
+        // searchValue("");
+    };
+
     return (
         <Box sx={{mb: 6}}>
+            <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flex: '1 1 100%', pb: 3}}>
+            <Typography
+                variant="h1"
+                id="tableTitle"
+            >
+                {resourceDetails?.resourceName}
+            </Typography>
+            <Button
+                sx={{minWidth: '80px'}}
+                id={"button-only-assigned"}
+                variant={"contained"}
+                aria-label="Toggle"
+                color={"primary"}
+                component={Link}
+                to={`tildeling`}
+                onClick={handleClick}
+            >
+                Legg til ressurs
+            </Button>
+            </Box>
             <Paper>
                 <FormGroup row>
                 </FormGroup>
@@ -57,7 +83,13 @@ function ResourceInfo() {
                             <ListItem>
                                 <ListItemText
                                     primary={resourceDetails?.resourceLimit}
-                                    secondary={'Grense for antall'}
+                                    secondary={'Totalt antall til tildeling'}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText
+                                    primary={resourceDetails?.resourceLimit}
+                                    secondary={'Antall brukt av denne ressursen'}
                                 />
                             </ListItem>
                             <ListItem>
@@ -72,12 +104,6 @@ function ResourceInfo() {
                                     secondary={'Ressurseier'}
                                 />
                             </ListItem>
-                            {/*<ListItem>
-                                <ListItemText
-                                    primary={resourceDetails?.validForOrgUnits[]}
-                                    secondary={'Ressurseier'}
-                                />
-                            </ListItem>*/}
                             <ListItem>
                                 <ListItemText
                                     primary={resourceDetails?.validForRoles}

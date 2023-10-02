@@ -73,6 +73,28 @@ export interface IUnitTree {
     orgUnits: IUnitItem[];
 }
 
+export interface IAssignment {
+    id: number;
+    resourceRef: number;
+    resourceName: string;
+    userRef: number;
+    userDisplayname: string;
+    userUsername: string;
+    userType: string;
+    assignerRef: number;
+    assignerDisplayname: string;
+    assignerUsername: string;
+    roleRef: number;
+    organizationUnitId: string;
+}
+
+export interface IAssignmentPage {
+    totalItems: number;
+    totalPages: number | any;
+    currentPage: number;
+    assignments: IAssignment[];
+}
+
 export interface ICreateAssignment {
     id: number;
     resourceRef: string;
@@ -112,6 +134,12 @@ export type ResourceContextState = {
     updateCurrentUserPage: (currentUserPage: number) => void;
     isAggregate: boolean;
     setIsAggregate: (isAggregate: boolean) => void;
+    assignments: IAssignment[] | null;
+    assignmentPage: IAssignmentPage | null;
+    currentAssignmentPage: number;
+    updateCurrentAssignmentPage: (currentAssignmentPage: number) => void;
+    assignmentSize: number;
+    setAssignmentSize: (assignmentSize: number) => void;
 };
 
 export const contextDefaultValues: ResourceContextState = {
@@ -156,6 +184,14 @@ export const contextDefaultValues: ResourceContextState = {
         },
         isAggregate: false,
         setIsAggregate(isAggregate: boolean): void {
+        },
+        assignments: [],
+        assignmentPage: null,
+        currentAssignmentPage: 0,
+        updateCurrentAssignmentPage(): void {
+        },
+        assignmentSize: 5,
+        setAssignmentSize(assignmentSize: number): void {
         },
     }
 ;
