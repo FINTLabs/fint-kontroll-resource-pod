@@ -112,7 +112,7 @@ const getUserPage = (basePath: string, page: number, size: number,
     return axios.get<IUserPage>(url);
 }
 
-const createAssignment = (basePath: string, resourceRef: string, userRef: string, organizationUnitId: string) => {
+const createAssignment = (basePath: string, resourceRef: number, userRef: number, organizationUnitId: string) => {
     const url = `${basePath === '/' ? '' : basePath}/api/assignments/`;
     console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
     return axios.post<ICreateAssignment>(url, {

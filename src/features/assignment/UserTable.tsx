@@ -13,7 +13,7 @@ import {ICreateAssignment} from "../../context/types";
 import {Add} from "@mui/icons-material";
 import TablePaginationActions from "../details/UserTableFooter";
 
-export const UserTable: any = (props: { resourceId: string, assignId: number, userId: string }) => {
+export const UserTable: any = (props: { resourceId: number, assignId: number, userId: number }) => {
 
     const {
         searchValue,
@@ -40,16 +40,16 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
         refreshAssignments()
     }, [updatingAssignment, basePath])
 
-    const assign = (resourceRef: string, userRef: string, organizationUnitId: string = '36'): void => {
+    const assign = (resourceRef: number, userRef: number, organizationUnitId: string = '36'): void => {
         setUpdatingAssignment(true)
         createAssignment(resourceRef, userRef, organizationUnitId);
         searchValue("");
     };
 
-    const isAssigned = (userId: string) => {
+    const isAssigned = (userId: number) => {
         return createAssignments
-            .filter((el) => el.userRef.toString() === userId)
-            .filter((el) => el.resourceRef.toString() === props.resourceId)
+            .filter((el) => el.userRef === userId)
+            .filter((el) => el.resourceRef === props.resourceId)
             .length > 0;
     }
 
@@ -95,12 +95,12 @@ export const UserTable: any = (props: { resourceId: string, assignId: number, us
                                         id={`buttonAddAssignment-${user.id}`}
                                         variant={"text"}
                                         aria-label="Legg til ressurs"
-                                        onClick={() => assign(props.resourceId, user.id.toString(), "36")}
+                                        onClick={() => assign(props.resourceId, user.id, "36")}
                                         color={"primary"}
                                         endIcon={<Add/>}
-                                        disabled={isAssigned(user.id.toString())}
+                                        disabled={isAssigned(user.id)}
                                     >
-                                        {isAssigned(user.id.toString()) ? 'Tildelt' : 'Tildel'}
+                                        {isAssigned(user.id) ? 'Tildelt' : 'Tildel'}
                                     </Button>
 
                                 </TableCell>

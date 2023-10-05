@@ -97,13 +97,13 @@ export interface IAssignmentPage {
 
 export interface ICreateAssignment {
     id: number;
-    resourceRef: string;
-    userRef: string;
+    resourceRef: number;
+    userRef: number;
     organizationUnitId: string;
 }
 
 export type ResourceContextState = {
-    createAssignment: (resourceRef: string, userRef: string, organizationUnitId: string) => void,
+    createAssignment: (resourceRef: number, userRef: number, organizationUnitId: string) => void,
     deleteAssignment: (id: number) => void,
     basePath: string;
     resources: IResource[] | null;
