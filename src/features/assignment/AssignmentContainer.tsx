@@ -44,7 +44,7 @@ function AssignmentContainer() {
                     <UserSearch/>
                 </Box>
             </Box>
-            <UserTable resourceId={id}/>
+            <UserTable resourceId={Number(id)}/>
         </Box>
     );
 }
