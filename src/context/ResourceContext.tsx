@@ -50,7 +50,7 @@ const ResourceProvider = ({children}: Props) => {
     const [assignmentSize, setAssignmentSize] = useState<number>(contextDefaultValues.assignmentSize);
 
     const createAssignment = (resourceRef: number, userRef: number, organizationUnitId: string) => {
-        // console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
+         console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
 
         ResourceRepository.createAssignment(basePath, resourceRef, userRef, organizationUnitId)
             .then(response => {
