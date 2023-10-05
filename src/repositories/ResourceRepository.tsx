@@ -6,7 +6,7 @@ const getBaseUrl = () => {
 }
 
 const getResources = (basePath: string) => {
-    const url = `${basePath === '/' ? '' : basePath}/api/resources/`;
+    const url = `${basePath === '/' ? '' : basePath}/api/resources`;
     return axios.get<IResource[]>(url);
 }
 
@@ -16,7 +16,7 @@ const getResources = (basePath: string) => {
 }*/
 
 const getUnitTree = (basePath: string) => {
-    const url = `${basePath === '/' ? '' : basePath}/api/orgunits/`;
+    const url = `${basePath === '/' ? '' : basePath}/api/orgunits`;
     return axios.get<IUnitTree>(url)
 }
 
@@ -24,7 +24,7 @@ const getResourceById = (uri: string) => axios.get<IResource>(uri);
 
 
 const getAssignmentPage = (basePath: string, assignmentPage: number, assignmentSize: number, userType: string, searchString: string) => {
-    const baseUrl = `${basePath === '/' ? '' : basePath}/api/assignments/`;
+    const baseUrl = `${basePath === '/' ? '' : basePath}/api/assignments`;
     let queryParams = [];
 
     const sanitizedQueryString = searchString.trim();
@@ -52,7 +52,7 @@ const getAssignmentPage = (basePath: string, assignmentPage: number, assignmentS
 const getResourcePage =
     (basePath: string, resourcePage: number, userType: string, organisationUnitId: number[],
      searchString: string, isAggregated: boolean) => {
-        const baseUrl = `${basePath === '/' ? '' : basePath}/api/resources/`;
+        const baseUrl = `${basePath === '/' ? '' : basePath}/api/resources`;
         let queryParams = [];
 
         const sanitizedQueryString = searchString.trim();
@@ -113,7 +113,7 @@ const getUserPage = (basePath: string, page: number, size: number,
 }
 
 const createAssignment = (basePath: string, resourceRef: number, userRef: number, organizationUnitId: string) => {
-    const url = `${basePath === '/' ? '' : basePath}/api/assignments/`;
+    const url = `${basePath === '/' ? '' : basePath}/api/assignments`;
     console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
     return axios.post<ICreateAssignment>(url, {
         resourceRef: resourceRef,
