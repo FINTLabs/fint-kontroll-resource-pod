@@ -129,7 +129,7 @@ const deleteAssignment = (basePath: string, id: number) => {
     )
 }
 
-const UserRepository = {
+const ResourceRepository = {
     getBaseUrl,
     getResources,
     getUnitTree,
@@ -142,4 +142,4 @@ const UserRepository = {
     getAssignmentPage,
 };
 
-export default UserRepository;
+export default ResourceRepository;
