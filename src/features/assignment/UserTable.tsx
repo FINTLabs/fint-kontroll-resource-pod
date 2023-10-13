@@ -11,7 +11,7 @@ import {ResourceContext} from "../../context";
 import axios from "axios";
 import {ICreateAssignment} from "../../context/types";
 import {Add} from "@mui/icons-material";
-import TablePaginationActions from "../details/UserTableFooter";
+import TablePaginationActions from "./UserTableFooter";
 
 export const UserTable: any = (props: { resourceId: number, assignId: number, userId: number }) => {
 

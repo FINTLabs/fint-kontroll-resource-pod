@@ -22,6 +22,13 @@ export interface IUserItem {
     "userType": string;
 }
 
+export interface IUser {
+    "id": number;
+    "firstName": string;
+    "lastName": string;
+    "userType": string;
+}
+
 export interface IUserPage {
     totalItems: number;
     totalPages: number | any;
@@ -88,11 +95,18 @@ export interface IAssignment {
     organizationUnitId: string;
 }
 
-export interface IAssignmentPage {
+/*export interface IAssignmentPage {
     totalItems: number;
     totalPages: number | any;
     currentPage: number;
     assignments: IAssignment[];
+}*/
+
+export interface IAssignedUsersPage {
+    totalItems: number;
+    totalPages: number | any;
+    currentPage: number;
+    users: IUser[];
 }
 
 export interface ICreateAssignment {
@@ -120,7 +134,7 @@ export type ResourceContextState = {
     resourceDetails: IResource | null;
     resourceItem: IResourceItem | null;
     resourcePage: IResourcePage | null;
-    currentPage: number;
+    currentResourcePage: number;
     searchString: string;
     getResourceById: (id: string) => void;
     searchValue: (searchString: string) => void;
@@ -135,63 +149,73 @@ export type ResourceContextState = {
     isAggregate: boolean;
     setIsAggregate: (isAggregate: boolean) => void;
     assignments: IAssignment[] | null;
-    assignmentPage: IAssignmentPage | null;
+   // assignmentPage: IAssignmentPage | null;
     currentAssignmentPage: number;
     updateCurrentAssignmentPage: (currentAssignmentPage: number) => void;
     assignmentSize: number;
     setAssignmentSize: (assignmentSize: number) => void;
+    assignedUsersPage: IAssignedUsersPage | null;
+    getAssignmentsPage: (id: number) => void;
+   // getUserById: (id: string) => void;
+    user: IUser | null;
 };
 
 export const contextDefaultValues: ResourceContextState = {
-        basePath: "/",
-        resources: [],
-        orgUnits: [],
-        orgName: "",
-        orgUnitPage: null,
-        organisationUnitId: 0,
-        getOrgName(): void {
-        },
-        updateOrganisationUnitId(): void {
-        },
-        unitTree: null,
-        selected: [],
-        setSelected(selected: number[]): void {
-        },
-        validForOrgUnits: [],
-        resourceDetails: null,
-        resourceItem: null,
-        resourcePage: null,
-        currentPage: 0,
-        searchString: "",
-        getResourceById(): void {
-        },
-        searchValue: () => {
-        },
-        users: [],
-        userType: "",
-        page: null,
-        currentUserPage: 0,
-        size: 5,
-        setSize(size: number): void {
-        },
-        updateUserType(): void {
-        },
-        updateCurrentUserPage(): void {
-        },
-        createAssignment(): void {
-        },
-        deleteAssignment(): void {
-        },
-        isAggregate: false,
-        setIsAggregate(isAggregate: boolean): void {
-        },
-        assignments: [],
-        assignmentPage: null,
-        currentAssignmentPage: 0,
-        updateCurrentAssignmentPage(): void {
-        },
-        assignmentSize: 5,
-        setAssignmentSize(assignmentSize: number): void {
-        },
-    }
-;
+    basePath: "/",
+    resources: [],
+    orgUnits: [],
+    orgName: "",
+    orgUnitPage: null,
+    organisationUnitId: 0,
+    getOrgName(): void {
+    },
+    updateOrganisationUnitId(): void {
+    },
+    unitTree: null,
+    selected: [],
+    setSelected(selected: number[]): void {
+    },
+    validForOrgUnits: [],
+    resourceDetails: null,
+    resourceItem: null,
+    resourcePage: null,
+    currentResourcePage: 0,
+    searchString: "",
+    getResourceById(): void {
+    },
+    searchValue: () => {
+    },
+    users: [],
+    userType: "",
+    page: null,
+    currentUserPage: 0,
+    size: 5,
+    setSize(size: number): void {
+    },
+    updateUserType(): void {
+    },
+    updateCurrentUserPage(): void {
+    },
+    createAssignment(): void {
+    },
+    deleteAssignment(): void {
+    },
+    isAggregate: false,
+    setIsAggregate(isAggregate: boolean): void {
+    },
+    assignments: [],
+  //  assignmentPage: null,
+    currentAssignmentPage: 0,
+    updateCurrentAssignmentPage(): void {
+    },
+    assignmentSize: 5,
+    setAssignmentSize(assignmentSize: number): void {
+    },
+    assignedUsersPage: null,
+    getAssignmentsPage(): void {
+    },
+   // getUserById(id: string): void {
+   // },
+    user: null,
+};
+

@@ -6,26 +6,29 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {Box, Button, TableFooter, TablePagination} from "@mui/material";
+import {Box, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
-import DeleteIcon from '@mui/icons-material/Delete';
+//import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
 import {IAssignment} from "../../context/types";
 import DeleteDialog from "./DeleteDialog";
-import TablePaginationActions from "./UserTableFooter";
+import TablePaginationActions from "../assignment/UserTableFooter";
+import {useParams} from "react-router-dom";
 
 export const AssignmentsTable: any = (props: { resourceId: string, assignId: number, userId: string }) => {
 
     const {
         //  searchValue,
         basePath,
-        assignmentPage,
         deleteAssignment,
         updateCurrentAssignmentPage,
         assignmentSize,
         setAssignmentSize,
         currentAssignmentPage,
+        assignedUsersPage,
+        getAssignmentsPage,
     } = useContext(ResourceContext);
+    const {id} = useParams<string>();
 
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
     const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false)
@@ -43,21 +46,28 @@ export const AssignmentsTable: any = (props: { resourceId: string, assignId: num
         refreshAssignments()
     }, [updatingAssignment, basePath])
 
-    const isAssigned = (assignId: number) => {
+    useEffect(() => {
+        if (id) {
+            getAssignmentsPage(parseInt(id));
+        }
+        // eslint-disable-next-line
+    }, [id, currentAssignmentPage, assignmentSize])
+
+    /*const isAssigned = (assignId: number) => {
         return assignments
             .filter((el) => el.id === assignId)
             .filter((el) => el.resourceRef.toString() === props.resourceId)
             .length > 0;
-    }
+    }*/
 
-    const getAssignedUsers = () => {
-        return assignmentPage?.assignments.filter((assignments) => isAssigned(assignments.id))
-    }
+    /* const getAssignedUsers = () => {
+         return assignmentPage?.assignments.filter((assignments) => isAssigned(assignments.id))
+     }*/
 
-    const deleteAssignmentById = (assignmentId: number) => {
+    /*const deleteAssignmentById = (assignmentId: number) => {
         setDeleteDialogOpen(true)
         setAssignedUserToRemove(assignmentId)
-    }
+    }*/
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
@@ -98,8 +108,8 @@ export const AssignmentsTable: any = (props: { resourceId: string, assignId: num
 
                     <TableHead>
                         <TableRow sx={{fontWeight: 'bold'}}>
-                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Navn userRef</TableCell>
-                            <TableCell align="left" sx={{fontWeight: 'bold'}}>resourceRef</TableCell>
+                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Navn</TableCell>
+                            {/*<TableCell align="left" sx={{fontWeight: 'bold'}}>resourceRef</TableCell>*/}
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Brukertype</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Gruppetype</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Tildelt av</TableCell>
@@ -107,22 +117,20 @@ export const AssignmentsTable: any = (props: { resourceId: string, assignId: num
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {getAssignedUsers()?.map((assignments) => (
+                        {assignedUsersPage?.users.map((users) => (
                             <TableRow
-                                key={assignments.id}
+                                key={users.id}
                                 hover={true}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
                                 <TableCell align="left" component="th" scope="row">
-                                    {assignments.userDisplayname}
+                                    {users.firstName} {users.lastName}
                                 </TableCell>
-                                <TableCell align="left">{assignments.resourceRef}</TableCell>
-                                <TableCell align="left">{assignments.userType}</TableCell>
+                                <TableCell align="left">{users.userType}</TableCell>
                                 <TableCell align="left">Hvis gruppe</TableCell>
-                                <TableCell align="left">{assignments.assignerDisplayname}</TableCell>
                                 <TableCell align="right">
 
-                                    <Button
+                                    {/*<Button
                                         //  id={`buttonDeleteAssignment-${user.id}`}
                                         variant={"text"}
                                         aria-label="Slett ressurs"
@@ -132,7 +140,7 @@ export const AssignmentsTable: any = (props: { resourceId: string, assignId: num
                                         onClick={() => deleteAssignmentById(assignments.id)}
                                     >
                                         Slett
-                                    </Button>
+                                    </Button>*/}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -143,7 +151,7 @@ export const AssignmentsTable: any = (props: { resourceId: string, assignId: num
                                 id={"paginationAssignment"}
                                 rowsPerPageOptions={[5, 10, 25, 50]}
                                 colSpan={7}
-                                count={assignmentPage ? assignmentPage.totalItems : 0}
+                                count={assignedUsersPage ? assignedUsersPage.totalItems : 0}
                                 rowsPerPage={assignmentSize}
                                 page={currentAssignmentPage}
                                 SelectProps={{
