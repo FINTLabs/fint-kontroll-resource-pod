@@ -10,8 +10,8 @@ import {Box, Button, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
 import axios from "axios";
 import {ICreateAssignment} from "../../context/types";
-import {Add} from "@mui/icons-material";
-import TablePaginationActions from "../details/UserTableFooter";
+import {Add, Check} from "@mui/icons-material";
+import TablePaginationActions from "./UserTableFooter";
 
 export const UserTable: any = (props: { resourceId: number, assignId: number, userId: number }) => {
 
@@ -91,18 +91,30 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
                                 <TableCell align="left">{user.userType}</TableCell>
 
                                 <TableCell align="right">
-                                    <Button
-                                        id={`buttonAddAssignment-${user.id}`}
-                                        variant={"text"}
-                                        aria-label="Legg til ressurs"
-                                        onClick={() => assign(props.resourceId, user.id, "36")}
-                                        color={"primary"}
-                                        endIcon={<Add/>}
-                                        disabled={isAssigned(user.id)}
-                                    >
-                                        {isAssigned(user.id) ? 'Tildelt' : 'Tildel'}
-                                    </Button>
-
+                                    {isAssigned(user.id) ?
+                                        <Button
+                                            id={`buttonAddAssignment-${user.id}`}
+                                            variant={"text"}
+                                            aria-label="Legg til ressurs"
+                                            onClick={() => assign(props.resourceId, user.id, "36")}
+                                            color={"primary"}
+                                            endIcon={<Check/>}
+                                            disabled={isAssigned(user.id)}
+                                        >
+                                            Tildelt
+                                        </Button>
+                                        :
+                                        <Button
+                                            id={`buttonAddAssignment-${user.id}`}
+                                            variant={"text"}
+                                            aria-label="Legg til ressurs"
+                                            onClick={() => assign(props.resourceId, user.id, "36")}
+                                            color={"primary"}
+                                            endIcon={<Add/>}
+                                        >
+                                            Tildel
+                                        </Button>
+                                    }
                                 </TableCell>
                             </TableRow>
                         ))}
