@@ -1,14 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SearchField from "./SearchField";
-import {Button, Tooltip} from "@mui/material";
+import {Button} from "@mui/material";
 import style from "../../template/style";
 import {Apartment} from "@mui/icons-material";
-import {ResourceContext} from "../../context";
-import IconButton from "@mui/material/IconButton";
-import LayersIcon from '@mui/icons-material/Layers';
-import LayersClearIcon from '@mui/icons-material/LayersClear';
 
 interface CustomTableToolbarProps {
     onShowDialog: (event: React.MouseEvent<unknown>) => void;
@@ -17,8 +13,6 @@ interface CustomTableToolbarProps {
 function CustomTableToolbar(props: CustomTableToolbarProps) {
 
     const {onShowDialog} = props;
-    const {isAggregate, setIsAggregate} = useContext(ResourceContext);
-    // const [showLayers, setShowLayers] = useState(true);
 
     return (
         <Toolbar
@@ -41,34 +35,10 @@ function CustomTableToolbar(props: CustomTableToolbarProps) {
                 startIcon={<Apartment/>}
                 onClick={onShowDialog}
                 sx={style.changeOrgButton}
-                style={{ fontWeight: 'normal' }}
+                style={{fontWeight: 'normal'}}
             >
                 Velg enhet
             </Button>
-
-            {isAggregate ? (
-                <Tooltip title={"Aggregated"}>
-                    <IconButton
-                        id={'aggregatedFalse'}
-                        aria-label="settings"
-                        onClick={() => setIsAggregate(false)}
-                    >
-                        <LayersClearIcon color={"primary"}/>
-                    </IconButton>
-                </Tooltip>
-
-            ) : (
-                <Tooltip title="Aggregated">
-                    <IconButton
-                        id={'aggregatedTrue'}
-                        aria-label="settings"
-                        onClick={() => setIsAggregate(true)}
-                    >
-                        <LayersIcon color={"primary"}/>
-                    </IconButton>
-                </Tooltip>
-            )}
-
         </Toolbar>
     );
 }

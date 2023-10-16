@@ -16,7 +16,7 @@ import {Link} from "react-router-dom";
 
 export const ResourceTable: any = (props: { resourceId: string, assignId: number, userId: string }) => {
 
-    const {resourcePage} = useContext(ResourceContext);
+    const {resourcePage, searchValue} = useContext(ResourceContext);
     const [openDialog, setOpenDialog] = useState(false);
 
     const handleTypeSelect = () => {
@@ -25,7 +25,7 @@ export const ResourceTable: any = (props: { resourceId: string, assignId: number
     }
 
     const handleClick = (): void => {
-        // searchValue("");
+         searchValue("");
     };
 
     return (

@@ -6,11 +6,9 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {Box, TableFooter, TablePagination} from "@mui/material";
+import {Box, Button, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
-//import DeleteIcon from '@mui/icons-material/Delete';
-import axios from "axios";
-import {IAssignment} from "../../context/types";
+import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteDialog from "./DeleteDialog";
 import TablePaginationActions from "../assignment/UserTableFooter";
 import {useParams} from "react-router-dom";
@@ -18,8 +16,8 @@ import {useParams} from "react-router-dom";
 export const AssignmentsTable: any = (props: { resourceId: string, assignId: number, userId: string }) => {
 
     const {
-        //  searchValue,
-        basePath,
+       // searchValue,
+       // searchString,
         deleteAssignment,
         updateCurrentAssignmentPage,
         assignmentSize,
@@ -28,46 +26,40 @@ export const AssignmentsTable: any = (props: { resourceId: string, assignId: num
         assignedUsersPage,
         getAssignmentsPage,
     } = useContext(ResourceContext);
-    const {id} = useParams<string>();
 
+    const {id} = useParams<string>();
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
     const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false)
     const [assignedUserToRemove, setAssignedUserToRemove] = useState<number | undefined>(undefined)
-    const [assignments, setAssignments] = useState<IAssignment[]>([])
-
-    useEffect(() => {
-        const refreshAssignments = () => {
-            axios.get(`${basePath === '/' ? '' : basePath}/api/assignments`)
-                .then(response => {
-                    setAssignments(response.data.assignments);
-                })
-        }
-        setUpdatingAssignment(false)
-        refreshAssignments()
-    }, [updatingAssignment, basePath])
 
     useEffect(() => {
         if (id) {
             getAssignmentsPage(parseInt(id));
         }
+        setUpdatingAssignment(false)
         // eslint-disable-next-line
-    }, [id, currentAssignmentPage, assignmentSize])
+    }, [id, currentAssignmentPage, assignmentSize, updatingAssignment])
 
-    /*const isAssigned = (assignId: number) => {
-        return assignments
-            .filter((el) => el.id === assignId)
-            .filter((el) => el.resourceRef.toString() === props.resourceId)
-            .length > 0;
-    }*/
 
-    /* const getAssignedUsers = () => {
-         return assignmentPage?.assignments.filter((assignments) => isAssigned(assignments.id))
-     }*/
-
-    /*const deleteAssignmentById = (assignmentId: number) => {
+    const deleteAssignmentById = (assignmentId: number) => {
         setDeleteDialogOpen(true)
         setAssignedUserToRemove(assignmentId)
-    }*/
+    }
+
+    const onRemoveAssignmentConfirmed = () => {
+        setDeleteDialogOpen(false)
+        setUpdatingAssignment(true)
+
+        const userAssignments = assignedUsersPage?.users.filter((el) => el.assignmentRef === assignedUserToRemove);
+        if (userAssignments && userAssignments.length > 0) {
+            deleteAssignment(userAssignments[0].assignmentRef)
+        }
+    };
+
+    const onRemoveAssignmentCancel = () => {
+        setDeleteDialogOpen(false)
+        setAssignedUserToRemove(undefined)
+    };
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
@@ -84,24 +76,10 @@ export const AssignmentsTable: any = (props: { resourceId: string, assignId: num
         updateCurrentAssignmentPage(0);
     };
 
-    const onRemoveAssignmentConfirmed = () => {
-        setDeleteDialogOpen(false)
-        setUpdatingAssignment(true)
-
-        const userAssignments = assignments.filter((el) => el.id === assignedUserToRemove);
-        if (userAssignments.length > 0) {
-            deleteAssignment(userAssignments[0].id)
-        }
-    };
-
-    const onRemoveAssignmentCancel = () => {
-        setDeleteDialogOpen(false)
-        setAssignedUserToRemove(undefined)
-    };
-
     return (
         <Box>
-            <DeleteDialog open={deleteDialogOpen} userId={""} assignId={0} onConfirm={onRemoveAssignmentConfirmed}
+            <DeleteDialog open={deleteDialogOpen} userId={""} assignId={0}
+                          onConfirm={() => onRemoveAssignmentConfirmed()}
                           onCancel={onRemoveAssignmentCancel}/>
             <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"userTable"}>
                 <Table aria-label="Users-table">
@@ -126,21 +104,21 @@ export const AssignmentsTable: any = (props: { resourceId: string, assignId: num
                                 <TableCell align="left" component="th" scope="row">
                                     {users.firstName} {users.lastName}
                                 </TableCell>
-                                <TableCell align="left">{users.userType}</TableCell>
+                                <TableCell align="left">{users.userType} </TableCell>
                                 <TableCell align="left">Hvis gruppe</TableCell>
                                 <TableCell align="right">
 
-                                    {/*<Button
+                                    <Button
                                         //  id={`buttonDeleteAssignment-${user.id}`}
                                         variant={"text"}
                                         aria-label="Slett ressurs"
                                         color={"error"}
                                         endIcon={<DeleteIcon/>}
                                         sx={{marginLeft: 2}}
-                                        onClick={() => deleteAssignmentById(assignments.id)}
+                                        onClick={() => deleteAssignmentById(users.assignmentRef)}
                                     >
                                         Slett
-                                    </Button>*/}
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ))}

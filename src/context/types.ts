@@ -27,6 +27,7 @@ export interface IUser {
     "firstName": string;
     "lastName": string;
     "userType": string;
+    "assignmentRef": number;
 }
 
 export interface IUserPage {
@@ -42,7 +43,6 @@ export interface IResourceItem {
     orgunitId: string;
     orgUnitName: string;
     resourceLimit: number;
-
 }
 
 export interface IResourcePage {
@@ -107,6 +107,7 @@ export interface IAssignedUsersPage {
     totalPages: number | any;
     currentPage: number;
     users: IUser[];
+
 }
 
 export interface ICreateAssignment {
@@ -148,15 +149,15 @@ export type ResourceContextState = {
     updateCurrentUserPage: (currentUserPage: number) => void;
     isAggregate: boolean;
     setIsAggregate: (isAggregate: boolean) => void;
-    assignments: IAssignment[] | null;
-   // assignmentPage: IAssignmentPage | null;
+    // assignments: IAssignment[] | null;
+    // assignmentPage: IAssignmentPage | null;
     currentAssignmentPage: number;
     updateCurrentAssignmentPage: (currentAssignmentPage: number) => void;
     assignmentSize: number;
     setAssignmentSize: (assignmentSize: number) => void;
     assignedUsersPage: IAssignedUsersPage | null;
     getAssignmentsPage: (id: number) => void;
-   // getUserById: (id: string) => void;
+    // getUserById: (id: string) => void;
     user: IUser | null;
 };
 
@@ -203,8 +204,8 @@ export const contextDefaultValues: ResourceContextState = {
     isAggregate: false,
     setIsAggregate(isAggregate: boolean): void {
     },
-    assignments: [],
-  //  assignmentPage: null,
+    // assignments: [],
+    //  assignmentPage: null,
     currentAssignmentPage: 0,
     updateCurrentAssignmentPage(): void {
     },
@@ -214,8 +215,8 @@ export const contextDefaultValues: ResourceContextState = {
     assignedUsersPage: null,
     getAssignmentsPage(): void {
     },
-   // getUserById(id: string): void {
-   // },
+    // getUserById(id: string): void {
+    // },
     user: null,
 };
 
