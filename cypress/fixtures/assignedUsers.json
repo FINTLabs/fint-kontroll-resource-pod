@@ -1,0 +1,43 @@
+{
+  "totalPages": 1,
+  "size": 50,
+  "totalItems": 14,
+  "users": [
+    {
+      "id": 1220,
+      "firstName": "Fred",
+      "lastName": "Danielsen",
+      "userType": "EMPLOYEE",
+      "assignmentRef": 58
+    },
+    {
+      "id": 1425,
+      "firstName": "Berit",
+      "lastName": "Andersen",
+      "userType": "STUDENT",
+      "assignmentRef": 59
+    },
+    {
+      "id": 1412,
+      "firstName": "Marianne",
+      "lastName": "Andersen",
+      "userType": "STUDENT",
+      "assignmentRef": 60
+    },
+    {
+      "id": 1147,
+      "firstName": "Egil",
+      "lastName": "Johnsen",
+      "userType": "EMPLOYEE",
+      "assignmentRef": 61
+    },
+    {
+      "id": 1500,
+      "firstName": "Herman",
+      "lastName": "Bergersen",
+      "userType": "STUDENT",
+      "assignmentRef": 66
+    }
+  ],
+  "currentPage": 0
+}

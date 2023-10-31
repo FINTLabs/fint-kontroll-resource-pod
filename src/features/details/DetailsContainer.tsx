@@ -6,12 +6,13 @@ import ResourceInfo from "./ResourceInfo";
 import DetailsToolBar from "./FiltersToolBar";
 import {useParams} from "react-router-dom";
 import {ResourceContext} from "../../context";
-import {AssignmentsTable} from "./AssignmentsTable";
+import {AssignedUsersTable} from "./AssignedUsersTable";
 import Typography from "@mui/material/Typography";
+import {AssignedRolesTable} from "../groups/AssignedRolesTable";
 
 function DetailsContainer() {
 
-    const {basePath, getResourceById} = useContext(ResourceContext);
+    const {basePath, getResourceById, objectType} = useContext(ResourceContext);
     const {id} = useParams<string>();
 
     useEffect(() => {
@@ -38,7 +39,12 @@ function DetailsContainer() {
                 </Typography>
                 <DetailsToolBar/>
             </Box>
-            <AssignmentsTable resourceId={id}/>
+            {objectType === 'Brukere' ?
+            <AssignedUsersTable resourceId={id}/>
+                :
+            <AssignedRolesTable resourceId={id}/>
+            }
+
         </Box>
     );
 }

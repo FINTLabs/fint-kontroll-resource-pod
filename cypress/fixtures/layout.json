@@ -1,0 +1,74 @@
+{
+  "id": 232,
+  "name": "fint-kontroll",
+  "basePath": "/",
+  "appBarMenuMainLayout": {
+    "id": 225,
+    "appbar": {
+      "id": 223,
+      "name": "fint-kontroll-appbar-pod",
+      "uri": "http://fint-kontroll-appbar-pod:7100/manifest.json"
+    },
+    "menu": {
+      "id": 224,
+      "name": "fint-kontroll-menu-pod",
+      "uri": "http://fint-kontroll-menu-pod:7100/manifest.json"
+    },
+    "main": [
+      {
+        "id": 231,
+        "name": "fint-kontroll-dashboard-pod",
+        "uri": "http://fint-kontroll-dashboard-pod:7100/manifest.json",
+        "title": "Dashboard",
+        "path": "/",
+        "icon": "dashboard",
+        "menuOrder": 0
+      },
+      {
+        "id": 226,
+        "name": "fint-kontroll-role-pod",
+        "uri": "http://fint-kontroll-role-pod:7100/manifest.json",
+        "title": "Grupper",
+        "path": "/",
+        "icon": "group",
+        "menuOrder": 1
+      },
+      {
+        "id": 227,
+        "name": "fint-kontroll-user-pod",
+        "uri": "http://fint-kontroll-user-pod:7100/manifest.json",
+        "title": "Brukere",
+        "path": "/",
+        "icon": "person",
+        "menuOrder": 2
+      },
+      {
+        "id": 230,
+        "name": "fint-kontroll-resource-pod",
+        "uri": "http://fint-kontroll-resource-pod:7100/manifest.json",
+        "title": "Ressurser",
+        "path": "/",
+        "icon": "approval",
+        "menuOrder": 3
+      },
+      {
+        "id": 228,
+        "name": "fint-kontroll-resource-admin-pod",
+        "uri": "http://fint-kontroll-resource-admin-pod:7100/manifest.json",
+        "title": "Ressurser Admin",
+        "path": "/",
+        "icon": "manage_accounts",
+        "menuOrder": 4
+      },
+      {
+        "id": 229,
+        "name": "fint-kontroll-app-admin-pod",
+        "uri": "http://fint-kontroll-app-admin-pod:7100/manifest.json",
+        "title": "Applikasjonadministrator",
+        "path": "/",
+        "icon": "dashboard",
+        "menuOrder": 5
+      }
+    ]
+  }
+}

@@ -18,24 +18,24 @@ function ResourceInfo() {
     return (
         <Box sx={{mb: 6}}>
             <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flex: '1 1 100%', pb: 3}}>
-            <Typography
-                variant="h1"
-                id="tableTitle"
-            >
-                {resourceDetails?.resourceName}
-            </Typography>
-            <Button
-                sx={{minWidth: '80px'}}
-                id={"button-only-assigned"}
-                variant={"contained"}
-                aria-label="Toggle"
-                color={"primary"}
-                component={Link}
-                to={`tildeling`}
-                onClick={handleClick}
-            >
-                Legg til ressurs
-            </Button>
+                <Typography
+                    variant="h1"
+                    id="tableTitle"
+                >
+                    {resourceDetails?.resourceName}
+                </Typography>
+                <Button
+                    sx={{minWidth: '80px'}}
+                    id={"button-add-assignment"}
+                    variant={"contained"}
+                    aria-label="Toggle"
+                    color={"primary"}
+                    component={Link}
+                    to={`tildeling`}
+                    onClick={handleClick}
+                >
+                    Legg til ressurs
+                </Button>
             </Box>
             <Paper>
                 <FormGroup row>
@@ -86,12 +86,12 @@ function ResourceInfo() {
                                     secondary={'Totalt antall til tildeling'}
                                 />
                             </ListItem>
-                            <ListItem>
+                            {/*<ListItem>
                                 <ListItemText
                                     primary={resourceDetails?.resourceLimit}
                                     secondary={'Antall brukt av denne ressursen'}
                                 />
-                            </ListItem>
+                            </ListItem>*/}
                             <ListItem>
                                 <ListItemText
                                     primary={resourceDetails?.platform.join(', ')}

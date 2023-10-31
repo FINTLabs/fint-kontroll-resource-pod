@@ -1,14 +1,16 @@
 import React, {createContext, ReactNode, useEffect, useState,} from "react";
 import {
-    contextDefaultValues, IAssignedUsersPage,
-   // IAssignment,
-   // IAssignmentPage,
+    contextDefaultValues,
+    IAssignedRolesPage,
+    IAssignedUsersPage,
     IOrgUnit,
     IOrgUnitPage,
     IResource,
     IResourceItem,
     IResourcePage,
-    IUnitTree, IUser,
+    IRolePage,
+    IUnitTree,
+    IUser,
     IUserItem,
     IUserPage,
     ResourceContextState
@@ -25,25 +27,25 @@ type Props = {
 
 const ResourceProvider = ({children}: Props) => {
     const [basePath, setBasePath] = useState<string>(contextDefaultValues.basePath);
-    const [resources, setResources] = useState<IResource[] | null>(contextDefaultValues.resources);
     const [orgUnitPage] = useState<IOrgUnitPage | null>(contextDefaultValues.orgUnitPage);
     const [orgUnits] = useState<IOrgUnit[]>(contextDefaultValues.orgUnits);
     const [orgName, setOrgName] = useState<string>(contextDefaultValues.orgName);
     const [organisationUnitId, setOrganisationUnitId] = useState<number>(contextDefaultValues.organisationUnitId);
     const [unitTree, setUnitTree] = useState<IUnitTree | null>(contextDefaultValues.unitTree);
     const [selected, setSelected] = useState<number[]>(contextDefaultValues.selected);
-    const [validForOrgUnits] = useState<IResourceItem[] | null>(contextDefaultValues.validForOrgUnits);
+   // const [validForOrgUnits] = useState<IResourceItem[] | null>(contextDefaultValues.validForOrgUnits);
+
     const [resourceItem] = useState<IResourceItem | null>(contextDefaultValues.resourceItem);
     const [resourceDetails, setResourceDetails] = useState<IResource | null>(contextDefaultValues.resourceDetails);
     const [resourcePage, setResourcePage] = useState<IResourcePage | null>(contextDefaultValues.resourcePage);
-    const [currentResourcePage] = useState<number>(contextDefaultValues.currentResourcePage);
+    const [resourceSize, setResourceSize] = useState<number>(contextDefaultValues.resourceSize);
+
+    const [currentResourcePage, setCurrentResourcePage] = useState<number>(contextDefaultValues.currentResourcePage);
     const [searchString, setSearchString] = useState<string>("");
 
     const [users] = useState<IUserItem[]>(contextDefaultValues.users);
     const [userType, setUserType] = useState<string>(contextDefaultValues.userType);
-    const [isAggregate, setIsAggregate] = useState<boolean>(contextDefaultValues.isAggregate);
-    //const [assignmentPage, setAssignmentPage] = useState<IAssignmentPage | null>(contextDefaultValues.assignmentPage);
-   // const [assignments] = useState<IAssignment[] | null>(contextDefaultValues.assignments);
+
 
     const [page, setPage] = useState<IUserPage | null>(contextDefaultValues.page);
     const [size, setSize] = useState<number>(contextDefaultValues.size);
@@ -53,12 +55,38 @@ const ResourceProvider = ({children}: Props) => {
     const [assignmentSize, setAssignmentSize] = useState<number>(contextDefaultValues.assignmentSize);
     const [currentAssignmentPage, setCurrentAssignmentPage] = useState<number>(contextDefaultValues.currentAssignmentPage);
 
+    const [rolePage, setRolePage] = useState<IRolePage | null>(contextDefaultValues.rolePage);
+    const [roleType, setRoleType] = useState<string>(contextDefaultValues.roleType);
+
+    const [roleSize, setRoleSize] = useState<number>(contextDefaultValues.roleSize);
+    const [currentRolePage, setCurrentRolePage] = useState<number>(contextDefaultValues.currentRolePage);
+
+
+    const [assignedRolesPage, setAssignedRolesPage] = useState<IAssignedRolesPage | null>(contextDefaultValues.assignedRolesPage);
+    const [assignedRoleSize, setAssignedRoleSize] = useState<number>(contextDefaultValues.assignedRoleSize);
+    const [currentAssignedRolePage, setCurrentAssignedRolePage] = useState<number>(contextDefaultValues.currentAssignedRolePage);
+
     const [user] = useState<IUser | null>(contextDefaultValues.user);
 
-    const createAssignment = (resourceRef: number, userRef: number, organizationUnitId: string) => {
-         console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
+    const [objectType, setObjectType] = useState<string>("")
 
-        ResourceRepository.createAssignment(basePath, resourceRef, userRef, organizationUnitId)
+    const createUserAssignment = (resourceRef: number, userRef: number, organizationUnitId: string) => {
+        console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
+
+        ResourceRepository.createUserAssignment(basePath, resourceRef, userRef, organizationUnitId)
+            .then(response => {
+                    console.log("Dette er responsen", response)
+                }
+            )
+            .catch((err) => {
+                console.error(err);
+            })
+    }
+
+    const createRoleAssignment = (resourceRef: number, roleRef: number, organizationUnitId: string) => {
+        console.log("resourceRef:", resourceRef, "RolleRef ", roleRef, "organizationUnitId:", organizationUnitId)
+
+        ResourceRepository.createRoleAssignment(basePath, resourceRef, roleRef, organizationUnitId)
             .then(response => {
                     console.log("Dette er responsen", response)
                 }
@@ -95,28 +123,6 @@ const ResourceProvider = ({children}: Props) => {
     }, [])
 
     useEffect(() => {
-        const getResources = () => {
-            if (basePath) {
-                ResourceRepository.getResources(basePath)
-                    .then(response => setResources(response.data))
-                    .catch((err) => console.error(err))
-            }
-        }
-        getResources()
-    }, [basePath]);
-
-    /*useEffect(() => {
-        const getAssignments = () => {
-            if (basePath) {
-                ResourceRepository.getAssignments(basePath)
-                    .then(response => setAssignments(response.data))
-                    .catch((err) => console.error(err))
-            }
-        }
-        getAssignments()
-    }, [basePath]);*/
-
-    useEffect(() => {
         const getUnitTree = () => {
             if (basePath) {
                 ResourceRepository.getUnitTree(basePath)
@@ -144,7 +150,7 @@ const ResourceProvider = ({children}: Props) => {
     useEffect(() => {
         const getResourcePage = () => {
             if (basePath) {
-                ResourceRepository.getResourcePage(basePath, currentResourcePage, userType, selected, searchString, isAggregate)
+                ResourceRepository.getResourcePage(basePath, currentResourcePage, resourceSize, userType, selected, searchString)
                     .then(response => setResourcePage(response.data))
                     .catch((err) => console.error(err))
             }
@@ -153,30 +159,35 @@ const ResourceProvider = ({children}: Props) => {
         if (searchString.length >= 3 || searchString.length === 0) {
             getResourcePage();
         }
-    }, [basePath, currentResourcePage, userType, organisationUnitId, searchString, selected, isAggregate]);
+    }, [basePath, currentResourcePage, resourceSize, userType, organisationUnitId, searchString, selected]);
 
-   /* useEffect(() => {
-        const getAllUsersPage = () => {
+    const getAssignedUsersPage = (id: number) => {
+        if (basePath) {
+            ResourceRepository.getAssignmentsPage(basePath, id, currentAssignmentPage, assignmentSize, userType, searchString)
+                .then(response => setAssignedUsersPage(response.data))
+                .catch((err) => console.error(err))
+        }
+    }
+
+    const getAssignedRolesPage = (id: number) => {
+        if (basePath) {
+            ResourceRepository.getAssignedRolesPage(basePath, id, roleType, currentAssignedRolePage, assignedRoleSize)
+                .then(response => setAssignedRolesPage(response.data))
+                .catch((err) => console.error(err))
+        }
+    }
+
+    useEffect(() => {
+        const getRolePage = () => {
             if (basePath) {
-                ResourceRepository.getAllAssignmentsPage(basePath, currentUserPage, assignmentSize, userType, searchString)
-                    .then(response => setAssignmentPage(response.data))
+                ResourceRepository.getRolePage(basePath, roleType, currentRolePage, roleSize)
+                    .then(response => setRolePage(response.data))
                     .catch((err) => console.error(err))
             }
         }
-        if (searchString.length >= 3 || searchString.length === 0) {
-            getAllUsersPage();
-        }
+        getRolePage()
+    }, [basePath, roleType, currentRolePage, roleSize]);
 
-
-    }, [basePath, currentUserPage, assignmentSize, userType, selected, searchString]);*/
-
-        const getAssignedUsersPage = (id: number) => {
-            if (basePath) {
-                ResourceRepository.getAssignmentsPage(basePath, id, currentAssignmentPage, assignmentSize, userType, searchString)
-                    .then(response => setAssignedUsersPage(response.data))
-                    .catch((err) => console.error(err))
-            }
-        }
 
     useEffect(() => {
         const getUserPage = () => {
@@ -192,21 +203,6 @@ const ResourceProvider = ({children}: Props) => {
         }
     }, [basePath, currentUserPage, size, userType, organisationUnitId, searchString, selected]);
 
- /*   const getUserById = (uri: string) => {
-        console.log('Deet er heer', uri)
-        if (basePath) {
-            ResourceRepository.getUserById(uri)
-                .then(response => {
-                        setUser(response.data)
-                    }
-                )
-                .catch((err) => {
-                    console.error(err);
-                })
-        }
-    }
-
-*/
     const updateOrganisationUnitId = (id: number) => {
         setOrganisationUnitId(id);
     }
@@ -231,12 +227,28 @@ const ResourceProvider = ({children}: Props) => {
         setCurrentAssignmentPage(currentAssignmentPage)
     }
 
+    const updateCurrentResourcePage = (currentResourcePage: number) => {
+        setCurrentResourcePage(currentResourcePage)
+    }
+
+    const updateCurrentRolePage = (currentRolePage: number) => {
+        setCurrentRolePage(currentRolePage)
+    }
+
+    const updateRoleType = (roleType: string) => {
+        setRoleType(roleType)
+    }
+
+    const updateCurrentAssignedRolePage = (currentAssignedRolePage: number) => {
+        setCurrentAssignedRolePage(currentAssignedRolePage)
+    }
+
     return (
         <ResourceContext.Provider
             value={{
-                validForOrgUnits,
+               // validForOrgUnits,
                 basePath,
-                resources,
+
                 orgUnits,
                 orgName,
                 orgUnitPage,
@@ -246,34 +258,58 @@ const ResourceProvider = ({children}: Props) => {
                 getOrgName,
                 updateOrganisationUnitId,
                 setSelected,
+
+
                 resourceItem,
                 resourceDetails,
                 resourcePage,
+                resourceSize,
+                setResourceSize,
                 currentResourcePage: currentResourcePage,
-                searchString,
+                updateCurrentResourcePage,
                 getResourceById,
+
+                searchString,
                 searchValue,
+
                 users,
                 userType,
+                updateUserType,
+                user,
                 page,
                 currentUserPage,
                 size,
                 setSize,
-                updateUserType,
                 updateCurrentUserPage,
-                createAssignment,
-                deleteAssignment,
-                isAggregate,
-                setIsAggregate,
-               // assignments,
-              //  assignmentPage,
+
                 currentAssignmentPage,
                 updateCurrentAssignmentPage,
                 assignmentSize,
                 setAssignmentSize,
                 assignedUsersPage,
                 getAssignmentsPage: getAssignedUsersPage,
-                user,
+
+
+                getAssignedRolesPage,
+                assignedRolesPage,
+                assignedRoleSize,
+                setAssignedRoleSize,
+                currentAssignedRolePage,
+                updateCurrentAssignedRolePage,
+
+                rolePage,
+                roleType,
+                roleSize,
+                setRoleSize,
+                currentRolePage,
+                updateRoleType,
+                updateCurrentRolePage,
+
+                createRoleAssignment,
+                createUserAssignment,
+                deleteAssignment,
+                objectType,
+                setObjectType,
             }}
         >
             {children}

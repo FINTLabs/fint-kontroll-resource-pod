@@ -14,6 +14,20 @@ export interface IResource {
     validForRoles: string;
 }
 
+export interface IRole {
+    "id": number;
+    "roleName": string;
+    "roleType": string;
+    "assignmentRef":number;
+}
+
+export interface IRolePage {
+    totalItems: number;
+    totalPages: number | any;
+    currentPage: number;
+    roles: IRole[];
+}
+
 export interface IUserItem {
     "id": number;
     "fullName": string;
@@ -46,6 +60,7 @@ export interface IResourceItem {
 }
 
 export interface IResourcePage {
+    totalItems: number;
     totalPages: number | any;
     currentPage: number;
     resources: IResource[];
@@ -95,34 +110,47 @@ export interface IAssignment {
     organizationUnitId: string;
 }
 
-/*export interface IAssignmentPage {
+export interface IAssignmentPage {
     totalItems: number;
     totalPages: number | any;
     currentPage: number;
     assignments: IAssignment[];
-}*/
+}
 
 export interface IAssignedUsersPage {
     totalItems: number;
     totalPages: number | any;
     currentPage: number;
     users: IUser[];
-
 }
 
-export interface ICreateAssignment {
+export interface IAssignedRolesPage {
+    totalItems: number;
+    totalPages: number | any;
+    currentPage: number;
+    roles: IRole[];
+}
+
+export interface ICreateUserAssignment {
     id: number;
     resourceRef: number;
     userRef: number;
     organizationUnitId: string;
 }
 
+export interface ICreateRoleAssignment {
+    id: number;
+    resourceRef: number;
+    roleRef: number;
+    organizationUnitId: string;
+}
+
 export type ResourceContextState = {
-    createAssignment: (resourceRef: number, userRef: number, organizationUnitId: string) => void,
+    createUserAssignment: (resourceRef: number, userRef: number, organizationUnitId: string) => void,
+    createRoleAssignment: (resourceRef: number, roleRef: number, organizationUnitId: string) => void,
     deleteAssignment: (id: number) => void,
     basePath: string;
-    resources: IResource[] | null;
-    validForOrgUnits: IResourceItem[] | null;
+   // validForOrgUnits: IResourceItem[] | null;
     orgUnits: IOrgUnit[];
     orgName: string;
     orgUnitPage: IOrgUnitPage | null;
@@ -135,7 +163,10 @@ export type ResourceContextState = {
     resourceDetails: IResource | null;
     resourceItem: IResourceItem | null;
     resourcePage: IResourcePage | null;
+    resourceSize: number;
+    setResourceSize: (resourceSize: number) => void;
     currentResourcePage: number;
+    updateCurrentResourcePage: (currentResourcePage: number) => void;
     searchString: string;
     getResourceById: (id: string) => void;
     searchValue: (searchString: string) => void;
@@ -146,24 +177,33 @@ export type ResourceContextState = {
     size: number;
     setSize: (size: number) => void;
     updateUserType: (userType: string) => void;
+    updateRoleType: (roleType: string) => void;
     updateCurrentUserPage: (currentUserPage: number) => void;
-    isAggregate: boolean;
-    setIsAggregate: (isAggregate: boolean) => void;
-    // assignments: IAssignment[] | null;
-    // assignmentPage: IAssignmentPage | null;
     currentAssignmentPage: number;
     updateCurrentAssignmentPage: (currentAssignmentPage: number) => void;
     assignmentSize: number;
     setAssignmentSize: (assignmentSize: number) => void;
     assignedUsersPage: IAssignedUsersPage | null;
     getAssignmentsPage: (id: number) => void;
-    // getUserById: (id: string) => void;
     user: IUser | null;
+    getAssignedRolesPage: (id: number) => void;
+    assignedRolesPage: IAssignedRolesPage | null;
+    assignedRoleSize: number;
+    setAssignedRoleSize: (assignedRoleSize: number) => void;
+    currentAssignedRolePage: number;
+    updateCurrentAssignedRolePage: (currentAssignedRolePage: number) => void;
+    rolePage: IRolePage | null;
+    roleType: string;
+    roleSize: number;
+    setRoleSize: (roleSize: number) => void;
+    currentRolePage: number;
+    updateCurrentRolePage: (currentRolePage: number) => void;
+    objectType: string;
+    setObjectType: (objectType: string) => void;
 };
 
 export const contextDefaultValues: ResourceContextState = {
     basePath: "/",
-    resources: [],
     orgUnits: [],
     orgName: "",
     orgUnitPage: null,
@@ -176,11 +216,15 @@ export const contextDefaultValues: ResourceContextState = {
     selected: [],
     setSelected(selected: number[]): void {
     },
-    validForOrgUnits: [],
+   // validForOrgUnits: [],
     resourceDetails: null,
     resourceItem: null,
     resourcePage: null,
+    resourceSize: 5,
+    setResourceSize(resourceSize): void {},
     currentResourcePage: 0,
+    updateCurrentResourcePage(): void {
+    },
     searchString: "",
     getResourceById(): void {
     },
@@ -195,17 +239,15 @@ export const contextDefaultValues: ResourceContextState = {
     },
     updateUserType(): void {
     },
+    updateRoleType(): void {},
     updateCurrentUserPage(): void {
     },
-    createAssignment(): void {
+    createUserAssignment(): void {
+    },
+    createRoleAssignment(): void {
     },
     deleteAssignment(): void {
     },
-    isAggregate: false,
-    setIsAggregate(isAggregate: boolean): void {
-    },
-    // assignments: [],
-    //  assignmentPage: null,
     currentAssignmentPage: 0,
     updateCurrentAssignmentPage(): void {
     },
@@ -215,8 +257,21 @@ export const contextDefaultValues: ResourceContextState = {
     assignedUsersPage: null,
     getAssignmentsPage(): void {
     },
-    // getUserById(id: string): void {
-    // },
     user: null,
+    assignedRolesPage: null,
+    assignedRoleSize: 5,
+    setAssignedRoleSize(assignedRoleSize: number): void {},
+    currentAssignedRolePage: 0,
+    updateCurrentAssignedRolePage(): void {},
+    rolePage: null,
+    roleType: "",
+    roleSize: 5,
+    setRoleSize(roleSize: number): void {},
+    currentRolePage: 0,
+    updateCurrentRolePage(): void {},
+    getAssignedRolesPage(): void {
+    },
+    objectType: "",
+    setObjectType(objectType: string): void{},
 };
 
