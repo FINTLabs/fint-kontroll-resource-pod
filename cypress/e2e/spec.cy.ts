@@ -208,6 +208,7 @@ describe('Check the resource details page', () => {
 describe('Check the assignment page', () => {
 
     const searchTextUser = 'Karen';
+    const searchTextRole = 'Kompetanse';
 
     const baseUrl = "http://localhost:3001";
     beforeEach(() => {
@@ -247,6 +248,20 @@ describe('Check the assignment page', () => {
         cy.wait(2000)
         cy.get('#buttonAddAssignmentRole-51').should('have.text', 'Tildel')
         cy.get('#buttonAddAssignmentRole-51').click()
+    });
+
+    it('Check searchfield for role, type and clear input', () => {
+        cy.goToAssignments();
+        cy.get('#outlined-search-role').should('exist')
+        cy.get('#outlined-search-role').should('have.value', '')
+        cy.get('#showClearIcon').should('not.be.visible')
+        cy.get('#outlined-search-role').type(searchTextRole).should('have.value', searchTextRole)
+        cy.wait(1000)
+        cy.get('#showClearIcon').should('be.visible')
+        cy.get('#outlined-search-role').should('be.visible')
+        cy.wait(1000)
+        cy.get('#showClearIcon').click();
+        cy.get('#outlined-search-role').should('have.value', '')
     });
 
     it('Check select objecttype (options, clickable)', () => {

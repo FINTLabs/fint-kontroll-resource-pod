@@ -175,13 +175,15 @@ const ResourceProvider = ({children}: Props) => {
     useEffect(() => {
         const getRolePage = () => {
             if (basePath) {
-                ResourceRepository.getRolePage(basePath, roleType, currentRolePage, roleSize)
+                ResourceRepository.getRolePage(basePath, roleType, currentRolePage, roleSize, searchString)
                     .then(response => setRolePage(response.data))
                     .catch((err) => console.error(err))
             }
         }
-        getRolePage()
-    }, [basePath, roleType, currentRolePage, roleSize]);
+        if (searchString.length >= 3 || searchString.length === 0) {
+            getRolePage()
+        }
+    }, [basePath, roleType, currentRolePage, roleSize, searchString]);
 
 
     useEffect(() => {

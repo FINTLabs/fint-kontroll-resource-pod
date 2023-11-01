@@ -12,8 +12,8 @@ export default function FilterGroupUser() {
     };
 
     const options = [
-        {value: "Brukere", label: "Brukere"},
-        {value: "Grupper", label: "Grupper"}
+        {value: "Grupper", label: "Grupper"},
+        {value: "Brukere", label: "Brukere"}
     ];
 
     return (

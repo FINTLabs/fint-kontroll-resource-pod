@@ -11,6 +11,7 @@ import UserType from "../assignment/UserType";
 import RoleType from "../assignment/RoleType";
 import {RoleTable} from "../groups/RoleTable";
 import ObjectType from "../details/ObjectType";
+import RoleSearch from "../groups/RoleSearch";
 
 function AssignmentContainer() {
 
@@ -52,10 +53,8 @@ function AssignmentContainer() {
                     {objectType === 'Brukere' ?
                         <UserSearch/>
                         :
-                        ''
+                        <RoleSearch/>
                     }
-
-
                 </Box>
             </Box>
             {objectType === 'Brukere' ?

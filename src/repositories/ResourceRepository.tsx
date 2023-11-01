@@ -88,9 +88,14 @@ const getUserPage = (basePath: string, page: number, size: number,
     return axios.get<IUserPage>(url);
 }
 
-const getRolePage = (basePath: string, roleType: string, currentRolePage: number, roleSize: number) => {
+const getRolePage = (basePath: string, roleType: string, currentRolePage: number, roleSize: number, searchString: string) => {
     const baseUrl = `${basePath === '/' ? '' : basePath}/api/roles`;
     let queryParams = [];
+
+    const sanitizedQueryString = searchString.trim();
+    if (sanitizedQueryString.length !== 0) {
+        queryParams.push(`search=${searchString}`);
+    }
 
     if (roleType) {
         queryParams.push(`roletype=${roleType}`);

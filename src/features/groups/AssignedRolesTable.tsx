@@ -86,7 +86,6 @@ export const AssignedRolesTable: any = (props: { resourceId: string, assignId: n
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Gruppe</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Gruppetype</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Tildelt av</TableCell>
-                            <TableCell align="left" sx={{fontWeight: 'bold'}}></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
