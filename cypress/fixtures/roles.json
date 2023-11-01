@@ -1,0 +1,53 @@
+{
+  "roles": [
+    {
+      "id": 17,
+      "roleName": "Ansatt - KOMP Område sørvest",
+      "roleType": "ansatt",
+      "roleSubType": "ansatt",
+      "aggregatedRole": false,
+      "organisationUnitId": "153",
+      "organisationUnitName": "KOMP Område sørvest"
+    },
+    {
+      "id": 41,
+      "roleName": "Ansatt - KOMP Område sørvest - Aggregert",
+      "roleType": "ansatt",
+      "roleSubType": "organisasjonselement aggregert",
+      "aggregatedRole": true,
+      "organisationUnitId": "153",
+      "organisationUnitName": "KOMP Område sørvest"
+    },
+    {
+      "id": 49,
+      "roleName": "Ansatt - Vår fylkeskommune - Aggregert",
+      "roleType": "ansatt",
+      "roleSubType": "organisasjonselement aggregert",
+      "aggregatedRole": true,
+      "organisationUnitId": "1",
+      "organisationUnitName": "Vår fylkeskommune"
+    },
+    {
+      "id": 51,
+      "roleName": "Ansatt - KOMP Utdanning og kompetanse - Aggregert",
+      "roleType": "ansatt",
+      "roleSubType": "organisasjonselement aggregert",
+      "aggregatedRole": true,
+      "organisationUnitId": "6",
+      "organisationUnitName": "KOMP Utdanning og kompetanse"
+    },
+    {
+      "id": 56,
+      "roleName": "Ansatt - VGSTOR Storskog videregående skole - Aggregert",
+      "roleType": "ansatt",
+      "roleSubType": "organisasjonselement aggregert",
+      "aggregatedRole": true,
+      "organisationUnitId": "198",
+      "organisationUnitName": "VGSTOR Storskog videregående skole"
+    }
+  ],
+  "totalItems": 9,
+  "currentPage": 0,
+  "totalPages": 1,
+  "size": 50
+}

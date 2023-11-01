@@ -3,41 +3,41 @@ import {useContext} from 'react';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
 import {ResourceContext} from "../../context";
 
-export default function FilterUserType() {
+export default function FilterGroupType() {
 
-    const {userType, updateUserType, updateCurrentUserPage} = useContext(ResourceContext);
+    const {roleType, updateRoleType, updateCurrentRolePage} = useContext(ResourceContext);
 
     function handleChange(event: SelectChangeEvent) {
-        updateUserType(event.target.value as string);
+        updateRoleType(event.target.value as string);
         console.log(event.target.value as string + "test")
     }
 
-    const updatePage = () => {
-        updateCurrentUserPage(0)
+    const updateRolePage = () => {
+        updateCurrentRolePage(0)
     }
 
     const options = [
-        {value: "", label: "Alle"},
-        {value: "STUDENT", label: "Elev"},
-        {value: "EMPLOYEE", label: "Ansatt"}
+        {value: "ALLTYPES", label: "Alle"},
+        {value: "elev", label: "Elev"},
+        {value: "ansatt", label: "Ansatt"}
     ];
 
     return (
         <FormControl style={{minWidth: 220}} sx={{mx: '2rem', my: '1rem'}}>
             <InputLabel
-                id="valg-brukertype"
+                id="valg-gruppetype"
             >
-                Brukertype
+                Gruppetype
             </InputLabel>
             <Select
                 labelId="valg-brukertype"
                 id="brukertype"
-                value={userType}
-                label="Brukertype"
+                value={roleType}
+                label="Gruppetype"
                 onChange={handleChange}
             >
                 {options.map((option) => (
-                    <MenuItem key={option.value} value={option.value} onClick={updatePage}>
+                    <MenuItem key={option.value} value={option.value} onClick={updateRolePage}>
                         {option.label}
                     </MenuItem>
                 ))}

@@ -1,0 +1,38 @@
+{
+  "size": 50,
+  "roles": [
+    {
+      "id": 34,
+      "roleName": "Ansatt - VGSTOR Storskog videregående skole",
+      "roleType": "ansatt",
+      "assignmentRef": 73
+    },
+    {
+      "id": 40,
+      "roleName": "Ansatt - KOMP Område sørvest",
+      "roleType": "ansatt",
+      "assignmentRef": 77
+    },
+    {
+      "id": 41,
+      "roleName": "Ansatt - KOMP Område sørvest - Aggregert",
+      "roleType": "ansatt",
+      "assignmentRef": 74
+    },
+    {
+      "id": 49,
+      "roleName": "Ansatt - DIGIT Serviceseksjon - Aggregert",
+      "roleType": "ansatt",
+      "assignmentRef": 76
+    },
+    {
+      "id": 51,
+      "roleName": "Ansatt - DIGIT Lokasjonssupport - Aggregert",
+      "roleType": "ansatt",
+      "assignmentRef": 75
+    }
+  ],
+  "totalItems": 5,
+  "currentPage": 0,
+  "totalPages": 1
+}

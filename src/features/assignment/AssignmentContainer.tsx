@@ -8,10 +8,14 @@ import Typography from "@mui/material/Typography";
 import {UserTable} from "./UserTable";
 import UserSearch from "../assignment/UserSearch";
 import UserType from "../assignment/UserType";
+import RoleType from "../assignment/RoleType";
+import {RoleTable} from "../groups/RoleTable";
+import ObjectType from "../details/ObjectType";
+import RoleSearch from "../groups/RoleSearch";
 
 function AssignmentContainer() {
 
-    const {basePath, getResourceById, resourceDetails} = useContext(ResourceContext);
+    const {basePath, getResourceById, resourceDetails, objectType} = useContext(ResourceContext);
     const {id} = useParams<string>();
 
     useEffect(() => {
@@ -40,11 +44,25 @@ function AssignmentContainer() {
                     </Typography>
                 </Box>
                 <Box>
-                    <UserType/>
-                    <UserSearch/>
+                    <ObjectType/>
+                    {objectType === 'Brukere' ?
+                        <>
+                            <UserType/>
+                            <UserSearch/>
+                        </>
+                        :
+                        <>
+                            <RoleType/>
+                            <RoleSearch/>
+                        </>
+                    }
                 </Box>
             </Box>
-            <UserTable resourceId={Number(id)}/>
+            {objectType === 'Brukere' ?
+                <UserTable resourceId={Number(id)}/>
+                :
+                <RoleTable resourceId={Number(id)}/>
+            }
         </Box>
     );
 }

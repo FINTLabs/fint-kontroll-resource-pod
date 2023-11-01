@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import AssignedUserSearch from './AssignedUserSearch';
-//import UserType from './UserType';
-//import ObjectType from './ObjectType';
+import UserType from '../assignment/UserType'
+import RoleType from '../assignment/RoleType'
+import ObjectType from './ObjectType';
+import {ResourceContext} from "../../context";
 
 
 function CustomTableToolbar() {
+
+    const {objectType} = useContext(ResourceContext);
 
     return (
         <Toolbar
@@ -15,9 +19,19 @@ function CustomTableToolbar() {
                 pb: 2,
             }}
         >
-            {/*<ObjectType/>
-            <UserType/>*/}
-            <AssignedUserSearch/>
+            <ObjectType/>
+            {objectType === 'Brukere' ?
+                <UserType/>
+
+                :
+                <RoleType/>
+            }
+            {objectType === 'Brukere' ?
+                <AssignedUserSearch/>
+                :
+                ''
+            }
+
         </Toolbar>
     );
 }

@@ -13,7 +13,7 @@ import DeleteDialog from "./DeleteDialog";
 import TablePaginationActions from "../assignment/UserTableFooter";
 import {useParams} from "react-router-dom";
 
-export const AssignmentsTable: any = (props: { resourceId: string, assignId: number, userId: string }) => {
+export const AssignedUsersTable: any = (props: { resourceId: string, assignId: number, userId: string }) => {
 
     const {
        // searchValue,
@@ -89,7 +89,6 @@ export const AssignmentsTable: any = (props: { resourceId: string, assignId: num
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Navn</TableCell>
                             {/*<TableCell align="left" sx={{fontWeight: 'bold'}}>resourceRef</TableCell>*/}
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Brukertype</TableCell>
-                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Gruppetype</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Tildelt av</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}></TableCell>
                         </TableRow>
@@ -105,7 +104,7 @@ export const AssignmentsTable: any = (props: { resourceId: string, assignId: num
                                     {users.firstName} {users.lastName}
                                 </TableCell>
                                 <TableCell align="left">{users.userType} </TableCell>
-                                <TableCell align="left">Hvis gruppe</TableCell>
+                                <TableCell align="left"></TableCell>
                                 <TableCell align="right">
 
                                     <Button
