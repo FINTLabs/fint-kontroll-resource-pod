@@ -38,40 +38,39 @@ export const AssignedRolesTable: any = (props: { resourceId: string, assignId: n
         // eslint-disable-next-line
     }, [id, currentAssignedRolePage, assignedRoleSize, updatingAssignment])
 
+//TODO: Sjekk om funkjoner kan flyttes ut
+    const deleteAssignmentById = (assignmentId: number) => {
+        setDeleteDialogOpen(true)
+        setAssignedRoleToRemove(assignmentId)
+    }
 
-      const deleteAssignmentById = (assignmentId: number) => {
-          setDeleteDialogOpen(true)
-          setAssignedRoleToRemove(assignmentId)
-      }
+    const onRemoveAssignmentConfirmed = () => {
+        setDeleteDialogOpen(false)
+        setUpdatingAssignment(true)
 
-          const onRemoveAssignmentConfirmed = () => {
-              setDeleteDialogOpen(false)
-              setUpdatingAssignment(true)
+        const roleAssignments = assignedRolesPage?.roles.filter((el) => el.assignmentRef === assignedRoleToRemove);
+        if (roleAssignments && roleAssignments.length > 0) {
+            deleteAssignment(roleAssignments[0].assignmentRef)
+        }
+    };
 
-              const roleAssignments = assignedRolesPage?.roles.filter((el) => el.assignmentRef === assignedRoleToRemove);
-              if (roleAssignments && roleAssignments.length > 0) {
-                  deleteAssignment(roleAssignments[0].assignmentRef)
-              }
-          };
+    const onRemoveAssignmentCancel = () => {
+        setDeleteDialogOpen(false)
+        setAssignedRoleToRemove(undefined)
+    };
+    const handleChangePage = (
+        event: React.MouseEvent<HTMLButtonElement> | null,
+        newPage: number,
+    ) => {
+        updateCurrentAssignedRolePage(newPage)
+    };
 
-          const onRemoveAssignmentCancel = () => {
-              setDeleteDialogOpen(false)
-              setAssignedRoleToRemove(undefined)
-          };
-              const handleChangePage = (
-                  event: React.MouseEvent<HTMLButtonElement> | null,
-                  newPage: number,
-              ) => {
-                  console.log("new page:", newPage)
-                  updateCurrentAssignedRolePage(newPage)
-              };
-
-              const handleChangeRowsPerPage = (
-                  event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-              ) => {
-                  setAssignedRoleSize(parseInt(event.target.value, 10));
-                  updateCurrentAssignedRolePage(0);
-              };
+    const handleChangeRowsPerPage = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        setAssignedRoleSize(parseInt(event.target.value, 10));
+        updateCurrentAssignedRolePage(0);
+    };
 
     return (
         <Box>

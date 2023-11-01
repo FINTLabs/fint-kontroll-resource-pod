@@ -46,14 +46,15 @@ function AssignmentContainer() {
                 <Box>
                     <ObjectType/>
                     {objectType === 'Brukere' ?
-                        <UserType/>
+                        <>
+                            <UserType/>
+                            <UserSearch/>
+                        </>
                         :
-                        <RoleType/>
-                    }
-                    {objectType === 'Brukere' ?
-                        <UserSearch/>
-                        :
-                        <RoleSearch/>
+                        <>
+                            <RoleType/>
+                            <RoleSearch/>
+                        </>
                     }
                 </Box>
             </Box>
