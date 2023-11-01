@@ -62,40 +62,11 @@ describe('Check the resource details page', () => {
         cy.interceptAndReturnFile("GET", `${baseUrl}/api/assignments/resource/1/users?size=5`, "assignedUsers.json");
         cy.interceptAndReturnFile("GET", `${baseUrl}/api/assignments/resource/1/roles?size=5`, "assignedRoles.json");
         cy.interceptAndReturnFile("GET", `${baseUrl}/api/users/?size=5`, "users.json");
-
-
     });
 
     it('Connect to localhost for resource info', () => {
         cy.visit('http://localhost:3001/ressurser/info/1')
     })
-
-    /*it('Check searchfield for user, type and clear input', () => {
-        cy.goToInfo();
-        cy.get('#outlined-search-user').should('exist')
-        cy.get('#outlined-search-user').should('have.value', '')
-        cy.get('#showClearIcon').should('not.be.visible')
-        cy.get('#outlined-search-user').type(searchTextUser).should('have.value', searchTextUser)
-        cy.wait(1000)
-        cy.get('#showClearIcon').should('be.visible')
-        cy.get('#outlined-search-user').should('be.visible')
-        cy.wait(1000)
-        cy.get('#showClearIcon').click();
-        cy.get('#outlined-search-user').should('have.value', '')
-    });*/
-
-    /*it('Check select usertype (options, clickable)', () => {
-        cy.goToInfo();
-        cy.get('#brukertype').should('exist')
-        cy.get('#valg-brukertype').should('have.text', 'Brukertype')
-        cy.get('#brukertype').click();
-        cy.get('[data-value="STUDENT"]').click()
-        cy.get('#brukertype').should('have.text', 'Elev')
-        cy.get('#brukertype').click();
-        cy.get('[data-value="EMPLOYEE"]').click()
-        cy.get('#brukertype').should('have.text', 'Ansatt')
-        cy.get('#brukertype').click();
-    })*/
 
     it('Check role assignment table (exists, has 5 rows)', () => {
         cy.goToInfo();
@@ -130,7 +101,7 @@ describe('Check the resource details page', () => {
     });
 
     it('Delete assignment', () => {
-       // cy.interceptAndReturnFile("GET", `${baseUrl}/api/assignments`, "afterCreateAssignment.json");
+        // cy.interceptAndReturnFile("GET", `${baseUrl}/api/assignments`, "afterCreateAssignment.json");
         cy.goToInfo();
         cy.wait(2000)
         cy.get('#buttonDeleteRoleAssignment-51').should('exist')
@@ -141,7 +112,7 @@ describe('Check the resource details page', () => {
         cy.get('#delete-button').should('exist')
         cy.wait(2000)
         cy.get('#delete-button').click()
-       // cy.interceptAndReturnFile("GET", `http://localhost:3001/api/assignments`, "afterDeleteAssignment.json");
+        // cy.interceptAndReturnFile("GET", `http://localhost:3001/api/assignments`, "afterDeleteAssignment.json");
 
     });
 
@@ -232,26 +203,11 @@ describe('Check the resource details page', () => {
         cy.get('#button-add-assignment').should('exist');
         cy.get('#button-add-assignment').click()
     });
-
-
-
-    /*it('Button for adding assignment to user', () => {
-        cy.goToInfo();
-        cy.get('#buttonAddAssignment-109').should('exist')
-        cy.wait(1000)
-        cy.get('#buttonAddAssignment-109').should('have.text', 'Tildel')
-        cy.get('#buttonAddAssignment-109').click()
-        cy.wait(1000)
-        cy.wait('@postValueconverting').its('request.body').should('deep.equal', {
-                resourceRef: "1",
-                userRef: "109",
-                organizationUnitId: "36"
-            }
-        )
-    });*/
 })
 
-describe('Check the assignment button after assign', () => {
+describe('Check the assignment page', () => {
+
+    const searchTextUser = 'Karen';
 
     const baseUrl = "http://localhost:3001";
     beforeEach(() => {
@@ -261,8 +217,6 @@ describe('Check the assignment button after assign', () => {
         cy.interceptAndReturnFile("GET", `${baseUrl}/api/roles?size=5`, "roles.json");
         cy.interceptAndReturnFile("GET", `${baseUrl}/api/assignments`, "afterCreateAssignment.json");
         cy.interceptAndReturnFile("GET", `${baseUrl}/layout/configuration`, "layout.json");
-
-
         // cy.intercept("DELETE", `${baseUrl}/api/assignments/15`, "afterCreateAssignment.json").as('afterDeleted');
 
     });
@@ -276,40 +230,77 @@ describe('Check the assignment button after assign', () => {
         cy.get('#roleTable').should('exist')
             .should('be.visible')
             .find('tbody tr')
-          //  .should('have.length', 5);
+            .should('have.length', 5);
     });
 
-     it('Check if assign button is disabled after assignment', () => {
-         cy.interceptAndReturnFile("GET", `${baseUrl}/api/assignments`, "afterCreateAssignment.json");
-         cy.goToAssignments();
-         cy.wait(2000)
-         cy.get('#buttonAddAssignmentRole-17').should('have.text', 'Tildelt')
-         cy.get('#buttonAddAssignmentRole-17').should('be.disabled')
-    //
-     });
+    it('Check if assign button is disabled after assignment', () => {
+        cy.interceptAndReturnFile("GET", `${baseUrl}/api/assignments`, "afterCreateAssignment.json");
+        cy.goToAssignments();
+        cy.wait(2000)
+        cy.get('#buttonIsAssignedRole-17').should('have.text', 'Tildelt')
+        cy.get('#buttonIsAssignedRole-17').should('be.disabled')
+    });
 
-    // it('Show disabled button for assigned users', () => {
-    //     cy.interceptAndReturnFile("GET", `${baseUrl}/api/assignments`, "afterCreateAssignment.json");
-    //     cy.goToAssignments();
-    //     cy.wait(2000)
-    //     cy.get('#buttonAddAssignment-109').should('have.text', 'Tildelt')
-    //     cy.get('#buttonAddAssignment-109').should('be.disabled')
-    // });
+    it('Check if assign button is clickable', () => {
+        cy.interceptAndReturnFile("GET", `${baseUrl}/api/assignments`, "afterCreateAssignment.json");
+        cy.goToAssignments();
+        cy.wait(2000)
+        cy.get('#buttonAddAssignmentRole-51').should('have.text', 'Tildel')
+        cy.get('#buttonAddAssignmentRole-51').click()
+    });
 
+    it('Check select objecttype (options, clickable)', () => {
+        cy.goToAssignments();
+        cy.get('#select-users-or-groups').should('exist')
+        cy.get('#velg-bruker-eller-gruppe').should('have.text', 'Velg Brukere / Grupper')
+        cy.get('#select-users-or-groups').click();
+        cy.wait(2000)
+        cy.get('[data-value="Grupper"]').click()
+        cy.get('#select-users-or-groups').should('have.text', 'Grupper')
+        cy.get('[data-value="Brukere"]').click()
+        cy.get('#select-users-or-groups').should('have.text', 'Brukere')
+        cy.get('#select-users-or-groups').click();
+        cy.wait(2000)
+    })
 
+    it('Check user table (exists, has 5 rows)', () => {
+        cy.goToAssignments();
+        cy.get('#select-users-or-groups').click();
+        cy.get('[data-value="Brukere"]').click()
+        cy.get('#userAssignmentTable')
+            .should('be.visible')
+            .find('tbody tr')
+            .should('have.length', 5);
+    });
 
-    // it('Check assignment table (switching tables, and button text)', () => {
-    //     cy.interceptAndReturnFile("GET", `${baseUrl}/api/assignments`, "assignedUsers.json");
-    //     cy.goToAssignments();
-    //     cy.interceptAndReturnFile("GET", `${baseUrl}/api/assignments?size=1000`, "afterCreateAssignment.json");
-    //     cy.get('#button-only-assigned').should('exist')
-    //     cy.get('#button-only-assigned').should('have.text', 'Se kun tildelte')
-    //     cy.get('#button-only-assigned').click()
-    //     cy.get('#assignedUserTable')
-    //         .should('be.visible')
-    //     cy.get('#button-only-assigned').should('exist')
-    //     cy.get('#button-only-assigned').should('have.text', 'Se alle brukere')
-    //     cy.get('#button-only-assigned').click()
-    //     cy.get('#userTable').should('exist')
-    // });
+    it('Check searchfield for user, type and clear input', () => {
+        cy.goToAssignments();
+        cy.get('#select-users-or-groups').click();
+        cy.get('[data-value="Brukere"]').click()
+        cy.get('#outlined-search-user').should('exist')
+        cy.get('#outlined-search-user').should('have.value', '')
+        cy.get('#showClearIcon').should('not.be.visible')
+        cy.get('#outlined-search-user').type(searchTextUser).should('have.value', searchTextUser)
+        cy.wait(1000)
+        cy.get('#showClearIcon').should('be.visible')
+        cy.get('#outlined-search-user').should('be.visible')
+        cy.wait(1000)
+        cy.get('#showClearIcon').click();
+        cy.get('#outlined-search-user').should('have.value', '')
+    });
+
+    it('Check select usertype (options, clickable)', () => {
+        cy.goToAssignments();
+        cy.get('#select-users-or-groups').click();
+        cy.get('[data-value="Brukere"]').click()
+        cy.get('#brukertype').should('exist')
+        cy.get('#valg-brukertype').should('have.text', 'Brukertype')
+        cy.get('#brukertype').click();
+        cy.get('[data-value="STUDENT"]').click()
+        cy.get('#brukertype').should('have.text', 'Elev')
+        cy.get('#brukertype').click();
+        cy.get('[data-value="EMPLOYEE"]').click()
+        cy.get('#brukertype').should('have.text', 'Ansatt')
+        cy.get('#brukertype').click();
+    })
 })

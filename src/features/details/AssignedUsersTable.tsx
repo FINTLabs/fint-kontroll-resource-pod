@@ -89,7 +89,6 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Navn</TableCell>
                             {/*<TableCell align="left" sx={{fontWeight: 'bold'}}>resourceRef</TableCell>*/}
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Brukertype</TableCell>
-                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Gruppetype</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Tildelt av</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}></TableCell>
                         </TableRow>
@@ -105,7 +104,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
                                     {users.firstName} {users.lastName}
                                 </TableCell>
                                 <TableCell align="left">{users.userType} </TableCell>
-                                <TableCell align="left">Hvis gruppe</TableCell>
+                                <TableCell align="left"></TableCell>
                                 <TableCell align="right">
 
                                     <Button

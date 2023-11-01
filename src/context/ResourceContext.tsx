@@ -27,29 +27,28 @@ type Props = {
 
 const ResourceProvider = ({children}: Props) => {
     const [basePath, setBasePath] = useState<string>(contextDefaultValues.basePath);
+    // const [validForOrgUnits] = useState<IResourceItem[] | null>(contextDefaultValues.validForOrgUnits);
+
     const [orgUnitPage] = useState<IOrgUnitPage | null>(contextDefaultValues.orgUnitPage);
     const [orgUnits] = useState<IOrgUnit[]>(contextDefaultValues.orgUnits);
     const [orgName, setOrgName] = useState<string>(contextDefaultValues.orgName);
     const [organisationUnitId, setOrganisationUnitId] = useState<number>(contextDefaultValues.organisationUnitId);
     const [unitTree, setUnitTree] = useState<IUnitTree | null>(contextDefaultValues.unitTree);
     const [selected, setSelected] = useState<number[]>(contextDefaultValues.selected);
-   // const [validForOrgUnits] = useState<IResourceItem[] | null>(contextDefaultValues.validForOrgUnits);
 
     const [resourceItem] = useState<IResourceItem | null>(contextDefaultValues.resourceItem);
     const [resourceDetails, setResourceDetails] = useState<IResource | null>(contextDefaultValues.resourceDetails);
     const [resourcePage, setResourcePage] = useState<IResourcePage | null>(contextDefaultValues.resourcePage);
     const [resourceSize, setResourceSize] = useState<number>(contextDefaultValues.resourceSize);
-
     const [currentResourcePage, setCurrentResourcePage] = useState<number>(contextDefaultValues.currentResourcePage);
     const [searchString, setSearchString] = useState<string>("");
 
     const [users] = useState<IUserItem[]>(contextDefaultValues.users);
     const [userType, setUserType] = useState<string>(contextDefaultValues.userType);
-
-
     const [page, setPage] = useState<IUserPage | null>(contextDefaultValues.page);
     const [size, setSize] = useState<number>(contextDefaultValues.size);
     const [currentUserPage, setCurrentUserPage] = useState<number>(contextDefaultValues.currentUserPage);
+    const [user] = useState<IUser | null>(contextDefaultValues.user);
 
     const [assignedUsersPage, setAssignedUsersPage] = useState<IAssignedUsersPage | null>(contextDefaultValues.assignedUsersPage);
     const [assignmentSize, setAssignmentSize] = useState<number>(contextDefaultValues.assignmentSize);
@@ -57,16 +56,12 @@ const ResourceProvider = ({children}: Props) => {
 
     const [rolePage, setRolePage] = useState<IRolePage | null>(contextDefaultValues.rolePage);
     const [roleType, setRoleType] = useState<string>(contextDefaultValues.roleType);
-
     const [roleSize, setRoleSize] = useState<number>(contextDefaultValues.roleSize);
     const [currentRolePage, setCurrentRolePage] = useState<number>(contextDefaultValues.currentRolePage);
-
 
     const [assignedRolesPage, setAssignedRolesPage] = useState<IAssignedRolesPage | null>(contextDefaultValues.assignedRolesPage);
     const [assignedRoleSize, setAssignedRoleSize] = useState<number>(contextDefaultValues.assignedRoleSize);
     const [currentAssignedRolePage, setCurrentAssignedRolePage] = useState<number>(contextDefaultValues.currentAssignedRolePage);
-
-    const [user] = useState<IUser | null>(contextDefaultValues.user);
 
     const [objectType, setObjectType] = useState<string>("")
 

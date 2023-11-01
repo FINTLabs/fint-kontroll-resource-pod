@@ -1,43 +1,7 @@
 {
   "roles": [
     {
-      "id": 1,
-      "roleName": "Elev - Storskog videregående skole",
-      "roleType": "elev",
-      "roleSubType": "skolegruppe",
-      "aggregatedRole": false,
-      "organisationUnitId": "198",
-      "organisationUnitName": "VGSTOR Storskog videregående skole"
-    },
-    {
-      "id": 12,
-      "roleName": "Ansatt - Vår fylkeskommune",
-      "roleType": "ansatt",
-      "roleSubType": "ansatt",
-      "aggregatedRole": false,
-      "organisationUnitId": "1",
-      "organisationUnitName": "Vår fylkeskommune"
-    },
-    {
       "id": 17,
-      "roleName": "Ansatt - KOMP Utdanning og kompetanse",
-      "roleType": "ansatt",
-      "roleSubType": "ansatt",
-      "aggregatedRole": false,
-      "organisationUnitId": "6",
-      "organisationUnitName": "KOMP Utdanning og kompetanse"
-    },
-    {
-      "id": 34,
-      "roleName": "Ansatt - VGSTOR Storskog videregående skole",
-      "roleType": "ansatt",
-      "roleSubType": "ansatt",
-      "aggregatedRole": false,
-      "organisationUnitId": "198",
-      "organisationUnitName": "VGSTOR Storskog videregående skole"
-    },
-    {
-      "id": 40,
       "roleName": "Ansatt - KOMP Område sørvest",
       "roleType": "ansatt",
       "roleSubType": "ansatt",

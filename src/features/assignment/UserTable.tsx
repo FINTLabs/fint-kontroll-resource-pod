@@ -69,7 +69,7 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
 
     return (
         <Box>
-            <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"userTable"}>
+            <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"userAssignmentTable"}>
                 <Table aria-label="Users-table">
                     <TableHead>
                         <TableRow sx={{fontWeight: 'bold'}}>

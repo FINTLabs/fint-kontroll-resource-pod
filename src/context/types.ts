@@ -18,7 +18,7 @@ export interface IRole {
     "id": number;
     "roleName": string;
     "roleType": string;
-    "assignmentRef":number;
+    "assignmentRef": number;
 }
 
 export interface IRolePage {
@@ -110,12 +110,12 @@ export interface IAssignment {
     organizationUnitId: string;
 }
 
-export interface IAssignmentPage {
+/*export interface IAssignmentPage {
     totalItems: number;
     totalPages: number | any;
     currentPage: number;
     assignments: IAssignment[];
-}
+}*/
 
 export interface IAssignedUsersPage {
     totalItems: number;
@@ -146,107 +146,111 @@ export interface ICreateRoleAssignment {
 }
 
 export type ResourceContextState = {
-    createUserAssignment: (resourceRef: number, userRef: number, organizationUnitId: string) => void,
-    createRoleAssignment: (resourceRef: number, roleRef: number, organizationUnitId: string) => void,
-    deleteAssignment: (id: number) => void,
     basePath: string;
-   // validForOrgUnits: IResourceItem[] | null;
+
+    searchString: string;
+    searchValue: (searchString: string) => void;
+
     orgUnits: IOrgUnit[];
     orgName: string;
     orgUnitPage: IOrgUnitPage | null;
-    getOrgName: (orgName: string) => void;
     organisationUnitId: number;
-    updateOrganisationUnitId: (id: number) => void;
     unitTree: IUnitTree | null;
     selected: number[];
     setSelected: (selected: number[]) => void;
-    resourceDetails: IResource | null;
+    getOrgName: (orgName: string) => void;
+    updateOrganisationUnitId: (id: number) => void;
+
     resourceItem: IResourceItem | null;
+    resourceDetails: IResource | null;
     resourcePage: IResourcePage | null;
     resourceSize: number;
     setResourceSize: (resourceSize: number) => void;
     currentResourcePage: number;
     updateCurrentResourcePage: (currentResourcePage: number) => void;
-    searchString: string;
     getResourceById: (id: string) => void;
-    searchValue: (searchString: string) => void;
+    // validForOrgUnits: IResourceItem[] | null;
+
     users: IUserItem[];
     userType: string;
+    updateUserType: (userType: string) => void;
+    user: IUser | null;
     page: IUserPage | null;
     currentUserPage: number;
     size: number;
     setSize: (size: number) => void;
-    updateUserType: (userType: string) => void;
-    updateRoleType: (roleType: string) => void;
     updateCurrentUserPage: (currentUserPage: number) => void;
+
     currentAssignmentPage: number;
     updateCurrentAssignmentPage: (currentAssignmentPage: number) => void;
     assignmentSize: number;
     setAssignmentSize: (assignmentSize: number) => void;
     assignedUsersPage: IAssignedUsersPage | null;
     getAssignmentsPage: (id: number) => void;
-    user: IUser | null;
+
+    rolePage: IRolePage | null;
+    roleType: string;
+    updateRoleType: (roleType: string) => void;
+    roleSize: number;
+    setRoleSize: (roleSize: number) => void;
+    currentRolePage: number;
+    updateCurrentRolePage: (currentRolePage: number) => void;
+
     getAssignedRolesPage: (id: number) => void;
     assignedRolesPage: IAssignedRolesPage | null;
     assignedRoleSize: number;
     setAssignedRoleSize: (assignedRoleSize: number) => void;
     currentAssignedRolePage: number;
     updateCurrentAssignedRolePage: (currentAssignedRolePage: number) => void;
-    rolePage: IRolePage | null;
-    roleType: string;
-    roleSize: number;
-    setRoleSize: (roleSize: number) => void;
-    currentRolePage: number;
-    updateCurrentRolePage: (currentRolePage: number) => void;
+
+    createUserAssignment: (resourceRef: number, userRef: number, organizationUnitId: string) => void,
+    createRoleAssignment: (resourceRef: number, roleRef: number, organizationUnitId: string) => void,
+    deleteAssignment: (id: number) => void,
+
     objectType: string;
     setObjectType: (objectType: string) => void;
 };
 
 export const contextDefaultValues: ResourceContextState = {
     basePath: "/",
+    searchString: "",
+    searchValue: () => {
+    },
     orgUnits: [],
     orgName: "",
     orgUnitPage: null,
     organisationUnitId: 0,
-    getOrgName(): void {
-    },
-    updateOrganisationUnitId(): void {
-    },
     unitTree: null,
     selected: [],
     setSelected(selected: number[]): void {
     },
-   // validForOrgUnits: [],
-    resourceDetails: null,
+    getOrgName(): void {
+    },
+    updateOrganisationUnitId(): void {
+    },
     resourceItem: null,
+    resourceDetails: null,
     resourcePage: null,
     resourceSize: 5,
-    setResourceSize(resourceSize): void {},
+    setResourceSize(resourceSize): void {
+    },
     currentResourcePage: 0,
     updateCurrentResourcePage(): void {
     },
-    searchString: "",
     getResourceById(): void {
     },
-    searchValue: () => {
-    },
+    // validForOrgUnits: [],
     users: [],
     userType: "",
+    updateUserType(): void {
+    },
+    user: null,
     page: null,
     currentUserPage: 0,
     size: 5,
     setSize(size: number): void {
     },
-    updateUserType(): void {
-    },
-    updateRoleType(): void {},
     updateCurrentUserPage(): void {
-    },
-    createUserAssignment(): void {
-    },
-    createRoleAssignment(): void {
-    },
-    deleteAssignment(): void {
     },
     currentAssignmentPage: 0,
     updateCurrentAssignmentPage(): void {
@@ -257,21 +261,33 @@ export const contextDefaultValues: ResourceContextState = {
     assignedUsersPage: null,
     getAssignmentsPage(): void {
     },
-    user: null,
-    assignedRolesPage: null,
-    assignedRoleSize: 5,
-    setAssignedRoleSize(assignedRoleSize: number): void {},
-    currentAssignedRolePage: 0,
-    updateCurrentAssignedRolePage(): void {},
     rolePage: null,
     roleType: "",
+    updateRoleType(): void {
+    },
     roleSize: 5,
-    setRoleSize(roleSize: number): void {},
+    setRoleSize(roleSize: number): void {
+    },
     currentRolePage: 0,
-    updateCurrentRolePage(): void {},
+    updateCurrentRolePage(): void {
+    },
     getAssignedRolesPage(): void {
     },
+    assignedRolesPage: null,
+    assignedRoleSize: 5,
+    setAssignedRoleSize(assignedRoleSize: number): void {
+    },
+    currentAssignedRolePage: 0,
+    updateCurrentAssignedRolePage(): void {
+    },
+    createUserAssignment(): void {
+    },
+    createRoleAssignment(): void {
+    },
+    deleteAssignment(): void {
+    },
     objectType: "",
-    setObjectType(objectType: string): void{},
+    setObjectType(objectType: string): void {
+    },
 };
 

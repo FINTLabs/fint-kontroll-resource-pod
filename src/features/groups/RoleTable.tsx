@@ -93,7 +93,7 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
                                 <TableCell align="right">
                                     {isAssigned(roles.id) ?
                                         <Button
-                                            id={`buttonAddAssignmentRole-${roles.id}`}
+                                            id={`buttonIsAssignedRole-${roles.id}`}
                                             variant={"text"}
                                             aria-label="Legg til ressurs"
                                             onClick={() => assign(props.resourceId, roles.id, "198")}
