@@ -149,6 +149,23 @@ const ResourceProvider = ({children}: Props) => {
 
     useEffect(() => {
         const getResourcePage = () => {
+            if(!basePath){
+                return console.log('Ikke basepath');
+            }
+
+            ResourceRepository.getResourcePage(basePath, currentResourcePage, resourceSize, userType, selected, searchString)
+                .then(response => setResourcePage(response.data))
+                .catch((err) => console.error(err))
+
+        }
+
+        if (searchString.length >= 3 || searchString.length === 0) {
+            getResourcePage();
+        }
+    }, [basePath, currentResourcePage, resourceSize, userType, organisationUnitId, searchString, selected]);
+
+    /*useEffect(() => {
+        const getResourcePage = () => {
             if (basePath) {
                 ResourceRepository.getResourcePage(basePath, currentResourcePage, resourceSize, userType, selected, searchString)
                     .then(response => setResourcePage(response.data))
@@ -159,7 +176,7 @@ const ResourceProvider = ({children}: Props) => {
         if (searchString.length >= 3 || searchString.length === 0) {
             getResourcePage();
         }
-    }, [basePath, currentResourcePage, resourceSize, userType, organisationUnitId, searchString, selected]);
+    }, [basePath, currentResourcePage, resourceSize, userType, organisationUnitId, searchString, selected]);*/
 
     const getAssignedUsersPage = (id: number) => {
         if (basePath) {
