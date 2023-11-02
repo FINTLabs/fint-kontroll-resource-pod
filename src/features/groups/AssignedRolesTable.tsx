@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import {Box, Button, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
 import DeleteIcon from '@mui/icons-material/Delete';
-import TablePaginationActions from "../assignment/UserTableFooter";
+import TablePaginationActions from "../main/TableFooter";
 import {useParams} from "react-router-dom";
 import DeleteDialog from "../details/DeleteDialog";
 

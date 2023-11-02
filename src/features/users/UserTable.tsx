@@ -11,7 +11,7 @@ import {ResourceContext} from "../../context";
 import axios from "axios";
 import {ICreateUserAssignment} from "../../context/types";
 import {Add, Check} from "@mui/icons-material";
-import TablePaginationActions from "./UserTableFooter";
+import TablePaginationActions from "../main/TableFooter";
 
 export const UserTable: any = (props: { resourceId: number, assignId: number, userId: number }) => {
 
@@ -75,6 +75,7 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
                         <TableRow sx={{fontWeight: 'bold'}}>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Navn</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Brukertype</TableCell>
+                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Organisasjon</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}></TableCell>
                         </TableRow>
                     </TableHead>
@@ -89,6 +90,7 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
                                     {user.fullName}
                                 </TableCell>
                                 <TableCell align="left">{user.userType}</TableCell>
+                                <TableCell align="left">{user.organisationUnitName}</TableCell>
 
                                 <TableCell align="right">
                                     {isAssigned(user.id) ?

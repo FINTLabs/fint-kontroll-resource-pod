@@ -9,8 +9,8 @@ import TableRow from '@mui/material/TableRow';
 import {Box, Button, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
 import DeleteIcon from '@mui/icons-material/Delete';
-import DeleteDialog from "./DeleteDialog";
-import TablePaginationActions from "../assignment/UserTableFooter";
+import DeleteDialog from "../details/DeleteDialog";
+import TablePaginationActions from "../main/TableFooter";
 import {useParams} from "react-router-dom";
 
 export const AssignedUsersTable: any = (props: { resourceId: string, assignId: number, userId: string }) => {

@@ -13,7 +13,7 @@ import {ResourceContext} from "../../context";
 import ToolBar from "./ToolBar";
 import DialogUnit from "./DialogUnit";
 import {Link} from "react-router-dom";
-import TablePaginationActions from "../assignment/UserTableFooter";
+import TablePaginationActions from "./TableFooter";
 
 export const ResourceTable: any = (props: { resourceId: string, assignId: number, userId: string }) => {
 
@@ -23,13 +23,17 @@ export const ResourceTable: any = (props: { resourceId: string, assignId: number
         setResourceSize,
         currentResourcePage,
         updateCurrentResourcePage,
-        searchValue
+        searchValue,
+        selectedOrgUnits,
+        setSelected
     } = useContext(ResourceContext);
     const [openDialog, setOpenDialog] = useState(false);
 
     const handleTypeSelect = () => {
         setOpenDialog(false);
-        console.log("selected");
+        const orgunitIds = selectedOrgUnits.map(orgunit => orgunit.organisationUnitId);
+        setSelected(orgunitIds);
+        console.log("selected", orgunitIds);
     }
 
     const handleClick = (): void => {
