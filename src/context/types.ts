@@ -21,11 +21,21 @@ export interface IRole {
     "assignmentRef": number;
 }
 
+export interface IRoleItem {
+    "id": number,
+    "roleName": string,
+    "roleType": string,
+    "roleSubType": string,
+    "aggregatedRole": boolean,
+    "organisationUnitId": string,
+    "organisationUnitName": string,
+}
+
 export interface IRolePage {
     totalItems: number;
     totalPages: number | any;
     currentPage: number;
-    roles: IRole[];
+    roles: IRoleItem[];
 }
 
 export interface IUserItem {
@@ -160,6 +170,8 @@ export type ResourceContextState = {
     setSelected: (selected: number[]) => void;
     getOrgName: (orgName: string) => void;
     updateOrganisationUnitId: (id: number) => void;
+    selectedOrgUnits: IUnitItem[];
+    setSelectedOrgUnits: (selectedOrgUnits: IUnitItem[]) => void;
 
     resourceItem: IResourceItem | null;
     resourceDetails: IResource | null;
@@ -227,6 +239,9 @@ export const contextDefaultValues: ResourceContextState = {
     getOrgName(): void {
     },
     updateOrganisationUnitId(): void {
+    },
+    selectedOrgUnits: [],
+    setSelectedOrgUnits(selectedOrgUnits: IUnitItem[]): void {
     },
     resourceItem: null,
     resourceDetails: null,

@@ -6,7 +6,7 @@ import ResourceInfo from "./ResourceInfo";
 import DetailsToolBar from "./FiltersToolBar";
 import {useParams} from "react-router-dom";
 import {ResourceContext} from "../../context";
-import {AssignedUsersTable} from "./AssignedUsersTable";
+import {AssignedUsersTable} from "../users/AssignedUsersTable";
 import Typography from "@mui/material/Typography";
 import {AssignedRolesTable} from "../groups/AssignedRolesTable";
 

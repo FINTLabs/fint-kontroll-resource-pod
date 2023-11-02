@@ -8,7 +8,7 @@ import {
     IResource,
     IResourceItem,
     IResourcePage,
-    IRolePage,
+    IRolePage, IUnitItem,
     IUnitTree,
     IUser,
     IUserItem,
@@ -34,6 +34,8 @@ const ResourceProvider = ({children}: Props) => {
     const [orgName, setOrgName] = useState<string>(contextDefaultValues.orgName);
     const [organisationUnitId, setOrganisationUnitId] = useState<number>(contextDefaultValues.organisationUnitId);
     const [unitTree, setUnitTree] = useState<IUnitTree | null>(contextDefaultValues.unitTree);
+    const [selectedOrgUnits, setSelectedOrgUnits] = useState<IUnitItem[]>(contextDefaultValues.selectedOrgUnits);
+
     const [selected, setSelected] = useState<number[]>(contextDefaultValues.selected);
 
     const [resourceItem] = useState<IResourceItem | null>(contextDefaultValues.resourceItem);
@@ -119,15 +121,18 @@ const ResourceProvider = ({children}: Props) => {
 
     useEffect(() => {
         const getUnitTree = () => {
+            console.log(`Getting a the units stree:`);
             if (basePath) {
+
                 ResourceRepository.getUnitTree(basePath)
                     .then(response => {
-                        console.log("Returned org data: ", response.data);
+                        console.log("Returned tree data: ", response.data);
                         setUnitTree(response.data);
                     })
                     .catch((err) => console.error(err))
             }
         }
+
         getUnitTree();
     }, [basePath]);
 
@@ -175,7 +180,7 @@ const ResourceProvider = ({children}: Props) => {
     useEffect(() => {
         const getRolePage = () => {
             if (basePath) {
-                ResourceRepository.getRolePage(basePath, roleType, currentRolePage, roleSize, searchString)
+                ResourceRepository.getRolePage(basePath, roleType, currentRolePage, roleSize, selected, searchString)
                     .then(response => setRolePage(response.data))
                     .catch((err) => console.error(err))
             }
@@ -183,7 +188,7 @@ const ResourceProvider = ({children}: Props) => {
         if (searchString.length >= 3 || searchString.length === 0) {
             getRolePage()
         }
-    }, [basePath, roleType, currentRolePage, roleSize, searchString]);
+    }, [basePath, roleType, currentRolePage, roleSize, searchString, organisationUnitId, selected]);
 
 
     useEffect(() => {
@@ -255,6 +260,8 @@ const ResourceProvider = ({children}: Props) => {
                 getOrgName,
                 updateOrganisationUnitId,
                 setSelected,
+                selectedOrgUnits,
+                setSelectedOrgUnits,
 
 
                 resourceItem,

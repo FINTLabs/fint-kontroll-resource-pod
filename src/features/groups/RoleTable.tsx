@@ -11,7 +11,7 @@ import {ResourceContext} from "../../context";
 import axios from "axios";
 import {ICreateRoleAssignment} from "../../context/types";
 import {Add, Check} from "@mui/icons-material";
-import TablePaginationActions from "../assignment/UserTableFooter";
+import TablePaginationActions from "../main/TableFooter";
 
 export const RoleTable: any = (props: { resourceId: number, assignId: number, roleId: number }) => {
 
@@ -75,6 +75,7 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
                         <TableRow sx={{fontWeight: 'bold'}}>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Gruppe</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Gruppetype</TableCell>
+                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Organisasjon</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}></TableCell>
                         </TableRow>
                     </TableHead>
@@ -89,6 +90,7 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
                                     {roles.roleName}
                                 </TableCell>
                                 <TableCell align="left">{roles.roleType}</TableCell>
+                                <TableCell align="left">{roles.organisationUnitName}</TableCell>
 
                                 <TableCell align="right">
                                     {isAssigned(roles.id) ?

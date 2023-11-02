@@ -30,8 +30,8 @@ function CustomTableToolbar(props: CustomTableToolbarProps) {
             </Typography>
             <SearchField/>
             <Button
-                id={'selectUnitsIcon'}
-                variant="text"
+                id={'selectUnits'}
+                variant="outlined"
                 startIcon={<Apartment/>}
                 onClick={onShowDialog}
                 sx={style.changeOrgButton}

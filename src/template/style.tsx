@@ -22,9 +22,8 @@ const style = {
     },
     changeOrgButton: {
         textTransform: 'none',
-       // height: 56,
+        height: 56,
         width: 300,
-        color: 'grey',
     },
 }
 
