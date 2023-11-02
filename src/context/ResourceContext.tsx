@@ -106,6 +106,9 @@ const ResourceProvider = ({children}: Props) => {
 
     useEffect(() => {
         const getBasePath = () => {
+            if(!basePath){
+                return console.log('Ikke basepath i henting');
+            }
             ResourceRepository.getBaseUrl()
                 .then(response => {
                         setBasePath(response.data.basePath)
@@ -117,7 +120,7 @@ const ResourceProvider = ({children}: Props) => {
                 })
         }
         getBasePath()
-    }, [])
+    }, [basePath])
 
     useEffect(() => {
         const getUnitTree = () => {
