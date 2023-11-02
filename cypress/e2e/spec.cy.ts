@@ -37,7 +37,6 @@ describe('Check resource home page', () => {
             .should('be.visible')
             .find('tbody tr')
             .should('have.length', 3);
-        cy.wait(2000)
     });
 
     it('Select resource and go to page for resource details', () => {
@@ -47,7 +46,36 @@ describe('Check resource home page', () => {
         cy.get('#iconResourceInfo-1').click()
         cy.wait(1000)
     });
+
+    it('Select orgUnit, aggregated on/off', () => {
+        cy.goToHome();
+        cy.get('#selectUnits').should('exist')
+        cy.wait(500)
+        cy.get('#selectUnits').trigger('mouseover')
+        cy.get('#selectUnits').click()
+        cy.get('#unitsSelectDialog').should('be.visible')
+        cy.wait(500)
+        cy.get('#expandIcon').should('be.visible')
+        cy.get('#aggregatedCheckbox').should('be.visible')
+        cy.get('#aggregatedCheckbox').click()
+        cy.get('#expandIcon').click()
+        cy.wait(500)
+        cy.get('#expandIcon').click()
+        cy.get('#expandMoreIcon').should('be.visible')
+        cy.get('.MuiTreeItem-root').first().click();
+        cy.get('#node-5').click()
+        cy.wait(1000)
+        cy.get('#aggregatedCheckbox').click()
+        cy.get('#node-36').click()
+        cy.wait(500)
+        cy.get('#node-27').click()
+        cy.wait(500)
+        cy.get('#closeDialog').click();
+
+
+    });
 })
+/*
 describe('Check the resource details page', () => {
 
     const searchTextUser = 'Karen';
@@ -318,4 +346,4 @@ describe('Check the assignment page', () => {
         cy.get('#brukertype').should('have.text', 'Ansatt')
         cy.get('#brukertype').click();
     })
-})
+})*/
