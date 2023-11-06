@@ -2,9 +2,11 @@ import axios from 'axios';
 import {
     IAssignedRolesPage,
     IAssignedUsersPage,
-    ICreateRoleAssignment, ICreateUserAssignment,
+    ICreateRoleAssignment,
+    ICreateUserAssignment,
     IResource,
-    IResourcePage, IRolePage,
+    IResourcePage,
+    IRolePage,
     IUnitTree,
     IUserPage
 } from "../context/types";
@@ -23,7 +25,10 @@ const getUnitTree = (basePath: string) => {
     return axios.get<IUnitTree>(url)
 }
 
-const getResourceById = (uri: string) => axios.get<IResource>(uri);
+const getResourceById = (id: number, basePath: string) => {
+    const uri = `${basePath === '/' ? '' : basePath}/api/resources/${id}`
+    return axios.get<IResource>(uri);
+}
 
 const getResourcePage =
     (basePath: string, resourcePage: number, resourceSize: number, userType: string, organisationUnitId: number[],

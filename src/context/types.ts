@@ -156,8 +156,6 @@ export interface ICreateRoleAssignment {
 }
 
 export type ResourceContextState = {
-    basePath: string;
-
     searchString: string;
     searchValue: (searchString: string) => void;
 
@@ -180,7 +178,7 @@ export type ResourceContextState = {
     setResourceSize: (resourceSize: number) => void;
     currentResourcePage: number;
     updateCurrentResourcePage: (currentResourcePage: number) => void;
-    getResourceById: (id: string) => void;
+    getResourceById: (id: number) => void;
     // validForOrgUnits: IResourceItem[] | null;
 
     users: IUserItem[];
@@ -224,7 +222,6 @@ export type ResourceContextState = {
 };
 
 export const contextDefaultValues: ResourceContextState = {
-    basePath: "/",
     searchString: "",
     searchValue: () => {
     },

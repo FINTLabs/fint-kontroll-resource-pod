@@ -1,18 +1,18 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Route, Routes} from 'react-router-dom';
-import {ResourceContext} from "../context";
 import MainContainer from "../features/main/MainContainer";
-import DetailsContainer from "../features/details/DetailsContainer";
-import AssignmentContainer from "../features/assignment/AssignmentContainer";
+import {useBasePath} from "../context/BasePathContext";
+import DetailsTempContainer from "../features/details/DetailsTempContainer";
+import AssignmentTempContainer from "../features/assignment/AssignmentTempContainer";
 
 const RouteList = () => {
-    const {basePath} = useContext(ResourceContext);
+    const basePath = useBasePath() || '';
 
     return (
         <Routes>
             <Route path={`${basePath}/ressurser`} element={<MainContainer/>}/>
-            <Route path={`${basePath}/ressurser/info/:id`} element={<DetailsContainer/>}/>
-            <Route path={`${basePath}/ressurser/info/:id/tildeling`} element={<AssignmentContainer/>}/>
+            <Route path={`${basePath}/ressurser/info/:id`} element={<DetailsTempContainer/>}/>
+            <Route path={`${basePath}/ressurser/info/:id/tildeling`} element={<AssignmentTempContainer/>}/>
         </Routes>
     )
 }

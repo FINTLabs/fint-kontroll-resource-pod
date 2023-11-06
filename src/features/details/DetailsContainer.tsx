@@ -12,12 +12,12 @@ import {AssignedRolesTable} from "../groups/AssignedRolesTable";
 
 function DetailsContainer() {
 
-    const {basePath, getResourceById, objectType} = useContext(ResourceContext);
+    const {getResourceById, objectType} = useContext(ResourceContext);
     const {id} = useParams<string>();
 
     useEffect(() => {
         if (id) {
-            getResourceById(`${basePath === '/' ? '' : basePath}/api/resources/${id}`);
+            getResourceById(parseInt(id));
         }
         // eslint-disable-next-line
     }, [])
@@ -40,11 +40,10 @@ function DetailsContainer() {
                 <DetailsToolBar/>
             </Box>
             {objectType === 'Brukere' ?
-            <AssignedUsersTable resourceId={id}/>
+                <AssignedUsersTable resourceId={id}/>
                 :
-            <AssignedRolesTable resourceId={id}/>
+                <AssignedRolesTable resourceId={id}/>
             }
-
         </Box>
     );
 }

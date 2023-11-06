@@ -8,7 +8,8 @@ import {
     IResource,
     IResourceItem,
     IResourcePage,
-    IRolePage, IUnitItem,
+    IRolePage,
+    IUnitItem,
     IUnitTree,
     IUser,
     IUserItem,
@@ -23,10 +24,11 @@ export const ResourceContext = createContext<ResourceContextState>(
 
 type Props = {
     children: ReactNode[] | ReactNode;
+    basePath: string;
 };
 
-const ResourceProvider = ({children}: Props) => {
-    const [basePath, setBasePath] = useState<string>(contextDefaultValues.basePath);
+const ResourceProvider = ({children, basePath}: Props) => {
+    // const [basePath, setBasePath] = useState<string>(contextDefaultValues.basePath);
     // const [validForOrgUnits] = useState<IResourceItem[] | null>(contextDefaultValues.validForOrgUnits);
 
     const [orgUnitPage] = useState<IOrgUnitPage | null>(contextDefaultValues.orgUnitPage);
@@ -105,24 +107,6 @@ const ResourceProvider = ({children}: Props) => {
     }
 
     useEffect(() => {
-        const getBasePath = () => {
-            if(!basePath){
-                return console.log('Ikke basepath i henting');
-            }
-            ResourceRepository.getBaseUrl()
-                .then(response => {
-                        setBasePath(response.data.basePath)
-                        console.log("basePath i context", response.data.basePath)
-                    }
-                )
-                .catch((err) => {
-                    console.error(err);
-                })
-        }
-        getBasePath()
-    }, [basePath])
-
-    useEffect(() => {
         const getUnitTree = () => {
             console.log(`Getting a the units stree:`);
             if (basePath) {
@@ -139,8 +123,8 @@ const ResourceProvider = ({children}: Props) => {
         getUnitTree();
     }, [basePath]);
 
-    const getResourceById = (uri: string) => {
-        ResourceRepository.getResourceById(uri)
+    const getResourceById = (id: number) => {
+        ResourceRepository.getResourceById(id, basePath)
             .then(response => {
                     setResourceDetails(response.data)
                 }
@@ -152,23 +136,6 @@ const ResourceProvider = ({children}: Props) => {
 
     useEffect(() => {
         const getResourcePage = () => {
-            if(!basePath){
-                return console.log('Ikke basepath');
-            }
-
-            ResourceRepository.getResourcePage(basePath, currentResourcePage, resourceSize, userType, selected, searchString)
-                .then(response => setResourcePage(response.data))
-                .catch((err) => console.error(err))
-
-        }
-
-        if (searchString.length >= 3 || searchString.length === 0) {
-            getResourcePage();
-        }
-    }, [basePath, currentResourcePage, resourceSize, userType, organisationUnitId, searchString, selected]);
-
-    /*useEffect(() => {
-        const getResourcePage = () => {
             if (basePath) {
                 ResourceRepository.getResourcePage(basePath, currentResourcePage, resourceSize, userType, selected, searchString)
                     .then(response => setResourcePage(response.data))
@@ -179,7 +146,7 @@ const ResourceProvider = ({children}: Props) => {
         if (searchString.length >= 3 || searchString.length === 0) {
             getResourcePage();
         }
-    }, [basePath, currentResourcePage, resourceSize, userType, organisationUnitId, searchString, selected]);*/
+    }, [basePath, currentResourcePage, resourceSize, userType, organisationUnitId, searchString, selected]);
 
     const getAssignedUsersPage = (id: number) => {
         if (basePath) {
@@ -268,9 +235,7 @@ const ResourceProvider = ({children}: Props) => {
     return (
         <ResourceContext.Provider
             value={{
-               // validForOrgUnits,
-                basePath,
-
+                // validForOrgUnits,
                 orgUnits,
                 orgName,
                 orgUnitPage,

@@ -12,12 +12,12 @@ import axios from "axios";
 import {ICreateRoleAssignment} from "../../context/types";
 import {Add, Check} from "@mui/icons-material";
 import TablePaginationActions from "../main/TableFooter";
+import {useBasePath} from "../../context/BasePathContext";
 
 export const RoleTable: any = (props: { resourceId: number, assignId: number, roleId: number }) => {
 
     const {
         searchValue,
-        basePath,
         rolePage,
         roleSize,
         setRoleSize,
@@ -28,6 +28,8 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
 
     const [createAssignments, setCreateAssignments] = useState<ICreateRoleAssignment[]>([]);
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
+    const basePath = useBasePath() || '';
+
 
     useEffect(() => {
         const refreshAssignments = () => {

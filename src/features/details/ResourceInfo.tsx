@@ -115,6 +115,7 @@ function ResourceInfo() {
                 </Grid>
             </Paper>
         </Box>
+
     );
 }
 
