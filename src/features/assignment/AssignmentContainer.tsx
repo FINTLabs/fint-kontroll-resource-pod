@@ -15,19 +15,18 @@ import RoleSearch from "../groups/RoleSearch";
 
 function AssignmentContainer() {
 
-    const {basePath, getResourceById, resourceDetails, objectType} = useContext(ResourceContext);
+    const {getResourceById, resourceDetails, objectType} = useContext(ResourceContext);
     const {id} = useParams<string>();
 
     useEffect(() => {
         if (id) {
-            getResourceById(`${basePath === '/' ? '' : basePath}/api/resources/${id}`);
+            getResourceById(parseInt(id));
         }
         // eslint-disable-next-line
     }, [])
 
     return (
         <Box sx={style.content}>
-
             <Box sx={{
                 pl: {sm: 2},
                 pr: {xs: 1, sm: 1},

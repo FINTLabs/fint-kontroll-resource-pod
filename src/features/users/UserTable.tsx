@@ -12,12 +12,12 @@ import axios from "axios";
 import {ICreateUserAssignment} from "../../context/types";
 import {Add, Check} from "@mui/icons-material";
 import TablePaginationActions from "../main/TableFooter";
+import {useBasePath} from "../../context/BasePathContext";
 
 export const UserTable: any = (props: { resourceId: number, assignId: number, userId: number }) => {
 
     const {
         searchValue,
-        basePath,
         page,
         createUserAssignment,
         updateCurrentUserPage,
@@ -28,6 +28,8 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
 
     const [createAssignments, setCreateAssignments] = useState<ICreateUserAssignment[]>([]);
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
+    const basePath = useBasePath() || '';
+
 
     useEffect(() => {
         const refreshAssignments = () => {
@@ -98,7 +100,7 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
                                             id={`buttonAddAssignment-${user.id}`}
                                             variant={"text"}
                                             aria-label="Legg til ressurs"
-                                            onClick={() => assign(props.resourceId, user.id,"36")}
+                                            onClick={() => assign(props.resourceId, user.id, "36")}
                                             color={"primary"}
                                             endIcon={<Check/>}
                                             disabled={isAssigned(user.id)}

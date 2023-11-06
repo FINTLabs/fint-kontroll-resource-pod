@@ -75,7 +75,6 @@ describe('Check resource home page', () => {
 
     });
 })
-/*
 describe('Check the resource details page', () => {
 
     const searchTextUser = 'Karen';
@@ -346,4 +345,4 @@ describe('Check the assignment page', () => {
         cy.get('#brukertype').should('have.text', 'Ansatt')
         cy.get('#brukertype').click();
     })
-})*/
+})
