@@ -3,13 +3,17 @@ import './App.css';
 import theme from './template/theme';
 import {ThemeProvider} from '@mui/material/styles';
 import RouteList from "./routes/RouteList";
-import {BasePathProvider} from "./context/BasePathContext";
+import {BasePathProvider, useBasePath} from "./context/BasePathContext";
+import ResourceProvider from "./context/ResourceContext";
 
 function App() {
+    const basePath = useBasePath() || '/';
     return (
         <ThemeProvider theme={theme}>
             <BasePathProvider>
-                <RouteList/>
+                    <ResourceProvider basePath={basePath}>
+                        <RouteList/>
+                    </ResourceProvider>
             </BasePathProvider>
         </ThemeProvider>
     );

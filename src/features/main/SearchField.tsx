@@ -31,6 +31,7 @@ export default function SearchFieldUser() {
                 id="outlined-search-resource"
                 label="Søk etter ressurs"
                 role="search"
+                type="search"
                 onChange={handleChange}
                 value={searchString}
                 InputLabelProps={{

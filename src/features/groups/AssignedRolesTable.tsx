@@ -16,6 +16,9 @@ import DeleteDialog from "../details/DeleteDialog";
 export const AssignedRolesTable: any = (props: { resourceId: string, assignId: number, userId: string }) => {
 
     const {
+        selected,
+        searchString,
+        roleType,
         deleteAssignment,
         assignedRolesPage,
         assignedRoleSize,
@@ -36,7 +39,7 @@ export const AssignedRolesTable: any = (props: { resourceId: string, assignId: n
         }
         setUpdatingAssignment(false)
         // eslint-disable-next-line
-    }, [id, currentAssignedRolePage, assignedRoleSize, updatingAssignment])
+    }, [id, currentAssignedRolePage, assignedRoleSize, updatingAssignment, selected, searchString, roleType])
 
 //TODO: Sjekk om funkjoner kan flyttes ut
     const deleteAssignmentById = (assignmentId: number) => {

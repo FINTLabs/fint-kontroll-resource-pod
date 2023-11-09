@@ -27,18 +27,20 @@ type Props = {
     basePath: string;
 };
 
-const ResourceProvider = ({children, basePath}: Props) => {
-    // const [basePath, setBasePath] = useState<string>(contextDefaultValues.basePath);
-    // const [validForOrgUnits] = useState<IResourceItem[] | null>(contextDefaultValues.validForOrgUnits);
+const getInitialOrgUnit = () => {
+    const selected = localStorage.getItem("selected");
+    return selected ? JSON.parse(selected) : contextDefaultValues.selected
+};
 
+const ResourceProvider = ({children, basePath}: Props) => {
+    // const [validForOrgUnits] = useState<IResourceItem[] | null>(contextDefaultValues.validForOrgUnits);
     const [orgUnitPage] = useState<IOrgUnitPage | null>(contextDefaultValues.orgUnitPage);
     const [orgUnits] = useState<IOrgUnit[]>(contextDefaultValues.orgUnits);
     const [orgName, setOrgName] = useState<string>(contextDefaultValues.orgName);
-    const [organisationUnitId, setOrganisationUnitId] = useState<number>(contextDefaultValues.organisationUnitId);
+    const [organisationUnitId, setOrganisationUnitId] = useState<string>(contextDefaultValues.organisationUnitId);
     const [unitTree, setUnitTree] = useState<IUnitTree | null>(contextDefaultValues.unitTree);
     const [selectedOrgUnits, setSelectedOrgUnits] = useState<IUnitItem[]>(contextDefaultValues.selectedOrgUnits);
-
-    const [selected, setSelected] = useState<number[]>(contextDefaultValues.selected);
+    const [selected, setSelected] = useState<string[]>(getInitialOrgUnit);
 
     const [resourceItem] = useState<IResourceItem | null>(contextDefaultValues.resourceItem);
     const [resourceDetails, setResourceDetails] = useState<IResource | null>(contextDefaultValues.resourceDetails);
@@ -68,6 +70,11 @@ const ResourceProvider = ({children, basePath}: Props) => {
     const [currentAssignedRolePage, setCurrentAssignedRolePage] = useState<number>(contextDefaultValues.currentAssignedRolePage);
 
     const [objectType, setObjectType] = useState<string>("")
+
+
+    useEffect(() => {
+        localStorage.setItem("selected", JSON.stringify(selected))
+    }, [selected])
 
     const createUserAssignment = (resourceRef: number, userRef: number, organizationUnitId: string) => {
         console.log("resourceRef:", resourceRef, "userRef:", userRef, "organizationUnitId:", organizationUnitId)
@@ -150,7 +157,7 @@ const ResourceProvider = ({children, basePath}: Props) => {
 
     const getAssignedUsersPage = (id: number) => {
         if (basePath) {
-            ResourceRepository.getAssignmentsPage(basePath, id, currentAssignmentPage, assignmentSize, userType, searchString)
+            ResourceRepository.getAssignmentsPage(basePath, id, currentAssignmentPage, assignmentSize, userType, selected, searchString)
                 .then(response => setAssignedUsersPage(response.data))
                 .catch((err) => console.error(err))
         }
@@ -158,7 +165,7 @@ const ResourceProvider = ({children, basePath}: Props) => {
 
     const getAssignedRolesPage = (id: number) => {
         if (basePath) {
-            ResourceRepository.getAssignedRolesPage(basePath, id, roleType, currentAssignedRolePage, assignedRoleSize)
+            ResourceRepository.getAssignedRolesPage(basePath, id, roleType, currentAssignedRolePage, assignedRoleSize, selected, searchString)
                 .then(response => setAssignedRolesPage(response.data))
                 .catch((err) => console.error(err))
         }
@@ -192,7 +199,7 @@ const ResourceProvider = ({children, basePath}: Props) => {
         }
     }, [basePath, currentUserPage, size, userType, organisationUnitId, searchString, selected]);
 
-    const updateOrganisationUnitId = (id: number) => {
+    const updateOrganisationUnitId = (id: string) => {
         setOrganisationUnitId(id);
     }
 
@@ -248,7 +255,6 @@ const ResourceProvider = ({children, basePath}: Props) => {
                 selectedOrgUnits,
                 setSelectedOrgUnits,
 
-
                 resourceItem,
                 resourceDetails,
                 resourcePage,
@@ -276,8 +282,7 @@ const ResourceProvider = ({children, basePath}: Props) => {
                 assignmentSize,
                 setAssignmentSize,
                 assignedUsersPage,
-                getAssignmentsPage: getAssignedUsersPage,
-
+                getAssignedUsersPage,
 
                 getAssignedRolesPage,
                 assignedRolesPage,

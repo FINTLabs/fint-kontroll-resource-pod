@@ -28,13 +28,13 @@ function ResourceInfo() {
                     sx={{minWidth: '80px'}}
                     id={"button-add-assignment"}
                     variant={"contained"}
-                    aria-label="Toggle"
+                    aria-label="Ny tildeling"
                     color={"primary"}
                     component={Link}
                     to={`tildeling`}
                     onClick={handleClick}
                 >
-                    Legg til ressurs
+                    Ny tildeling
                 </Button>
             </Box>
             <Paper>

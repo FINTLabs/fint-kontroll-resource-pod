@@ -103,7 +103,7 @@ function UnitSelectDialog({open, onClose}: DialogUnitProps) {
         const findChildren = (node: IUnitItem) => {
             if (Array.isArray(node.childrenRef)) {
                 for (const nodeId of node.childrenRef) {
-                    const childNode = unitTree?.orgUnits.find((n) => n.organisationUnitId === nodeId);
+                    const childNode = unitTree?.orgUnits.find((n) => n.organisationUnitId === nodeId.toString());
                     if (childNode) {
                         childrenOrgUnits.push(childNode);
                         findChildren(childNode);
@@ -138,7 +138,7 @@ function UnitSelectDialog({open, onClose}: DialogUnitProps) {
                 {Array.isArray(nodes.childrenRef)
                     ? nodes.childrenRef.map((nodeId: number) => {
                         const node = unitTree?.orgUnits.find(
-                            (n) => n.organisationUnitId === nodeId
+                            (n) => n.organisationUnitId === nodeId.toString()
                         );
                         if (node) {
                             return renderTree(node);

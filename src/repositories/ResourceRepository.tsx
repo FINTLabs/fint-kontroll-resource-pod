@@ -31,7 +31,7 @@ const getResourceById = (id: number, basePath: string) => {
 }
 
 const getResourcePage =
-    (basePath: string, resourcePage: number, resourceSize: number, userType: string, organisationUnitId: number[],
+    (basePath: string, resourcePage: number, resourceSize: number, userType: string, organisationUnitId: string[],
      searchString: string) => {
         const baseUrl = `${basePath === '/' ? '' : basePath}/api/resources`;
         let queryParams = [];
@@ -59,7 +59,7 @@ const getResourcePage =
     }
 
 const getUserPage = (basePath: string, page: number, size: number,
-                     userType: string, organisationUnitId: number[], searchString: string) => {
+                     userType: string, organisationUnitId: string[], searchString: string) => {
     const baseUrl = `${basePath === '/' ? '' : basePath}/api/users`;
     let queryParams = [];
 
@@ -89,7 +89,7 @@ const getUserPage = (basePath: string, page: number, size: number,
     return axios.get<IUserPage>(url);
 }
 
-const getRolePage = (basePath: string, roleType: string, currentRolePage: number, roleSize: number, organisationUnitId: number[], searchString: string) => {
+const getRolePage = (basePath: string, roleType: string, currentRolePage: number, roleSize: number, organisationUnitId: string[], searchString: string) => {
     const baseUrl = `${basePath === '/' ? '' : basePath}/api/roles`;
     let queryParams = [];
 
@@ -118,12 +118,16 @@ const getRolePage = (basePath: string, roleType: string, currentRolePage: number
     return axios.get<IRolePage>(url);
 }
 
-const getAssignedRolesPage = (basePath: string, id: number, roleType: string, currentAssignedRolePage: number, assignedRoleSize: number) => {
+const getAssignedRolesPage = (basePath: string, id: number, roleType: string, currentAssignedRolePage: number, assignedRoleSize: number, organisationUnitId: string[], searchString: string) => {
     const baseUrl = `${basePath === '/' ? '' : basePath}/api/assignments/resource/${id}/roles`;
     let queryParams = [];
+    const sanitizedQueryString = searchString.trim();
+    if (sanitizedQueryString.length !== 0) {
+        queryParams.push(`search=${searchString}`);
+    }
 
     if (roleType) {
-        queryParams.push(`roletype=${roleType}`);
+        queryParams.push(`roleType=${roleType}`);
     }
 
     if (assignedRoleSize) {
@@ -134,12 +138,16 @@ const getAssignedRolesPage = (basePath: string, id: number, roleType: string, cu
         queryParams.push(`page=${currentAssignedRolePage}`);
     }
 
+    if (organisationUnitId && organisationUnitId.length > 0) {
+        queryParams.push(`orgUnits=${organisationUnitId}`);
+    }
+
     const url = `${baseUrl}${queryParams.length > 0 ? '?' : ''}${queryParams.join('&')}`;
 
     return axios.get<IAssignedRolesPage>(url);
 }
 
-const getAssignedUsersPage = (basePath: string, id: number, assignedUsersPage: number, assignmentSize: number, userType: string, searchString: string) => {
+const getAssignedUsersPage = (basePath: string, id: number, assignedUsersPage: number, assignmentSize: number, userType: string, organisationUnitId: string[], searchString: string) => {
     const baseUrl = `${basePath === '/' ? '' : basePath}/api/assignments/resource/${id}/users`;
     let queryParams = [];
 
@@ -158,6 +166,10 @@ const getAssignedUsersPage = (basePath: string, id: number, assignedUsersPage: n
 
     if (assignedUsersPage) {
         queryParams.push(`page=${assignedUsersPage}`);
+    }
+
+    if (organisationUnitId && organisationUnitId.length > 0) {
+        queryParams.push(`orgUnits=${organisationUnitId}`);
     }
 
     const url = `${baseUrl}${queryParams.length > 0 ? '?' : ''}${queryParams.join('&')}`;
