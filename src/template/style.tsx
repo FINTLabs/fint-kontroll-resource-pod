@@ -3,7 +3,7 @@ import theme from "./theme";
 const style = {
     content: {
         [theme.breakpoints.up("sm")]: {
-            margin: theme.spacing(10)
+            margin: theme.spacing(8)
         },
     },
     filters: {
@@ -13,7 +13,7 @@ const style = {
         [theme.breakpoints.down("md")]: {
             display: "flex",
             flexDirection: "column",
-            margin: theme.spacing(10)
+            margin: theme.spacing(8)
         }
     },
     table: {

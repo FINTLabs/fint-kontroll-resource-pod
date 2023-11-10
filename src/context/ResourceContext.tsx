@@ -71,6 +71,8 @@ const ResourceProvider = ({children, basePath}: Props) => {
 
     const [objectType, setObjectType] = useState<string>("")
 
+    const [error, setError] = useState<string | null>(null);
+
 
     useEffect(() => {
         localStorage.setItem("selected", JSON.stringify(selected))
@@ -105,10 +107,12 @@ const ResourceProvider = ({children, basePath}: Props) => {
     const deleteAssignment = (id: number) => {
         ResourceRepository.deleteAssignment(basePath, id)
             .then(response => {
-                    console.log("Dette er responsen", response)
+                    console.log(response)
                 }
             )
             .catch((err) => {
+                const errorObject = new Error((err as Error).message);
+                setError(errorObject.message);
                 console.error(err);
             })
     }
@@ -167,7 +171,12 @@ const ResourceProvider = ({children, basePath}: Props) => {
         if (basePath) {
             ResourceRepository.getAssignedRolesPage(basePath, id, roleType, currentAssignedRolePage, assignedRoleSize, selected, searchString)
                 .then(response => setAssignedRolesPage(response.data))
-                .catch((err) => console.error(err))
+                // .catch((err) => console.error(err))
+                .catch((err) => {
+                    const errorObject = new Error((err as Error).message);
+                    setError(errorObject.message);
+                    console.error(err);
+                })
         }
     }
 
@@ -176,7 +185,12 @@ const ResourceProvider = ({children, basePath}: Props) => {
             if (basePath) {
                 ResourceRepository.getRolePage(basePath, roleType, currentRolePage, roleSize, selected, searchString)
                     .then(response => setRolePage(response.data))
-                    .catch((err) => console.error(err))
+                    // .catch((err) => console.error(err))
+                    .catch((err) => {
+                        const errorObject = new Error((err as Error).message);
+                        setError(errorObject.message);
+                        console.error(err);
+                    })
             }
         }
         if (searchString.length >= 3 || searchString.length === 0) {
@@ -304,6 +318,8 @@ const ResourceProvider = ({children, basePath}: Props) => {
                 deleteAssignment,
                 objectType,
                 setObjectType,
+
+                error,
             }}
         >
             {children}

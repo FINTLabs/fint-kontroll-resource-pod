@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {Box, Button, TableFooter, TablePagination} from "@mui/material";
+import {Alert, Box, Button, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
 import DeleteIcon from '@mui/icons-material/Delete';
 import TablePaginationActions from "../main/TableFooter";
@@ -26,6 +26,7 @@ export const AssignedRolesTable: any = (props: { resourceId: string, assignId: n
         currentAssignedRolePage,
         updateCurrentAssignedRolePage,
         getAssignedRolesPage,
+        error,
     } = useContext(ResourceContext);
 
     const {id} = useParams<string>();
@@ -80,6 +81,10 @@ export const AssignedRolesTable: any = (props: { resourceId: string, assignId: n
             <DeleteDialog open={deleteDialogOpen} userId={""} assignId={0}
                           onConfirm={() => onRemoveAssignmentConfirmed()}
                           onCancel={onRemoveAssignmentCancel}/>
+            {error && (
+                <Alert severity="warning">{error}</Alert>
+            )}
+
             <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"roleAssignmentTable"}>
                 <Table aria-label="Role-assignment-table">
 

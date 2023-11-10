@@ -221,6 +221,8 @@ export type ResourceContextState = {
 
     objectType: string;
     setObjectType: (objectType: string) => void;
+
+    error: string | null;
 };
 
 export const contextDefaultValues: ResourceContextState = {
@@ -303,5 +305,6 @@ export const contextDefaultValues: ResourceContextState = {
     objectType: "",
     setObjectType(objectType: string): void {
     },
+    error: null,
 };
 
