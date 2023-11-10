@@ -1,5 +1,4 @@
 import {createTheme} from '@mui/material/styles';
-//import type {} from '@mui/lab/themeAugmentation';
 import {nbNO} from '@mui/material/locale';
 
 const theme = createTheme({
@@ -29,6 +28,7 @@ const theme = createTheme({
                 fontSize: '1rem',
                 fontWeight: "normal",
             },
+            fontSize: 15,
             fontFamily: [
                 "Nunito Sans", 'sans-serif'
             ].join(',')
@@ -46,12 +46,21 @@ const theme = createTheme({
                         }
                     },
                     {
+                        props: {variant: "outlined"},
+                        style: {
+                            color: "primary",
+                            textTransform: 'none',
+                            fontSize: 16,
+                            fontWeight: 600,
+                        }
+                    },
+                    {
                         props: {variant: "text"},
                         style: {
                             color: "primary",
                             textTransform: 'none',
                             fontSize: 16,
-                            fontWeight: 500,
+                            fontWeight: 600,
                         }
                     },
 

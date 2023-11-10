@@ -109,7 +109,7 @@ export const AssignedRolesTable: any = (props: { resourceId: string, assignId: n
                                 <TableCell align="right">
                                     <Button
                                         id={`buttonDeleteRoleAssignment-${role.id}`}
-                                        variant={"text"}
+                                        variant={"outlined"}
                                         aria-label="Slett ressurs"
                                         color={"error"}
                                         endIcon={<DeleteIcon/>}

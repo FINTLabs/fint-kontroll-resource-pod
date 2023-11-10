@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import {ResourceContext} from "../../context";
 import Typography from "@mui/material/Typography";
 import {Link} from "react-router-dom";
+import {Add} from "@mui/icons-material";
 
 function ResourceInfo() {
 
@@ -30,6 +31,7 @@ function ResourceInfo() {
                     variant={"contained"}
                     aria-label="Ny tildeling"
                     color={"primary"}
+                    endIcon={<Add/>}
                     component={Link}
                     to={`tildeling`}
                     onClick={handleClick}

@@ -110,7 +110,7 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
                                         :
                                         <Button
                                             id={`buttonAddAssignment-${user.id}`}
-                                            variant={"text"}
+                                            variant={"outlined"}
                                             aria-label="Legg til ressurs"
                                             onClick={() => assign(props.resourceId, user.id, "36")}
                                             color={"primary"}

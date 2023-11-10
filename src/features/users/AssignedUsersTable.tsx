@@ -112,7 +112,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
 
                                     <Button
                                         //  id={`buttonDeleteAssignment-${user.id}`}
-                                        variant={"text"}
+                                        variant={"outlined"}
                                         aria-label="Slett ressurs"
                                         color={"error"}
                                         endIcon={<DeleteIcon/>}

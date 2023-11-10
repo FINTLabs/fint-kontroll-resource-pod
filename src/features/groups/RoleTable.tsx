@@ -110,7 +110,7 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
                                         :
                                         <Button
                                             id={`buttonAddAssignmentRole-${roles.id}`}
-                                            variant={"text"}
+                                            variant={"outlined"}
                                             aria-label="Legg til ressurs"
                                             onClick={() => assign(props.resourceId, roles.id, "198")}
                                             color={"primary"}
