@@ -29,7 +29,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
         getAssignedUsersPage
     } = useContext(ResourceContext);
 
-    const basePath = useBasePath() || '/'
+    const basePath = useBasePath() || ''
     const {id} = useParams<string>();
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
     const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false)

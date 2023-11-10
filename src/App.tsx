@@ -7,7 +7,7 @@ import {BasePathProvider, useBasePath} from "./context/BasePathContext";
 import ResourceProvider from "./context/ResourceContext";
 
 function App() {
-    const basePath = useBasePath() || '/';
+    const basePath = useBasePath() || '';
     return (
         <ThemeProvider theme={theme}>
             <BasePathProvider>
