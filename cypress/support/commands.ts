@@ -74,15 +74,15 @@ Cypress.Commands.add('interceptAndReturnFile', interceptAndReturnFile)
 
 
 export function goToHome() {
-    return cy.visit('http://localhost:3001');
+    return cy.visit('http://localhost:3000');
 }
 
 export function goToInfo() {
-    return cy.visit('http://localhost:3001/info/1');
+    return cy.visit('http://localhost:3000/info/1');
 }
 
 export function goToAssignments() {
-    return cy.visit('http://localhost:3001/info/1/tildeling');
+    return cy.visit('http://localhost:3000/info/1/tildeling');
 }
 Cypress.Commands.add('goToHome', goToHome)
 Cypress.Commands.add('goToInfo', goToInfo)

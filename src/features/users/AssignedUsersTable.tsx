@@ -12,21 +12,24 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteDialog from "../details/DeleteDialog";
 import TablePaginationActions from "../main/TableFooter";
 import {useParams} from "react-router-dom";
+import {useBasePath} from "../../context/BasePathContext";
 
 export const AssignedUsersTable: any = (props: { resourceId: string, assignId: number, userId: string }) => {
 
     const {
-       // searchValue,
-       // searchString,
         deleteAssignment,
         updateCurrentAssignmentPage,
         assignmentSize,
         setAssignmentSize,
         currentAssignmentPage,
         assignedUsersPage,
-        getAssignmentsPage,
+        selected,
+        userType,
+        searchString,
+        getAssignedUsersPage
     } = useContext(ResourceContext);
 
+    const basePath = useBasePath() || '/'
     const {id} = useParams<string>();
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
     const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false)
@@ -34,11 +37,11 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
 
     useEffect(() => {
         if (id) {
-            getAssignmentsPage(parseInt(id));
+            getAssignedUsersPage(parseInt(id));
         }
         setUpdatingAssignment(false)
         // eslint-disable-next-line
-    }, [id, currentAssignmentPage, assignmentSize, updatingAssignment])
+    }, [basePath, id, currentAssignmentPage, assignmentSize, updatingAssignment, selected, userType, searchString])
 
 
     const deleteAssignmentById = (assignmentId: number) => {

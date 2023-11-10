@@ -10,7 +10,7 @@ function MainContainer() {
     const basePath = useBasePath() || '';
 
     return (
-        <Box sx={style.content}>
+        <Box sx={style.content} >
             <Box sx={style.table}>
                 <ResourceProvider basePath={basePath}>
                     <ResourceTable/>

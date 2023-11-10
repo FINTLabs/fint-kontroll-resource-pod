@@ -9,7 +9,6 @@ export default function FilterGroupType() {
 
     function handleChange(event: SelectChangeEvent) {
         updateRoleType(event.target.value as string);
-        console.log(event.target.value as string + "test")
     }
 
     const updateRolePage = () => {
@@ -30,8 +29,8 @@ export default function FilterGroupType() {
                 Gruppetype
             </InputLabel>
             <Select
-                labelId="valg-brukertype"
-                id="brukertype"
+                labelId="valg-gruppetype"
+                id="rolletype"
                 value={roleType}
                 label="Gruppetype"
                 onChange={handleChange}
@@ -42,7 +41,6 @@ export default function FilterGroupType() {
                     </MenuItem>
                 ))}
             </Select>
-
         </FormControl>
     );
 }

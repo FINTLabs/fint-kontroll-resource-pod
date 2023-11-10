@@ -4,7 +4,7 @@ describe('Check resource home page', () => {
     const userType = 'STUDENT';
 
     beforeEach(() => {
-        const baseUrl = "http://localhost:3001/api";
+        const baseUrl = "http://localhost:3000/api";
         cy.interceptAndReturnFile("GET", `${baseUrl}/orgunits`, "orgunits.json");
         cy.interceptAndReturnFile("GET", `${baseUrl}/orgunits/orgTree`, "orgunits.json");
         cy.interceptAndReturnFile("GET", `${baseUrl}/users?size=5`, "users.json");
@@ -16,7 +16,7 @@ describe('Check resource home page', () => {
     });
 
     it('Connect to localhost', () => {
-        cy.visit('http://localhost:3001/ressurser')
+        cy.visit('http://localhost:3000/ressurser')
     })
 
     it('Check type in searchField, and clear input', () => {
@@ -78,9 +78,10 @@ describe('Check resource home page', () => {
 describe('Check the resource details page', () => {
 
     const searchTextUser = 'Karen';
+    const searchTextRole = 'KOMP';
 
     beforeEach(() => {
-        const baseUrl = "http://localhost:3001";
+        const baseUrl = "http://localhost:3000";
         cy.interceptAndReturnFile("GET", `${baseUrl}/api/resources`, "resources.json");
         cy.interceptAndReturnFile("GET", `${baseUrl}/api/resources/1`, "resourceDetailed.json");
         cy.interceptAndReturnFile("GET", `${baseUrl}/api/assignments`, "assignedUsers.json");
@@ -92,7 +93,7 @@ describe('Check the resource details page', () => {
     });
 
     it('Connect to localhost for resource info', () => {
-        cy.visit('http://localhost:3001/ressurser/info/1')
+        cy.visit('http://localhost:3000/ressurser/info/1')
     })
 
     it('Check role assignment table (exists, has 5 rows)', () => {
@@ -102,6 +103,35 @@ describe('Check the resource details page', () => {
             .find('tbody tr')
             .should('have.length', 5);
     });
+
+    it('Check searchfield for role, type and clear input', () => {
+        cy.goToInfo();
+        cy.get('#outlined-search-role').should('exist')
+        cy.get('#outlined-search-role').should('have.value', '')
+        cy.get('#showClearIcon').should('not.be.visible')
+        cy.get('#outlined-search-role').type(searchTextRole).should('have.value', searchTextRole)
+        cy.wait(1000)
+        cy.get('#showClearIcon').should('be.visible')
+        cy.get('#outlined-search-role').should('be.visible')
+        cy.wait(1000)
+        cy.get('#showClearIcon').click();
+        cy.get('#outlined-search-role').should('have.value', '')
+    });
+
+    it('Check select roletype (options, clickable)', () => {
+        cy.goToInfo();
+       // cy.get('#select-users-or-groups').click();
+       // cy.get('[data-value="Brukere"]').click()
+        cy.get('#rolletype').should('exist')
+        cy.get('#valg-gruppetype').should('have.text', 'Gruppetype')
+        cy.get('#rolletype').click();
+        cy.get('[data-value="elev"]').click()
+        cy.get('#rolletype').should('have.text', 'Elev')
+        cy.get('#rolletype').click();
+        cy.get('[data-value="ansatt"]').click()
+        cy.get('#rolletype').should('have.text', 'Ansatt')
+        cy.get('#rolletype').click();
+    })
 
     it('Check select objecttype (options, clickable)', () => {
         cy.goToInfo();
@@ -115,6 +145,21 @@ describe('Check the resource details page', () => {
         cy.get('#select-users-or-groups').should('have.text', 'Brukere')
         cy.get('#select-users-or-groups').click();
         cy.wait(2000)
+    })
+
+    it('Check select usertype (options, clickable)', () => {
+        cy.goToAssignments();
+        cy.get('#select-users-or-groups').click();
+        cy.get('[data-value="Brukere"]').click()
+        cy.get('#brukertype').should('exist')
+        cy.get('#valg-brukertype').should('have.text', 'Brukertype')
+        cy.get('#brukertype').click();
+        cy.get('[data-value="STUDENT"]').click()
+        cy.get('#brukertype').should('have.text', 'Elev')
+        cy.get('#brukertype').click();
+        cy.get('[data-value="EMPLOYEE"]').click()
+        cy.get('#brukertype').should('have.text', 'Ansatt')
+        cy.get('#brukertype').click();
     })
 
     it('Check user table (exists, has 5 rows)', () => {
@@ -237,7 +282,7 @@ describe('Check the assignment page', () => {
     const searchTextUser = 'Karen';
     const searchTextRole = 'Kompetanse';
 
-    const baseUrl = "http://localhost:3001";
+    const baseUrl = "http://localhost:3000";
     beforeEach(() => {
         cy.interceptAndReturnFile("GET", `${baseUrl}/api/resources?size=5`, "resources.json");
         cy.interceptAndReturnFile("GET", `${baseUrl}/api/resources/1`, "resourceDetailed.json");
@@ -250,7 +295,7 @@ describe('Check the assignment page', () => {
     });
 
     it('Connect to localhost for assignments', () => {
-        cy.visit('http://localhost:3001/ressurser/info/1/tildeling')
+        cy.visit('http://localhost:3000/ressurser/info/1/tildeling')
     })
 
     it('Check role table (exists, has 5 rows)', () => {

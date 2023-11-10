@@ -24,7 +24,7 @@ export default function FilterGroupUser() {
                 Velg Brukere / Grupper
             </InputLabel>
             <Select
-                labelId="select-users-or-groups-label"
+                labelId="velg-bruker-eller-gruppe"
                 id="select-users-or-groups"
                 value={objectType}
                 label="Velg Brukere / Grupper"

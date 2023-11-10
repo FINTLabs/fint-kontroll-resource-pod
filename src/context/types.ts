@@ -19,6 +19,8 @@ export interface IRole {
     "roleName": string;
     "roleType": string;
     "assignmentRef": number;
+    "organisationUnitId": string,
+    "organisationUnitName": string,
 }
 
 export interface IRoleItem {
@@ -42,7 +44,7 @@ export interface IUserItem {
     "id": number;
     "fullName": string;
     "organisationUnitName": string;
-    "organisationUnitId": number;
+    "organisationUnitId": string;
     "userType": string;
 }
 
@@ -79,7 +81,7 @@ export interface IResourcePage {
 export interface IOrgUnit {
     "id": number;
     "name": string;
-    "organisationUnitId": number;
+    "organisationUnitId": string;
 }
 
 export interface IOrgUnitPage {
@@ -93,7 +95,7 @@ export interface IUnitItem {
     id: number;
     resourceId: string;
     name: string;
-    organisationUnitId: number;
+    organisationUnitId: string;
     parentRef: number;
     childrenRef: number[];
 }
@@ -162,12 +164,12 @@ export type ResourceContextState = {
     orgUnits: IOrgUnit[];
     orgName: string;
     orgUnitPage: IOrgUnitPage | null;
-    organisationUnitId: number;
+    organisationUnitId: string;
     unitTree: IUnitTree | null;
-    selected: number[];
-    setSelected: (selected: number[]) => void;
+    selected: string[];
+    setSelected: (selected: string[]) => void;
     getOrgName: (orgName: string) => void;
-    updateOrganisationUnitId: (id: number) => void;
+    updateOrganisationUnitId: (id: string) => void;
     selectedOrgUnits: IUnitItem[];
     setSelectedOrgUnits: (selectedOrgUnits: IUnitItem[]) => void;
 
@@ -196,7 +198,7 @@ export type ResourceContextState = {
     assignmentSize: number;
     setAssignmentSize: (assignmentSize: number) => void;
     assignedUsersPage: IAssignedUsersPage | null;
-    getAssignmentsPage: (id: number) => void;
+    getAssignedUsersPage: (id: number) => void;
 
     rolePage: IRolePage | null;
     roleType: string;
@@ -219,6 +221,8 @@ export type ResourceContextState = {
 
     objectType: string;
     setObjectType: (objectType: string) => void;
+
+    error: string | null;
 };
 
 export const contextDefaultValues: ResourceContextState = {
@@ -228,10 +232,10 @@ export const contextDefaultValues: ResourceContextState = {
     orgUnits: [],
     orgName: "",
     orgUnitPage: null,
-    organisationUnitId: 0,
+    organisationUnitId: '',
     unitTree: null,
     selected: [],
-    setSelected(selected: number[]): void {
+    setSelected(selected: string[]): void {
     },
     getOrgName(): void {
     },
@@ -271,7 +275,7 @@ export const contextDefaultValues: ResourceContextState = {
     setAssignmentSize(assignmentSize: number): void {
     },
     assignedUsersPage: null,
-    getAssignmentsPage(): void {
+    getAssignedUsersPage(): void {
     },
     rolePage: null,
     roleType: "",
@@ -301,5 +305,6 @@ export const contextDefaultValues: ResourceContextState = {
     objectType: "",
     setObjectType(objectType: string): void {
     },
+    error: null,
 };
 

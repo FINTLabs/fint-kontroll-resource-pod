@@ -39,11 +39,13 @@ function DetailsContainer() {
                 </Typography>
                 <DetailsToolBar/>
             </Box>
-            {objectType === 'Brukere' ?
-                <AssignedUsersTable resourceId={id}/>
-                :
-                <AssignedRolesTable resourceId={id}/>
-            }
+            <Box role="main">
+                {objectType === 'Brukere' ?
+                    <AssignedUsersTable resourceId={id}/>
+                    :
+                    <AssignedRolesTable resourceId={id}/>
+                }
+            </Box>
         </Box>
     );
 }
