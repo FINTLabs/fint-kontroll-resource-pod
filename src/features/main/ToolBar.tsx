@@ -32,12 +32,11 @@ function CustomTableToolbar(props: CustomTableToolbarProps) {
             <Button
                 id={'selectUnits'}
                 variant="outlined"
-                startIcon={<Apartment/>}
+                endIcon={<Apartment/>}
                 onClick={onShowDialog}
                 sx={style.changeOrgButton}
-                style={{fontWeight: 'normal'}}
             >
-                Velg enhet
+                Velg orgenhet
             </Button>
         </Toolbar>
     );
