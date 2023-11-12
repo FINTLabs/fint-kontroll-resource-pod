@@ -18,7 +18,7 @@ const AlertDialog = (props: {
 }) => {
 
     return (
-        <div>
+        <React.Fragment>
             <Dialog
                 id="delete-dialog"
                 open={props.open}
@@ -54,7 +54,7 @@ const AlertDialog = (props: {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </div>
+        </React.Fragment>
     );
 }
 

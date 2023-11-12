@@ -39,7 +39,7 @@ function DetailsContainer() {
                 </Typography>
                 <DetailsToolBar/>
             </Box>
-            <Box role="main">
+            <Box>
                 {objectType === 'Brukere' ?
                     <AssignedUsersTable resourceId={id}/>
                     :

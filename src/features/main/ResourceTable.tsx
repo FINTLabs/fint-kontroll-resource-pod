@@ -88,7 +88,7 @@ export const ResourceTable: any = (props: { resourceId: string, assignId: number
                                         <Button
                                             id={`iconResourceInfo-${resources.id}`}
                                             variant={"outlined"}
-                                            aria-label="informasjon"
+                                            aria-label="Se informasjon"
                                             component={Link}
                                             to={`info/${resources.id}`}
                                             onClick={handleClick}
