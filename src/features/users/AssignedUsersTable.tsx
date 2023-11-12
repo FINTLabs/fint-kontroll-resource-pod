@@ -84,7 +84,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
             <DeleteDialog open={deleteDialogOpen} userId={""} assignId={0}
                           onConfirm={() => onRemoveAssignmentConfirmed()}
                           onCancel={onRemoveAssignmentCancel}/>
-            <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"userTable"}>
+            <TableContainer sx={{minWidth: 1040, maxWidth: 1920}} id={"userTable"}>
                 <Table aria-label="Users-table">
 
                     <TableHead>

@@ -71,7 +71,7 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
 
     return (
         <Box>
-            <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"roleTable"}>
+            <TableContainer sx={{minWidth: 1040, maxWidth: 1920}} id={"roleTable"}>
                 <Table aria-label="Role-assignment-table">
                     <TableHead>
                         <TableRow sx={{fontWeight: 'bold'}}>

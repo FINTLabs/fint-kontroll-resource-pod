@@ -6,9 +6,8 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import IconButton from '@mui/material/IconButton';
-import {ArrowCircleRightOutlined} from "@mui/icons-material";
-import {Box, TableFooter, TablePagination, Tooltip} from "@mui/material";
+import {InfoOutlined} from "@mui/icons-material";
+import {Box, Button, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
 import ToolBar from "./ToolBar";
 import DialogUnit from "./DialogUnit";
@@ -59,7 +58,7 @@ export const ResourceTable: any = (props: { resourceId: string, assignId: number
                 onClose={handleTypeSelect}
                 open={openDialog}
             />
-            <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"resourceTable"}>
+            <TableContainer sx={{minWidth: 1040, maxWidth: 1920}} id={"resourceTable"}>
                 <ToolBar onShowDialog={() => setOpenDialog(true)}/>
                 <Table aria-label="resource-table" role="main">
                     <TableHead>
@@ -85,9 +84,21 @@ export const ResourceTable: any = (props: { resourceId: string, assignId: number
                                     <TableCell align="left">{resources.resourceType}</TableCell>
                                     <TableCell align="left">{resources.resourceLimit}</TableCell>
                                     <TableCell align="left">{resources.resourceLimit}</TableCell>
-                                    {/*<TableCell align="left">{resources.validForOrgUnits[0].orgUnitName}</TableCell>*/}
-                                    <TableCell align="left">
-                                        <Tooltip title={"Se detaljer"}>
+                                    <TableCell align="right">
+                                        <Button
+                                            id={`iconResourceInfo-${resources.id}`}
+                                            variant={"outlined"}
+                                            aria-label="informasjon"
+                                            component={Link}
+                                            to={`info/${resources.id}`}
+                                            onClick={handleClick}
+                                            color={"primary"}
+                                            endIcon={<InfoOutlined/>}
+                                        >
+                                            Se info
+                                        </Button>
+
+                                        {/*<Tooltip title={"Se detaljer"}>
                                             <IconButton
                                                 id={`iconResourceInfo-${resources.id}`}
                                                 aria-label="informasjon"
@@ -96,7 +107,7 @@ export const ResourceTable: any = (props: { resourceId: string, assignId: number
                                                 onClick={handleClick}>
                                                 <ArrowCircleRightOutlined color={"primary"}/>
                                             </IconButton>
-                                        </Tooltip>
+                                        </Tooltip>*/}
                                     </TableCell>
                                 </TableRow>
                             ))}

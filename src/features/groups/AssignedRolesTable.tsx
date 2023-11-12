@@ -85,7 +85,7 @@ export const AssignedRolesTable: any = (props: { resourceId: string, assignId: n
                 <Alert severity="warning">{error}</Alert>
             )}
 
-            <TableContainer sx={{minWidth: 1040, maxWidth: 1536}} id={"roleAssignmentTable"}>
+            <TableContainer sx={{minWidth: 1040, maxWidth: 1920}} id={"roleAssignmentTable"}>
                 <Table aria-label="Role-assignment-table">
 
                     <TableHead>
