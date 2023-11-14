@@ -13,6 +13,7 @@ import {ICreateUserAssignment} from "../../context/types";
 import {Add, Check} from "@mui/icons-material";
 import TablePaginationActions from "../main/TableFooter";
 import {useBasePath} from "../../context/BasePathContext";
+import AssignDialog from "../assignment/AssignDialog";
 
 export const UserTable: any = (props: { resourceId: number, assignId: number, userId: number }) => {
 
@@ -28,6 +29,8 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
 
     const [createAssignments, setCreateAssignments] = useState<ICreateUserAssignment[]>([]);
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
+    const [assignDialogOpen, setAssignDialogOpen] = useState<boolean>(false)
+
     const basePath = useBasePath() || '';
 
 
@@ -42,8 +45,8 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
         refreshAssignments()
     }, [updatingAssignment, basePath])
 
-    const assign = (resourceRef: number, userRef: number, organizationUnitId: string = '36'): void => {
-        setUpdatingAssignment(true)
+    const assign = (resourceRef: number, userRef: number, organizationUnitId: string): void => {
+        setAssignDialogOpen(true)
         createUserAssignment(resourceRef, userRef, organizationUnitId);
         searchValue("");
     };
@@ -69,8 +72,21 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
         updateCurrentUserPage(0);
     };
 
+    const onAssignmentConfirmed = () => {
+        setAssignDialogOpen(false)
+        setUpdatingAssignment(true)
+    };
+
+    const onAssignmentCancel = () => {
+        setAssignDialogOpen(false)
+        setUpdatingAssignment(false)
+    };
+
     return (
         <Box>
+            <AssignDialog open={assignDialogOpen}
+                          onConfirm={() => onAssignmentConfirmed()}
+                          onCancel={onAssignmentCancel}/>
             <TableContainer sx={{minWidth: 1040, maxWidth: 1920}} id={"userAssignmentTable"}>
                 <Table aria-label="Users-table">
                     <TableHead>
@@ -100,7 +116,7 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
                                             id={`buttonAddAssignment-${user.id}`}
                                             variant={"text"}
                                             aria-label="Legg til ressurs"
-                                            onClick={() => assign(props.resourceId, user.id, "36")}
+                                            // onClick={() => assign(props.resourceId, user.id, user.organisationUnitId)}
                                             color={"primary"}
                                             endIcon={<Check/>}
                                             disabled={isAssigned(user.id)}
@@ -112,7 +128,7 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
                                             id={`buttonAddAssignment-${user.id}`}
                                             variant={"outlined"}
                                             aria-label="Legg til ressurs"
-                                            onClick={() => assign(props.resourceId, user.id, "36")}
+                                            onClick={() => assign(props.resourceId, user.id, user.organisationUnitId)}
                                             color={"primary"}
                                             endIcon={<Add/>}
                                         >
