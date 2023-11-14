@@ -13,6 +13,7 @@ import {ICreateRoleAssignment} from "../../context/types";
 import {Add, Check} from "@mui/icons-material";
 import TablePaginationActions from "../main/TableFooter";
 import {useBasePath} from "../../context/BasePathContext";
+import AssignDialog from "../assignment/AssignDialog";
 
 export const RoleTable: any = (props: { resourceId: number, assignId: number, roleId: number }) => {
 
@@ -28,6 +29,8 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
 
     const [createAssignments, setCreateAssignments] = useState<ICreateRoleAssignment[]>([]);
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
+    const [assignDialogOpen, setAssignDialogOpen] = useState<boolean>(false)
+
     const basePath = useBasePath() || '';
 
 
@@ -42,8 +45,8 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
         refreshAssignments()
     }, [updatingAssignment, basePath])
 
-    const assign = (resourceRef: number, roleRef: number, organizationUnitId: string = '36'): void => {
-        setUpdatingAssignment(true)
+    const assign = (resourceRef: number, roleRef: number, organizationUnitId: string): void => {
+        setAssignDialogOpen(true)
         createRoleAssignment(resourceRef, roleRef, organizationUnitId);
         searchValue("");
     };
@@ -69,8 +72,21 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
         updateCurrentRolePage(0);
     };
 
+    const onAssignmentConfirmed = () => {
+        setAssignDialogOpen(false)
+        setUpdatingAssignment(true)
+    };
+
+    const onAssignmentCancel = () => {
+        setAssignDialogOpen(false)
+        setUpdatingAssignment(false)
+    };
+
     return (
         <Box>
+            <AssignDialog open={assignDialogOpen}
+                          onConfirm={() => onAssignmentConfirmed()}
+                          onCancel={onAssignmentCancel}/>
             <TableContainer sx={{minWidth: 1040, maxWidth: 1920}} id={"roleTable"}>
                 <Table aria-label="Role-assignment-table">
                     <TableHead>
@@ -100,7 +116,7 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
                                             id={`buttonIsAssignedRole-${roles.id}`}
                                             variant={"text"}
                                             aria-label="Legg til ressurs"
-                                            onClick={() => assign(props.resourceId, roles.id, "198")}
+                                            // onClick={() => assign(props.resourceId, roles.id, roles.organisationUnitId)}
                                             color={"primary"}
                                             endIcon={<Check/>}
                                             disabled={isAssigned(roles.id)}
@@ -112,7 +128,7 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
                                             id={`buttonAddAssignmentRole-${roles.id}`}
                                             variant={"outlined"}
                                             aria-label="Legg til ressurs"
-                                            onClick={() => assign(props.resourceId, roles.id, "198")}
+                                            onClick={() => assign(props.resourceId, roles.id, roles.organisationUnitId)}
                                             color={"primary"}
                                             endIcon={<Add/>}
                                         >

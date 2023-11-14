@@ -10,25 +10,22 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const AlertDialog = (props: {
     open: boolean,
-    assignId: number,
-    userId: string,
     onConfirm: () => void,
     onCancel: () => void,
-
 }) => {
 
     return (
         <React.Fragment>
             <Dialog
-                id="delete-dialog"
+                id="assign-dialog"
                 open={props.open}
                 onClose={props.onCancel}
-                aria-labelledby="alert-dialog-title"
+                aria-labelledby="assign-dialog-title"
                 aria-describedby="alert-dialog-description"
                 disableEscapeKeyDown={true}
             >
-                <DialogTitle id="alert-dialog-title">
-                    {"Trekke tilgang?"}
+                <DialogTitle id="assign-dialog-title">
+                    {"Fullfør tildelingen"}
                 </DialogTitle>
                 <IconButton
                     aria-label="close"
@@ -43,15 +40,15 @@ const AlertDialog = (props: {
                     <CloseIcon/>
                 </IconButton>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        Er du sikker på at du ønsker å trekke tilgangen til denne ressursen?
+                    <DialogContentText id="assign-dialog-description">
+                        Trykk lagre for å bekrefte tildelingen av ressursen
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions sx={{margin: "1em"}}>
                     <Button variant={"outlined"} onClick={props.onCancel}>Avbryt</Button>
-                    <Button variant={"contained"} id="delete-button" color={"error"} onClick={props.onConfirm}
+                    <Button variant={"contained"} id="assign-button" onClick={props.onConfirm}
                             autoFocus>
-                        Slett
+                        Lagre
                     </Button>
                 </DialogActions>
             </Dialog>
