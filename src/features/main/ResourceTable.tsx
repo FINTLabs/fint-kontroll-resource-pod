@@ -83,7 +83,7 @@ export const ResourceTable: any = (props: { resourceId: string, assignId: number
                                     </TableCell>
                                     <TableCell align="left">{resources.resourceType}</TableCell>
                                     <TableCell align="left">{resources.resourceLimit}</TableCell>
-                                    <TableCell align="left">{resources.resourceLimit}</TableCell>
+                                    <TableCell align="left"></TableCell>
                                     <TableCell align="right">
                                         <Button
                                             id={`iconResourceInfo-${resources.id}`}

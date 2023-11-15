@@ -25,7 +25,7 @@ function UnitSelectDialog({open, onClose}: DialogUnitProps) {
     const {unitTree, selectedOrgUnits, setSelectedOrgUnits} = useContext(ResourceContext);
     const [aggregated, setAggregated] = useState(false);
 
-    const label = { inputProps: { 'aria-label': 'Checkbox orgenhet' } };
+    const label = {inputProps: {'aria-label': 'Checkbox orgenhet'}};
 
     const customDialogStyle: React.CSSProperties = {
         width: '600px',
@@ -55,7 +55,7 @@ function UnitSelectDialog({open, onClose}: DialogUnitProps) {
                 newSelected = selectedOrgUnits;
             }
         }
-       // console.log(newSelected, 'Valgte')
+        // console.log(newSelected, 'Valgte')
         setSelectedOrgUnits(newSelected);
     };
 
@@ -156,37 +156,38 @@ function UnitSelectDialog({open, onClose}: DialogUnitProps) {
 
     return (
         <React.Fragment>
-        <Dialog id={'unitsSelectDialog'} open={open} onClose={handleClose} sx={{'& .MuiPaper-root': customDialogStyle}}>
-            <DialogTitle variant={"h3"} aria-label="velg orgenheter">Velg enhet(er)</DialogTitle>
-            <DialogContent>
-                <div>
-                    <FormControlLabel
-                        control={<Switch/>}
-                        role={"switch"}
-                        label="Aggregated"
-                        aria-label="Aggregert"
-                        checked={aggregated}
-                        onChange={handleAggregationToggle}
-                        id="aggregatedCheckbox"
-                    />
+            <Dialog id={'unitsSelectDialog'} open={open} onClose={handleClose}
+                    sx={{'& .MuiPaper-root': customDialogStyle}}>
+                <DialogTitle variant={"h3"} aria-label="velg orgenheter">Velg enhet(er)</DialogTitle>
+                <DialogContent>
+                    <div>
+                        <FormControlLabel
+                            control={<Switch/>}
+                            role={"switch"}
+                            label="Inkluder underliggende enheter"
+                            aria-label="Aggregert"
+                            checked={aggregated}
+                            onChange={handleAggregationToggle}
+                            id="aggregatedCheckbox"
+                        />
 
-                </div>
-                <TreeView
-                    defaultCollapseIcon={<ExpandMoreIcon id={'expandMoreIcon'} aria-label="ekspander fler"/>}
-                    defaultExpandIcon={<ChevronRightIcon id={'expandIcon'} aria-label="ekspander"/>}
-                >
-                    {unitTree?.orgUnits?.map((node: any) => {
-                        if (node.parentRef !== node.organisationUnitId) {
-                            return null;
-                        }
-                        return renderTree(node);
-                    })}
-                </TreeView>
-            </DialogContent>
-            <DialogActions>
-                <Button id={'closeDialog'} onClick={onClose}>Ferdig</Button>
-            </DialogActions>
-        </Dialog>
+                    </div>
+                    <TreeView
+                        defaultCollapseIcon={<ExpandMoreIcon id={'expandMoreIcon'} aria-label="ekspander fler"/>}
+                        defaultExpandIcon={<ChevronRightIcon id={'expandIcon'} aria-label="ekspander"/>}
+                    >
+                        {unitTree?.orgUnits?.map((node: any) => {
+                            if (node.parentRef !== node.organisationUnitId) {
+                                return null;
+                            }
+                            return renderTree(node);
+                        })}
+                    </TreeView>
+                </DialogContent>
+                <DialogActions>
+                    <Button id={'closeDialog'} onClick={onClose}>Ferdig</Button>
+                </DialogActions>
+            </Dialog>
         </React.Fragment>
     );
 }

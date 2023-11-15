@@ -7,8 +7,8 @@ import {ResourceContext} from "../../context";
 import Typography from "@mui/material/Typography";
 import {UserTable} from "../users/UserTable";
 import UserSearch from "../users/UserSearch";
-import UserType from "../users/UserType";
-import RoleType from "../groups/RoleType";
+//import UserType from "../users/UserType";
+//import RoleType from "../groups/RoleType";
 import {RoleTable} from "../groups/RoleTable";
 import ObjectType from "../details/ObjectType";
 import RoleSearch from "../groups/RoleSearch";
@@ -46,12 +46,12 @@ function AssignmentContainer() {
                     <ObjectType/>
                     {objectType === 'Brukere' ?
                         <>
-                            <UserType/>
+                            {/*<UserType/>*/}
                             <UserSearch/>
                         </>
                         :
                         <>
-                            <RoleType/>
+                            {/*<RoleType/>*/}
                             <RoleSearch/>
                         </>
                     }

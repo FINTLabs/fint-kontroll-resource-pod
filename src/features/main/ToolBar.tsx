@@ -36,7 +36,7 @@ function CustomTableToolbar(props: CustomTableToolbarProps) {
                 onClick={onShowDialog}
                 sx={style.changeOrgButton}
             >
-                Velg orgenhet
+                Velg enhet
             </Button>
         </Toolbar>
     );
