@@ -83,7 +83,7 @@ const ResourceProvider = ({children, basePath}: Props) => {
 
         ResourceRepository.createUserAssignment(basePath, resourceRef, userRef, organizationUnitId)
             .then(response => {
-                    console.log("Dette er responsen", response)
+                    // console.log("Dette er responsen", response)
                 }
             )
             .catch((err) => {
@@ -96,7 +96,7 @@ const ResourceProvider = ({children, basePath}: Props) => {
 
         ResourceRepository.createRoleAssignment(basePath, resourceRef, roleRef, organizationUnitId)
             .then(response => {
-                    console.log("Dette er responsen", response)
+                    // console.log("Dette er responsen", response)
                 }
             )
             .catch((err) => {
@@ -119,7 +119,7 @@ const ResourceProvider = ({children, basePath}: Props) => {
 
     useEffect(() => {
         const getUnitTree = () => {
-            console.log(`Getting a the units stree:`);
+            // console.log(`Getting the units stree:`);
             if (basePath) {
 
                 ResourceRepository.getUnitTree(basePath)

@@ -139,6 +139,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
                                         'aria-label': 'rows per page',
                                     },
                                     native: true,
+                                    autoComplete: "off",
                                 }}
                                 onPageChange={handleChangePage}
                                 onRowsPerPageChange={handleChangeRowsPerPage}

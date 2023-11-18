@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {Box, Button, TableFooter, TablePagination} from "@mui/material";
+import {Box, Button, Icon, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
 import axios from "axios";
 import {ICreateRoleAssignment} from "../../context/types";
@@ -14,6 +14,7 @@ import {Add, Check} from "@mui/icons-material";
 import TablePaginationActions from "../main/TableFooter";
 import {useBasePath} from "../../context/BasePathContext";
 import AssignDialog from "../assignment/AssignDialog";
+import Typography from "@mui/material/Typography";
 
 export const RoleTable: any = (props: { resourceId: number, assignId: number, roleId: number }) => {
 
@@ -112,7 +113,14 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
 
                                 <TableCell align="right">
                                     {isAssigned(roles.id) ?
-                                        <Button
+                                        <Box>
+                                            <Typography sx={{fontSize: 16, fontWeight: 600}} color="secondary.dark">
+                                                Tildelt
+                                                <Icon fontSize={"small"} sx={{ml: 1}}><Check/></Icon>
+                                            </Typography>
+                                        </Box>
+
+                                        /*<Button
                                             id={`buttonIsAssignedRole-${roles.id}`}
                                             variant={"text"}
                                             aria-label="Legg til ressurs"
@@ -122,12 +130,12 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
                                             disabled={isAssigned(roles.id)}
                                         >
                                             Tildelt
-                                        </Button>
+                                        </Button>*/
                                         :
                                         <Button
                                             id={`buttonAddAssignmentRole-${roles.id}`}
                                             variant={"outlined"}
-                                            aria-label="Legg til ressurs"
+                                            aria-label="Tildel ressurs"
                                             onClick={() => assign(props.resourceId, roles.id, roles.organisationUnitId)}
                                             color={"primary"}
                                             endIcon={<Add/>}
@@ -153,6 +161,7 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
                                         'aria-label': 'rows per page',
                                     },
                                     native: true,
+                                    autoComplete: "off",
                                 }}
                                 onPageChange={handleChangePage}
                                 onRowsPerPageChange={handleChangeRowsPerPage}

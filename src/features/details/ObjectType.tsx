@@ -28,6 +28,7 @@ export default function FilterGroupUser() {
                 id="select-users-or-groups"
                 value={objectType}
                 label="Velg Brukere / Grupper"
+                autoComplete="off"
                 onChange={handleChange}
             >
                 {options.map((option) => (

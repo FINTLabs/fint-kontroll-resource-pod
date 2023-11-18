@@ -32,6 +32,7 @@ export default function SearchFieldUser() {
                 label="Søk etter ressurs"
                 role="search"
                 onChange={handleChange}
+                autoComplete="off"
                 value={searchString}
                 InputLabelProps={{
                     shrink: true,

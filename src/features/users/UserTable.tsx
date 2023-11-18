@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {Box, Button, TableFooter, TablePagination} from "@mui/material";
+import {Box, Button, Icon, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
 import axios from "axios";
 import {ICreateUserAssignment} from "../../context/types";
@@ -14,6 +14,7 @@ import {Add, Check} from "@mui/icons-material";
 import TablePaginationActions from "../main/TableFooter";
 import {useBasePath} from "../../context/BasePathContext";
 import AssignDialog from "../assignment/AssignDialog";
+import Typography from "@mui/material/Typography";
 
 export const UserTable: any = (props: { resourceId: number, assignId: number, userId: number }) => {
 
@@ -112,7 +113,13 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
 
                                 <TableCell align="right">
                                     {isAssigned(user.id) ?
-                                        <Button
+                                        <Box>
+                                            <Typography sx={{fontSize: 16, fontWeight: 600}} color="secondary.dark">
+                                                Tildelt
+                                                <Icon fontSize={"small"} sx={{ml: 1}}><Check/></Icon>
+                                            </Typography>
+                                        </Box>
+                                        /*<Button
                                             id={`buttonAddAssignment-${user.id}`}
                                             variant={"text"}
                                             aria-label="Legg til ressurs"
@@ -122,12 +129,12 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
                                             disabled={isAssigned(user.id)}
                                         >
                                             Tildelt
-                                        </Button>
+                                        </Button>*/
                                         :
                                         <Button
                                             id={`buttonAddAssignment-${user.id}`}
                                             variant={"outlined"}
-                                            aria-label="Legg til ressurs"
+                                            aria-label="Tildel ressurs"
                                             onClick={() => assign(props.resourceId, user.id, user.organisationUnitId)}
                                             color={"primary"}
                                             endIcon={<Add/>}
@@ -153,6 +160,7 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
                                         'aria-label': 'rows per page',
                                     },
                                     native: true,
+                                    autoComplete: "off",
                                 }}
                                 onPageChange={handleChangePage}
                                 onRowsPerPageChange={handleChangeRowsPerPage}

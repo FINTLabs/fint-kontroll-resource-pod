@@ -60,7 +60,7 @@ export const ResourceTable: any = (props: { resourceId: string, assignId: number
             />
             <TableContainer sx={{minWidth: 1040, maxWidth: 1920}} id={"resourceTable"}>
                 <ToolBar onShowDialog={() => setOpenDialog(true)}/>
-                <Table aria-label="resource-table" role="main">
+                <Table aria-label="resource-table">
                     <TableHead>
                         <TableRow sx={{fontWeight: 'bold'}}>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Ressurs</TableCell>
@@ -126,6 +126,7 @@ export const ResourceTable: any = (props: { resourceId: string, assignId: number
                                         'aria-label': 'rows per page',
                                     },
                                     native: true,
+                                    autoComplete: "off",
                                 }}
                                 onPageChange={handleChangePage}
                                 onRowsPerPageChange={handleChangeRowsPerPage}

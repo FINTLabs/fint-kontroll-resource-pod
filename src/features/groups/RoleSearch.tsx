@@ -32,6 +32,7 @@ export default function SearchFieldRole() {
                 label="Søk etter gruppe"
                 role="search"
                 onChange={handleChange}
+                autoComplete="off"
                 value={searchString}
                 InputLabelProps={{
                     shrink: true,
