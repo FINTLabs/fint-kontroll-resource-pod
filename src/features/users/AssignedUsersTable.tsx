@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {Box, Button, TableFooter, TablePagination} from "@mui/material";
+import {Alert, Box, Button, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteDialog from "../details/DeleteDialog";
@@ -26,7 +26,9 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
         selected,
         userType,
         searchString,
-        getAssignedUsersPage
+        getAssignedUsersPage,
+        deleted,
+        setDeleted,
     } = useContext(ResourceContext);
 
     const basePath = useBasePath() || ''
@@ -47,6 +49,10 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
     const deleteAssignmentById = (assignmentId: number) => {
         setDeleteDialogOpen(true)
         setAssignedUserToRemove(assignmentId)
+
+        setTimeout(() => {
+            setDeleted(null)
+        }, 5000)
     }
 
     const onRemoveAssignmentConfirmed = () => {
@@ -84,6 +90,9 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
             <DeleteDialog open={deleteDialogOpen} userId={""} assignId={0}
                           onConfirm={() => onRemoveAssignmentConfirmed()}
                           onCancel={onRemoveAssignmentCancel}/>
+            {deleted && (
+                <Alert severity="success">{deleted}</Alert>
+            )}
             <TableContainer sx={{minWidth: 1040, maxWidth: 1920}} id={"userTable"}>
                 <Table aria-label="Users-table">
 

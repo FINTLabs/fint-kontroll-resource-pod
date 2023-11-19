@@ -223,6 +223,8 @@ export type ResourceContextState = {
     setObjectType: (objectType: string) => void;
 
     error: string | null;
+    deleted: string | null;
+    setDeleted: (deleted: string | null) => void;
 };
 
 export const contextDefaultValues: ResourceContextState = {
@@ -306,5 +308,8 @@ export const contextDefaultValues: ResourceContextState = {
     setObjectType(objectType: string): void {
     },
     error: null,
+    deleted: null,
+    setDeleted(): void {
+    },
 };
 

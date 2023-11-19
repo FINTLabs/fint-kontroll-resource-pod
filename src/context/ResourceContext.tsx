@@ -72,6 +72,7 @@ const ResourceProvider = ({children, basePath}: Props) => {
     const [objectType, setObjectType] = useState<string>("")
 
     const [error, setError] = useState<string | null>(null);
+    const [deleted, setDeleted] = useState<string | null>(null);
 
 
     useEffect(() => {
@@ -111,9 +112,14 @@ const ResourceProvider = ({children, basePath}: Props) => {
                 }
             )
             .catch((err) => {
+                console.log(err.response.status, 'errrror')
                 const errorObject = new Error((err as Error).message);
-                setError(errorObject.message);
-                console.error(err);
+                if (err.response.status === 410) {
+                    setDeleted('Tildelingen er fjernet!')
+                } else {
+                    setError(errorObject.message);
+                    console.error(err);
+                }
             })
     }
 
@@ -163,7 +169,12 @@ const ResourceProvider = ({children, basePath}: Props) => {
         if (basePath) {
             ResourceRepository.getAssignmentsPage(basePath, id, currentAssignmentPage, assignmentSize, userType, selected, searchString)
                 .then(response => setAssignedUsersPage(response.data))
-                .catch((err) => console.error(err))
+                // .catch((err) => console.error(err))
+                .catch((err) => {
+                    const errorObject = new Error((err as Error).message);
+                    setError(errorObject.message);
+                    console.error(err);
+                })
         }
     }
 
@@ -204,7 +215,12 @@ const ResourceProvider = ({children, basePath}: Props) => {
             if (basePath) {
                 ResourceRepository.getUserPage(basePath, currentUserPage, size, userType, selected, searchString)
                     .then(response => setPage(response.data))
-                    .catch((err) => console.error(err))
+                    // .catch((err) => console.error(err))
+                    .catch((err) => {
+                        const errorObject = new Error((err as Error).message);
+                        setError(errorObject.message);
+                        console.error(err);
+                    })
             }
         }
 
@@ -320,6 +336,8 @@ const ResourceProvider = ({children, basePath}: Props) => {
                 setObjectType,
 
                 error,
+                deleted,
+                setDeleted,
             }}
         >
             {children}

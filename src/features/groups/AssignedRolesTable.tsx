@@ -26,7 +26,8 @@ export const AssignedRolesTable: any = (props: { resourceId: string, assignId: n
         currentAssignedRolePage,
         updateCurrentAssignedRolePage,
         getAssignedRolesPage,
-        error,
+        deleted,
+        setDeleted,
     } = useContext(ResourceContext);
 
     const {id} = useParams<string>();
@@ -46,6 +47,11 @@ export const AssignedRolesTable: any = (props: { resourceId: string, assignId: n
     const deleteAssignmentById = (assignmentId: number) => {
         setDeleteDialogOpen(true)
         setAssignedRoleToRemove(assignmentId)
+
+        setTimeout(() => {
+            setDeleted(null)
+        }, 5000)
+
     }
 
     const onRemoveAssignmentConfirmed = () => {
@@ -81,8 +87,8 @@ export const AssignedRolesTable: any = (props: { resourceId: string, assignId: n
             <DeleteDialog open={deleteDialogOpen} userId={""} assignId={0}
                           onConfirm={() => onRemoveAssignmentConfirmed()}
                           onCancel={onRemoveAssignmentCancel}/>
-            {error && (
-                <Alert severity="warning">{error}</Alert>
+            {deleted && (
+                <Alert severity="success">{deleted}</Alert>
             )}
 
             <TableContainer sx={{minWidth: 1040, maxWidth: 1920}} id={"roleAssignmentTable"}>
