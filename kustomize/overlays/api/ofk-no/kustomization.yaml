@@ -4,7 +4,7 @@ resources:
   - ../../../base
 commonLabels:
   app.kubernetes.io/name: fint-kontroll-resource-pod
-  app.kubernetes.io/instance: fint-kontrollresource-pod_ofk-no
+  app.kubernetes.io/instance: fint-kontroll-resource-pod_ofk-no
   app.kubernetes.io/version: "latest"
   app.kubernetes.io/managed-by: GA
   app.kubernetes.io/component: podlet
