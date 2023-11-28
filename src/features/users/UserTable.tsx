@@ -120,17 +120,6 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
                                                 <Icon fontSize={"small"} sx={{ml: 1}}><Check/></Icon>
                                             </Typography>
                                         </Box>
-                                        /*<Button
-                                            id={`buttonAddAssignment-${user.id}`}
-                                            variant={"text"}
-                                            aria-label="Legg til ressurs"
-                                            // onClick={() => assign(props.resourceId, user.id, user.organisationUnitId)}
-                                            color={"primary"}
-                                            endIcon={<Check/>}
-                                            disabled={isAssigned(user.id)}
-                                        >
-                                            Tildelt
-                                        </Button>*/
                                         :
                                         <Button
                                             id={`buttonAddAssignment-${user.id}`}
