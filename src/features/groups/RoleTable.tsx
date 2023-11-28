@@ -47,8 +47,9 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
     }, [updatingAssignment, basePath])
 
     const assign = (resourceRef: number, roleRef: number, organizationUnitId: string): void => {
-        setAssignDialogOpen(true)
+       // setAssignDialogOpen(true)
         createRoleAssignment(resourceRef, roleRef, organizationUnitId);
+        setUpdatingAssignment(true);
         searchValue("");
     };
 

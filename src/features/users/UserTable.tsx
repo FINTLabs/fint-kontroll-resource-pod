@@ -47,8 +47,9 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
     }, [updatingAssignment, basePath])
 
     const assign = (resourceRef: number, userRef: number, organizationUnitId: string): void => {
-        setAssignDialogOpen(true)
+       // setAssignDialogOpen(true)
         createUserAssignment(resourceRef, userRef, organizationUnitId);
+        setUpdatingAssignment(true)
         searchValue("");
     };
 
