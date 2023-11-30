@@ -50,7 +50,7 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
        // setAssignDialogOpen(true)
         createUserAssignment(resourceRef, userRef, organizationUnitId);
         setUpdatingAssignment(true)
-        searchValue("");
+       // searchValue("");
     };
 
     const isAssigned = (userId: number) => {

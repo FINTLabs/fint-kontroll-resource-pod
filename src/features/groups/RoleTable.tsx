@@ -50,7 +50,7 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
        // setAssignDialogOpen(true)
         createRoleAssignment(resourceRef, roleRef, organizationUnitId);
         setUpdatingAssignment(true);
-        searchValue("");
+       // searchValue("");
     };
 
     const isAssigned = (roleId: number) => {
