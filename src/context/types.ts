@@ -252,7 +252,7 @@ export const contextDefaultValues: ResourceContextState = {
     resourceItem: null,
     resourceDetails: null,
     resourcePage: null,
-    resourceSize: 5,
+    resourceSize: 25,
     setResourceSize(resourceSize): void {
     },
     currentResourcePage: 0,
@@ -268,7 +268,7 @@ export const contextDefaultValues: ResourceContextState = {
     user: null,
     page: null,
     currentUserPage: 0,
-    size: 5,
+    size: 25,
     setSize(size: number): void {
     },
     updateCurrentUserPage(): void {
@@ -276,7 +276,7 @@ export const contextDefaultValues: ResourceContextState = {
     currentAssignmentPage: 0,
     updateCurrentAssignmentPage(): void {
     },
-    assignmentSize: 5,
+    assignmentSize: 25,
     setAssignmentSize(assignmentSize: number): void {
     },
     assignedUsersPage: null,
@@ -286,7 +286,7 @@ export const contextDefaultValues: ResourceContextState = {
     roleType: "",
     updateRoleType(): void {
     },
-    roleSize: 5,
+    roleSize: 25,
     setRoleSize(roleSize: number): void {
     },
     currentRolePage: 0,
@@ -295,7 +295,7 @@ export const contextDefaultValues: ResourceContextState = {
     getAssignedRolesPage(): void {
     },
     assignedRolesPage: null,
-    assignedRoleSize: 5,
+    assignedRoleSize: 25,
     setAssignedRoleSize(assignedRoleSize: number): void {
     },
     currentAssignedRolePage: 0,
