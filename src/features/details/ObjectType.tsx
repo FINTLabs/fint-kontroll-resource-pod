@@ -5,10 +5,11 @@ import {ResourceContext} from "../../context";
 
 export default function FilterGroupUser() {
 
-    const {objectType, setObjectType} = useContext(ResourceContext);
+    const {objectType, setObjectType, searchValue} = useContext(ResourceContext);
 
     const handleChange = (event: SelectChangeEvent) => {
         setObjectType(event.target.value as string);
+        searchValue("");
     };
 
     const options = [

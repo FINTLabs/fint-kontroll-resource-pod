@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {Box, Button, Icon, TableFooter, TablePagination} from "@mui/material";
+import {Alert, Box, Button, Icon, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
 import axios from "axios";
 import {ICreateUserAssignment} from "../../context/types";
@@ -19,18 +19,23 @@ import Typography from "@mui/material/Typography";
 export const UserTable: any = (props: { resourceId: number, assignId: number, userId: number }) => {
 
     const {
-       // searchValue,
         page,
         createUserAssignment,
         updateCurrentUserPage,
         size,
         setSize,
         currentUserPage,
+        assigned,
+        setAssigned,
+        error,
+        setError,
     } = useContext(ResourceContext);
 
     const [createAssignments, setCreateAssignments] = useState<ICreateUserAssignment[]>([]);
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
     const [assignDialogOpen, setAssignDialogOpen] = useState<boolean>(false)
+    const [userId, setUserId] = useState<number>(0)
+    const [orgId, setOrgId] = useState<string>('')
 
     const basePath = useBasePath() || '';
 
@@ -47,10 +52,23 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
     }, [updatingAssignment, basePath])
 
     const assign = (resourceRef: number, userRef: number, organizationUnitId: string): void => {
-       // setAssignDialogOpen(true)
         createUserAssignment(resourceRef, userRef, organizationUnitId);
+        setTimeout(() => {
+            setAssigned(null)
+            setError(null)
+        }, 5000)
+    };
+
+    const userToAssign = (resourceRef: number, userId: number, orgId: string) => {
+        setUserId(userId)
+        setOrgId(orgId)
+        setAssignDialogOpen(true)
+    }
+
+    const onAssignmentConfirmed = () => {
+        assign(props.resourceId, userId, orgId)
+        setAssignDialogOpen(false)
         setUpdatingAssignment(true)
-       // searchValue("");
     };
 
     const isAssigned = (userId: number) => {
@@ -74,11 +92,6 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
         updateCurrentUserPage(0);
     };
 
-    const onAssignmentConfirmed = () => {
-        setAssignDialogOpen(false)
-        setUpdatingAssignment(true)
-    };
-
     const onAssignmentCancel = () => {
         setAssignDialogOpen(false)
         setUpdatingAssignment(false)
@@ -89,6 +102,12 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
             <AssignDialog open={assignDialogOpen}
                           onConfirm={() => onAssignmentConfirmed()}
                           onCancel={onAssignmentCancel}/>
+            {assigned && (
+                <Alert severity="success">{assigned}</Alert>
+            )}
+            {error && (
+                <Alert severity="error">{error}</Alert>
+            )}
             <TableContainer sx={{minWidth: 1040, maxWidth: 1920}} id={"userAssignmentTable"}>
                 <Table aria-label="Users-table">
                     <TableHead>
@@ -125,7 +144,7 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
                                             id={`buttonAddAssignment-${user.id}`}
                                             variant={"outlined"}
                                             aria-label="Tildel ressurs"
-                                            onClick={() => assign(props.resourceId, user.id, user.organisationUnitId)}
+                                            onClick={() => userToAssign(props.resourceId, user.id, user.organisationUnitId)}
                                             color={"primary"}
                                             endIcon={<Add/>}
                                         >

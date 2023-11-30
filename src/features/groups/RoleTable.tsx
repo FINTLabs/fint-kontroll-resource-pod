@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {Box, Button, Icon, TableFooter, TablePagination} from "@mui/material";
+import {Alert, Box, Button, Icon, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
 import axios from "axios";
 import {ICreateRoleAssignment} from "../../context/types";
@@ -19,18 +19,24 @@ import Typography from "@mui/material/Typography";
 export const RoleTable: any = (props: { resourceId: number, assignId: number, roleId: number }) => {
 
     const {
-       // searchValue,
+        // searchValue,
         rolePage,
         roleSize,
         setRoleSize,
         currentRolePage,
         createRoleAssignment,
         updateCurrentRolePage,
+        assigned,
+        setAssigned,
+        error,
+        setError,
     } = useContext(ResourceContext);
 
     const [createAssignments, setCreateAssignments] = useState<ICreateRoleAssignment[]>([]);
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
     const [assignDialogOpen, setAssignDialogOpen] = useState<boolean>(false)
+    const [roleId, setRoleId] = useState<number>(0)
+    const [orgId, setOrgId] = useState<string>('')
 
     const basePath = useBasePath() || '';
 
@@ -47,10 +53,23 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
     }, [updatingAssignment, basePath])
 
     const assign = (resourceRef: number, roleRef: number, organizationUnitId: string): void => {
-       // setAssignDialogOpen(true)
         createRoleAssignment(resourceRef, roleRef, organizationUnitId);
-        setUpdatingAssignment(true);
-       // searchValue("");
+        setTimeout(() => {
+            setAssigned(null)
+            setError(null)
+        }, 5000)
+    };
+
+    const roleToAssign = (resourceRef: number, roleId: number, orgId: string) => {
+        setRoleId(roleId)
+        setOrgId(orgId)
+        setAssignDialogOpen(true)
+    }
+
+    const onAssignmentConfirmed = () => {
+        assign(props.resourceId, roleId, orgId)
+        setAssignDialogOpen(false)
+        setUpdatingAssignment(true)
     };
 
     const isAssigned = (roleId: number) => {
@@ -74,10 +93,6 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
         updateCurrentRolePage(0);
     };
 
-    const onAssignmentConfirmed = () => {
-        setAssignDialogOpen(false)
-        setUpdatingAssignment(true)
-    };
 
     const onAssignmentCancel = () => {
         setAssignDialogOpen(false)
@@ -89,6 +104,12 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
             <AssignDialog open={assignDialogOpen}
                           onConfirm={() => onAssignmentConfirmed()}
                           onCancel={onAssignmentCancel}/>
+            {assigned && (
+                <Alert severity="success">{assigned}</Alert>
+            )}
+            {error && (
+                <Alert severity="error">{error}</Alert>
+            )}
             <TableContainer sx={{minWidth: 1040, maxWidth: 1920}} id={"roleTable"}>
                 <Table aria-label="Role-assignment-table">
                     <TableHead>
@@ -120,24 +141,13 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
                                                 <Icon fontSize={"small"} sx={{ml: 1}}><Check/></Icon>
                                             </Typography>
                                         </Box>
-
-                                        /*<Button
-                                            id={`buttonIsAssignedRole-${roles.id}`}
-                                            variant={"text"}
-                                            aria-label="Legg til ressurs"
-                                            // onClick={() => assign(props.resourceId, roles.id, roles.organisationUnitId)}
-                                            color={"primary"}
-                                            endIcon={<Check/>}
-                                            disabled={isAssigned(roles.id)}
-                                        >
-                                            Tildelt
-                                        </Button>*/
                                         :
                                         <Button
                                             id={`buttonAddAssignmentRole-${roles.id}`}
                                             variant={"outlined"}
                                             aria-label="Tildel ressurs"
-                                            onClick={() => assign(props.resourceId, roles.id, roles.organisationUnitId)}
+                                            // onClick={() => assign(props.resourceId, roles.id, roles.organisationUnitId)}
+                                            onClick={() => roleToAssign(props.resourceId, roles.id, roles.organisationUnitId)}
                                             color={"primary"}
                                             endIcon={<Add/>}
                                         >

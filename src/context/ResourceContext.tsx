@@ -73,6 +73,7 @@ const ResourceProvider = ({children, basePath}: Props) => {
 
     const [error, setError] = useState<string | null>(null);
     const [deleted, setDeleted] = useState<string | null>(null);
+    const [assigned, setAssigned] = useState<string | null>(null);
 
 
     useEffect(() => {
@@ -84,10 +85,15 @@ const ResourceProvider = ({children, basePath}: Props) => {
 
         ResourceRepository.createUserAssignment(basePath, resourceRef, userRef, organizationUnitId)
             .then(response => {
-                    // console.log("Dette er responsen", response)
+                    if (response.status === 201) {
+                        setAssigned('Tildelingen var vellykket!')
+                    } else {
+                        console.log("Dette er responsen", response)
+                    }
                 }
             )
             .catch((err) => {
+                setError('Noe gikk galt!')
                 console.error(err);
             })
     }
@@ -97,10 +103,15 @@ const ResourceProvider = ({children, basePath}: Props) => {
 
         ResourceRepository.createRoleAssignment(basePath, resourceRef, roleRef, organizationUnitId)
             .then(response => {
-                    // console.log("Dette er responsen", response)
+                    if (response.status === 201) {
+                        setAssigned('Tildelingen var vellykket!')
+                    } else {
+                        console.log("Dette er responsen", response)
+                    }
                 }
             )
             .catch((err) => {
+                setError('Noe gikk galt!')
                 console.error(err);
             })
     }
@@ -112,7 +123,6 @@ const ResourceProvider = ({children, basePath}: Props) => {
                 }
             )
             .catch((err) => {
-                console.log(err.response.status, 'errrror')
                 const errorObject = new Error((err as Error).message);
                 if (err.response.status === 410) {
                     setDeleted('Tildelingen er fjernet!')
@@ -336,8 +346,11 @@ const ResourceProvider = ({children, basePath}: Props) => {
                 setObjectType,
 
                 error,
+                setError,
                 deleted,
                 setDeleted,
+                assigned,
+                setAssigned,
             }}
         >
             {children}
