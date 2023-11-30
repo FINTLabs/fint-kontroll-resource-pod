@@ -19,7 +19,7 @@ import Typography from "@mui/material/Typography";
 export const RoleTable: any = (props: { resourceId: number, assignId: number, roleId: number }) => {
 
     const {
-        searchValue,
+       // searchValue,
         rolePage,
         roleSize,
         setRoleSize,

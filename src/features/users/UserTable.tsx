@@ -19,7 +19,7 @@ import Typography from "@mui/material/Typography";
 export const UserTable: any = (props: { resourceId: number, assignId: number, userId: number }) => {
 
     const {
-        searchValue,
+       // searchValue,
         page,
         createUserAssignment,
         updateCurrentUserPage,
