@@ -46,7 +46,7 @@ const getResourcePage =
         }
 
         if (resourcePage) {
-            queryParams.push(`resourcePage=${resourcePage}`);
+            queryParams.push(`page=${resourcePage}`);
         }
 
         if (resourceSize) {
