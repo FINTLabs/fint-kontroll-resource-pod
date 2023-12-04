@@ -93,7 +93,10 @@ const ResourceProvider = ({children, basePath}: Props) => {
                 }
             )
             .catch((err) => {
-                setError('Noe gikk galt!')
+
+                if (err.response.status === 409) {
+                    setError('Ressursen er allerede tildelt')
+                }
                 console.error(err);
             })
     }
@@ -111,7 +114,9 @@ const ResourceProvider = ({children, basePath}: Props) => {
                 }
             )
             .catch((err) => {
-                setError('Noe gikk galt!')
+                if (err.response.status === 409) {
+                    setError('Ressursen er allerede tildelt')
+                }
                 console.error(err);
             })
     }
