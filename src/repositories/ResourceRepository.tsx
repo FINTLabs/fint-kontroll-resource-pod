@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
     IAssignedRolesPage,
-    IAssignedUsersPage,
+    IAssignedUsersPage, IAssignmentPage,
     ICreateRoleAssignment,
     ICreateUserAssignment,
     IResource,
@@ -118,6 +118,31 @@ const getRolePage = (basePath: string, roleType: string, currentRolePage: number
     return axios.get<IRolePage>(url);
 }
 
+const getAssignmentsPage = (basePath: string, id: number, currentAssignmentPage: number, assignmentSize: number, organisationUnitId: string[], searchString: string) => {
+    const baseUrl = `${basePath === '/' ? '' : basePath}/api/assignments`;
+    let queryParams = [];
+    const sanitizedQueryString = searchString.trim();
+    if (sanitizedQueryString.length !== 0) {
+        queryParams.push(`search=${searchString}`);
+    }
+
+    if (assignmentSize) {
+        queryParams.push(`size=${assignmentSize}`);
+    }
+
+    if (currentAssignmentPage) {
+        queryParams.push(`page=${currentAssignmentPage}`);
+    }
+
+    if (organisationUnitId && organisationUnitId.length > 0) {
+        queryParams.push(`orgUnits=${organisationUnitId}`);
+    }
+
+    const url = `${baseUrl}${queryParams.length > 0 ? '?' : ''}${queryParams.join('&')}`;
+
+    return axios.get<IAssignmentPage>(url);
+}
+
 const getAssignedRolesPage = (basePath: string, id: number, roleType: string, currentAssignedRolePage: number, assignedRoleSize: number, organisationUnitId: string[], searchString: string) => {
     const baseUrl = `${basePath === '/' ? '' : basePath}/api/assignments/resource/${id}/roles`;
     let queryParams = [];
@@ -147,7 +172,7 @@ const getAssignedRolesPage = (basePath: string, id: number, roleType: string, cu
     return axios.get<IAssignedRolesPage>(url);
 }
 
-const getAssignedUsersPage = (basePath: string, id: number, assignedUsersPage: number, assignmentSize: number, userType: string, organisationUnitId: string[], searchString: string) => {
+const getAssignedUsersPage = (basePath: string, id: number, assignedUsersPage: number, assignedUsersSize: number, userType: string, organisationUnitId: string[], searchString: string) => {
     const baseUrl = `${basePath === '/' ? '' : basePath}/api/assignments/resource/${id}/users`;
     let queryParams = [];
 
@@ -156,8 +181,8 @@ const getAssignedUsersPage = (basePath: string, id: number, assignedUsersPage: n
         queryParams.push(`search=${searchString}`);
     }
 
-    if (assignmentSize) {
-        queryParams.push(`size=${assignmentSize}`);
+    if (assignedUsersSize) {
+        queryParams.push(`size=${assignedUsersSize}`);
     }
 
     if (userType) {
@@ -211,8 +236,9 @@ const ResourceRepository = {
     createUserAssignment,
     createRoleAssignment,
     deleteAssignment,
-    getAssignmentsPage: getAssignedUsersPage,
+    getAssignedUsersPage,
     getAssignedRolesPage,
     getRolePage,
+    getAssignmentsPage,
 };
 export default ResourceRepository;

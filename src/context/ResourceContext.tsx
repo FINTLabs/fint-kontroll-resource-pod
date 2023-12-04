@@ -3,6 +3,7 @@ import {
     contextDefaultValues,
     IAssignedRolesPage,
     IAssignedUsersPage,
+    IAssignmentPage,
     IOrgUnit,
     IOrgUnitPage,
     IResource,
@@ -56,9 +57,14 @@ const ResourceProvider = ({children, basePath}: Props) => {
     const [currentUserPage, setCurrentUserPage] = useState<number>(contextDefaultValues.currentUserPage);
     const [user] = useState<IUser | null>(contextDefaultValues.user);
 
-    const [assignedUsersPage, setAssignedUsersPage] = useState<IAssignedUsersPage | null>(contextDefaultValues.assignedUsersPage);
+    const [assignmentPage, setAssignmentPage] = useState<IAssignmentPage | null>(contextDefaultValues.assignmentPage);
     const [assignmentSize, setAssignmentSize] = useState<number>(contextDefaultValues.assignmentSize);
     const [currentAssignmentPage, setCurrentAssignmentPage] = useState<number>(contextDefaultValues.currentAssignmentPage);
+
+
+    const [assignedUsersPage, setAssignedUsersPage] = useState<IAssignedUsersPage | null>(contextDefaultValues.assignedUsersPage);
+    const [assignedUsersSize, setAssignedUsersSize] = useState<number>(contextDefaultValues.assignmentSize);
+    const [currentAssignedUsersPage, setCurrentAssignedUsersPage] = useState<number>(contextDefaultValues.currentAssignmentPage);
 
     const [rolePage, setRolePage] = useState<IRolePage | null>(contextDefaultValues.rolePage);
     const [roleType, setRoleType] = useState<string>(contextDefaultValues.roleType);
@@ -180,9 +186,20 @@ const ResourceProvider = ({children, basePath}: Props) => {
         }
     }, [basePath, currentResourcePage, resourceSize, userType, organisationUnitId, searchString, selected]);
 
+    const getAssignmentPage = (id: number) => {
+        if (basePath) {
+            ResourceRepository.getAssignmentsPage(basePath, id, currentAssignmentPage, assignmentSize, selected, searchString)
+                .then(response => setAssignmentPage(response.data))
+                // .catch((err) => console.error(err))
+                .catch((err) => {
+                    console.error(err);
+                })
+        }
+    }
+
     const getAssignedUsersPage = (id: number) => {
         if (basePath) {
-            ResourceRepository.getAssignmentsPage(basePath, id, currentAssignmentPage, assignmentSize, userType, selected, searchString)
+            ResourceRepository.getAssignedUsersPage(basePath, id, currentAssignedUsersPage, assignedUsersSize, userType, selected, searchString)
                 .then(response => setAssignedUsersPage(response.data))
                 // .catch((err) => console.error(err))
                 .catch((err) => {
@@ -265,7 +282,7 @@ const ResourceProvider = ({children, basePath}: Props) => {
     }
 
     const updateCurrentAssignmentPage = (currentAssignmentPage: number) => {
-        setCurrentAssignmentPage(currentAssignmentPage)
+        setCurrentAssignedUsersPage(currentAssignmentPage)
     }
 
     const updateCurrentResourcePage = (currentResourcePage: number) => {
@@ -282,6 +299,10 @@ const ResourceProvider = ({children, basePath}: Props) => {
 
     const updateCurrentAssignedRolePage = (currentAssignedRolePage: number) => {
         setCurrentAssignedRolePage(currentAssignedRolePage)
+    }
+
+    const updateCurrentAssignedUserPage = (currentAssignedUserPage: number) => {
+        setCurrentAssignedUsersPage(currentAssignedUserPage)
     }
 
     return (
@@ -321,13 +342,20 @@ const ResourceProvider = ({children, basePath}: Props) => {
                 size,
                 setSize,
                 updateCurrentUserPage,
-
+                assignmentPage,
                 currentAssignmentPage,
-                updateCurrentAssignmentPage,
                 assignmentSize,
                 setAssignmentSize,
+                updateCurrentAssignmentPage,
+                getAssignmentPage,
+
+
+                currentAssignedUsersPage,
+                assignedUsersSize,
+                setAssignedUsersSize,
                 assignedUsersPage,
                 getAssignedUsersPage,
+                updateCurrentAssignedUserPage,
 
                 getAssignedRolesPage,
                 assignedRolesPage,

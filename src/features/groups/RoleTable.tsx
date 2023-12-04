@@ -116,6 +116,7 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
                         <TableRow sx={{fontWeight: 'bold'}}>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Gruppe</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Gruppetype</TableCell>
+                            <TableCell align="left" sx={{fontWeight: 'bold'}}>Gruppe id</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Organisasjon</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}></TableCell>
                         </TableRow>
@@ -131,6 +132,7 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
                                     {roles.roleName}
                                 </TableCell>
                                 <TableCell align="left">{roles.roleType}</TableCell>
+                                <TableCell align="left">{roles.id}</TableCell>
                                 <TableCell align="left">{roles.organisationUnitName}</TableCell>
 
                                 <TableCell align="right">

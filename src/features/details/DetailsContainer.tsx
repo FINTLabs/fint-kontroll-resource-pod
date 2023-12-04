@@ -6,9 +6,10 @@ import ResourceInfo from "./ResourceInfo";
 import DetailsToolBar from "./FiltersToolBar";
 import {useParams} from "react-router-dom";
 import {ResourceContext} from "../../context";
-import {AssignedUsersTable} from "../users/AssignedUsersTable";
+//import {AssignedUsersTable} from "../users/AssignedUsersTable";
 import Typography from "@mui/material/Typography";
 import {AssignedRolesTable} from "../groups/AssignedRolesTable";
+import {AssignmentsTable} from "../assignment/AssignmentTable";
 
 function DetailsContainer() {
 
@@ -41,7 +42,8 @@ function DetailsContainer() {
             </Box>
             <Box>
                 {objectType === 'Brukere' ?
-                    <AssignedUsersTable resourceId={id}/>
+                    <AssignmentsTable />
+                   /* <AssignedUsersTable resourceId={id}/>*/
                     :
                     <AssignedRolesTable resourceId={id}/>
                 }
