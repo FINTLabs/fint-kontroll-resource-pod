@@ -18,10 +18,10 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
 
     const {
         deleteAssignment,
-        updateCurrentAssignmentPage,
-        assignmentSize,
-        setAssignmentSize,
-        currentAssignmentPage,
+        assignedUsersSize,
+        updateCurrentAssignedUserPage,
+        setAssignedUsersSize,
+        currentAssignedUsersPage,
         assignedUsersPage,
         selected,
         userType,
@@ -43,7 +43,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
         }
         setUpdatingAssignment(false)
         // eslint-disable-next-line
-    }, [basePath, id, currentAssignmentPage, assignmentSize, updatingAssignment, selected, userType, searchString])
+    }, [basePath, id, currentAssignedUsersPage, assignedUsersSize, updatingAssignment, selected, userType, searchString])
 
 
     const deleteAssignmentById = (assignmentId: number) => {
@@ -75,14 +75,14 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
         newPage: number,
     ) => {
         console.log("new page:", newPage)
-        updateCurrentAssignmentPage(newPage)
+        updateCurrentAssignedUserPage(newPage)
     };
 
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
-        setAssignmentSize(parseInt(event.target.value, 10));
-        updateCurrentAssignmentPage(0);
+        setAssignedUsersSize(parseInt(event.target.value, 10));
+        updateCurrentAssignedUserPage(0);
     };
 
     return (
@@ -141,8 +141,8 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
                                 rowsPerPageOptions={[5, 10, 25, 50]}
                                 colSpan={7}
                                 count={assignedUsersPage ? assignedUsersPage.totalItems : 0}
-                                rowsPerPage={assignmentSize}
-                                page={currentAssignmentPage}
+                                rowsPerPage={assignedUsersSize}
+                                page={currentAssignedUsersPage}
                                 SelectProps={{
                                     inputProps: {
                                         'aria-label': 'rows per page',

@@ -122,12 +122,12 @@ export interface IAssignment {
     organizationUnitId: string;
 }
 
-/*export interface IAssignmentPage {
+export interface IAssignmentPage {
     totalItems: number;
     totalPages: number | any;
     currentPage: number;
     assignments: IAssignment[];
-}*/
+}
 
 export interface IAssignedUsersPage {
     totalItems: number;
@@ -197,6 +197,13 @@ export type ResourceContextState = {
     updateCurrentAssignmentPage: (currentAssignmentPage: number) => void;
     assignmentSize: number;
     setAssignmentSize: (assignmentSize: number) => void;
+    assignmentPage: IAssignmentPage | null;
+    getAssignmentPage: (id: number) => void;
+
+    currentAssignedUsersPage: number;
+    updateCurrentAssignedUserPage: (currentAssignedUsersPage: number) => void;
+    assignedUsersSize: number;
+    setAssignedUsersSize: (assignedUsersSize: number) => void;
     assignedUsersPage: IAssignedUsersPage | null;
     getAssignedUsersPage: (id: number) => void;
 
@@ -276,11 +283,19 @@ export const contextDefaultValues: ResourceContextState = {
     currentAssignmentPage: 0,
     updateCurrentAssignmentPage(): void {
     },
+    assignmentPage: null,
+    getAssignmentPage(): void {},
     assignmentSize: 25,
     setAssignmentSize(assignmentSize: number): void {
     },
     assignedUsersPage: null,
     getAssignedUsersPage(): void {
+    },
+    assignedUsersSize: 25,
+    setAssignedUsersSize(assignmentSize: number): void {
+    },
+    currentAssignedUsersPage: 0,
+    updateCurrentAssignedUserPage(): void {
     },
     rolePage: null,
     roleType: "",

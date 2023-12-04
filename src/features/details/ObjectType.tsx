@@ -13,6 +13,7 @@ export default function FilterGroupUser() {
     };
 
     const options = [
+        {value: "Alle", label: "Alle"},
         {value: "Grupper", label: "Grupper"},
         {value: "Brukere", label: "Brukere"}
     ];
