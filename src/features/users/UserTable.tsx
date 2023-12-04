@@ -9,12 +9,13 @@ import TableRow from '@mui/material/TableRow';
 import {Alert, Box, Button, Icon, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
 import axios from "axios";
-import {ICreateUserAssignment} from "../../context/types";
+import {IUserItem} from "../../context/types";
 import {Add, Check} from "@mui/icons-material";
 import TablePaginationActions from "../main/TableFooter";
 import {useBasePath} from "../../context/BasePathContext";
 import AssignDialog from "../assignment/AssignDialog";
 import Typography from "@mui/material/Typography";
+import {useParams} from "react-router-dom";
 
 export const UserTable: any = (props: { resourceId: number, assignId: number, userId: number }) => {
 
@@ -31,25 +32,28 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
         setError,
     } = useContext(ResourceContext);
 
-    const [createAssignments, setCreateAssignments] = useState<ICreateUserAssignment[]>([]);
+    const [createAssignments, setCreateAssignments] = useState<IUserItem[]>([]);
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
     const [assignDialogOpen, setAssignDialogOpen] = useState<boolean>(false)
     const [userId, setUserId] = useState<number>(0)
     const [orgId, setOrgId] = useState<string>('')
+    const {id} = useParams<string>()
 
     const basePath = useBasePath() || '';
 
 
     useEffect(() => {
         const refreshAssignments = () => {
-            axios.get(`${basePath === '/' ? '' : basePath}/api/assignments`)
-                .then(response => {
-                    setCreateAssignments(response.data.assignments);
-                })
+            if (id) {
+                axios.get(`${basePath === '/' ? '' : basePath}/api/assignments/resource/${id}/users`)
+                    .then(response => {
+                        setCreateAssignments(response.data.users);
+                    })
+            }
         }
         setUpdatingAssignment(false)
         refreshAssignments()
-    }, [updatingAssignment, basePath])
+    }, [updatingAssignment, basePath, id])
 
     const assign = (resourceRef: number, userRef: number, organizationUnitId: string): void => {
         createUserAssignment(resourceRef, userRef, organizationUnitId);
@@ -73,8 +77,8 @@ export const UserTable: any = (props: { resourceId: number, assignId: number, us
 
     const isAssigned = (userId: number) => {
         return createAssignments
-            .filter((el) => el.userRef === userId)
-            .filter((el) => el.resourceRef === props.resourceId)
+            .filter((el) => el.id === userId)
+            // .filter((el) => el.resourceRef === props.resourceId)
             .length > 0;
     }
 

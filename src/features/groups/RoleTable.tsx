@@ -9,12 +9,13 @@ import TableRow from '@mui/material/TableRow';
 import {Alert, Box, Button, Icon, TableFooter, TablePagination} from "@mui/material";
 import {ResourceContext} from "../../context";
 import axios from "axios";
-import {ICreateRoleAssignment} from "../../context/types";
+import {IRole} from "../../context/types";
 import {Add, Check} from "@mui/icons-material";
 import TablePaginationActions from "../main/TableFooter";
 import {useBasePath} from "../../context/BasePathContext";
 import AssignDialog from "../assignment/AssignDialog";
 import Typography from "@mui/material/Typography";
+import {useParams} from "react-router-dom";
 
 export const RoleTable: any = (props: { resourceId: number, assignId: number, roleId: number }) => {
 
@@ -32,25 +33,28 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
         setError,
     } = useContext(ResourceContext);
 
-    const [createAssignments, setCreateAssignments] = useState<ICreateRoleAssignment[]>([]);
+    const [isRoleAssigned, setIsRoleAssigned] = useState<IRole[]>([]);
     const [updatingAssignment, setUpdatingAssignment] = useState<boolean>(false)
     const [assignDialogOpen, setAssignDialogOpen] = useState<boolean>(false)
     const [roleId, setRoleId] = useState<number>(0)
     const [orgId, setOrgId] = useState<string>('')
+    const {id} = useParams<string>();
 
     const basePath = useBasePath() || '';
 
 
     useEffect(() => {
         const refreshAssignments = () => {
-            axios.get(`${basePath === '/' ? '' : basePath}/api/assignments`)
-                .then(response => {
-                    setCreateAssignments(response.data.assignments);
-                })
+            if (id) {
+                axios.get(`${basePath === '/' ? '' : basePath}/api/assignments/resource/${id}/roles`)
+                    .then(response => {
+                        setIsRoleAssigned(response.data.roles);
+                    })
+            }
         }
         setUpdatingAssignment(false)
         refreshAssignments()
-    }, [updatingAssignment, basePath])
+    }, [updatingAssignment, basePath, id])
 
     const assign = (resourceRef: number, roleRef: number, organizationUnitId: string): void => {
         createRoleAssignment(resourceRef, roleRef, organizationUnitId);
@@ -73,10 +77,11 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
     };
 
     const isAssigned = (roleId: number) => {
-        return createAssignments
-            .filter((el) => el.roleRef === roleId)
-            .filter((el) => el.resourceRef === props.resourceId)
+        return isRoleAssigned
+            .filter((el) => el.id === roleId)
+            //.filter((el) => el.resourceRef === Number(id))
             .length > 0;
+
     }
 
     const handleChangePage = (
@@ -146,7 +151,6 @@ export const RoleTable: any = (props: { resourceId: number, assignId: number, ro
                                             id={`buttonAddAssignmentRole-${roles.id}`}
                                             variant={"outlined"}
                                             aria-label="Tildel ressurs"
-                                            // onClick={() => assign(props.resourceId, roles.id, roles.organisationUnitId)}
                                             onClick={() => roleToAssign(props.resourceId, roles.id, roles.organisationUnitId)}
                                             color={"primary"}
                                             endIcon={<Add/>}
