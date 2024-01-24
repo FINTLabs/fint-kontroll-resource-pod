@@ -82,13 +82,13 @@ function ResourceInfo() {
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <List>
-                            <ListItem>
+                            {/*  <ListItem>
                                 <ListItemText
                                     primary={resourceDetails?.resourceLimit}
                                     secondary={'Totalt antall til tildeling'}
                                 />
                             </ListItem>
-                            {/*<ListItem>
+                            <ListItem>
                                 <ListItemText
                                     primary={resourceDetails?.resourceLimit}
                                     secondary={'Antall brukt av denne ressursen'}
