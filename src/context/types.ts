@@ -1,6 +1,7 @@
 export interface IResource {
     id: number;
     resourceId: string;
+    identityProviderGroupName: string;
     resourceName: string;
     resourceType: string;
     resourceLimit: number;

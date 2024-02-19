@@ -47,9 +47,16 @@ function ResourceInfo() {
                         <List>
                             <ListItem>
                                 <ListItemText
-                                    id={'resourceName'}
-                                    primary={resourceDetails?.resourceName}
-                                    secondary={'Ressurs'}
+                                    id={'entraId'}
+                                    primary={resourceDetails?.identityProviderGroupName}
+                                    secondary={'Gruppenavn Entra ID'}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText
+                                    id={'resourceId'}
+                                    primary={resourceDetails?.resourceId}
+                                    secondary={'KildesystemId'}
                                 />
                             </ListItem>
                             <ListItem>
@@ -72,12 +79,6 @@ function ResourceInfo() {
                                     secondary={'Tilgangsrolle'}
                                 />
                             </ListItem>
-                            <ListItem>
-                                <ListItemText
-                                    primary={resourceDetails?.accessType}
-                                    secondary={'Tilgangstype'}
-                                />
-                            </ListItem>
                         </List>
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -94,6 +95,12 @@ function ResourceInfo() {
                                     secondary={'Antall brukt av denne ressursen'}
                                 />
                             </ListItem>*/}
+                            <ListItem>
+                                <ListItemText
+                                    primary={resourceDetails?.accessType}
+                                    secondary={'Tilgangstype'}
+                                />
+                            </ListItem>
                             <ListItem>
                                 <ListItemText
                                     primary={resourceDetails?.platform.join(', ')}

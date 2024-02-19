@@ -109,7 +109,7 @@ const ResourceProvider = ({children, basePath}: Props) => {
                     if (response.status === 201) {
                         setAssigned('Tildelingen var vellykket!')
                     } else {
-                        console.log("Dette er responsen", response)
+                        console.log("Dette er responsen")
                     }
                 }
             )
@@ -145,7 +145,7 @@ const ResourceProvider = ({children, basePath}: Props) => {
 
                 ResourceRepository.getUnitTree(basePath)
                     .then(response => {
-                        console.log("Returned tree data: ", response.data);
+                        console.log("Returned tree data: ");
                         setUnitTree(response.data);
                     })
                     .catch((err) => console.error(err))
