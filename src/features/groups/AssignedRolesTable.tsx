@@ -99,6 +99,7 @@ export const AssignedRolesTable: any = (props: { resourceId: string, assignId: n
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Gruppe</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Gruppetype</TableCell>
                             <TableCell align="left" sx={{fontWeight: 'bold'}}>Tildelt av</TableCell>
+                            <TableCell align="left"></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -112,6 +113,7 @@ export const AssignedRolesTable: any = (props: { resourceId: string, assignId: n
                                     {role.roleName}
                                 </TableCell>
                                 <TableCell align="left">{role.roleType} </TableCell>
+                                <TableCell align="left">{role.assignerDisplayname ? role.assignerDisplayname : role.assignerUsername} </TableCell>
                                 <TableCell align="right">
                                     <Button
                                         id={`buttonDeleteRoleAssignment-${role.id}`}
