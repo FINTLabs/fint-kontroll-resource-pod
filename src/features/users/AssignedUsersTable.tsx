@@ -116,7 +116,7 @@ export const AssignedUsersTable: any = (props: { resourceId: string, assignId: n
                                     {users.firstName} {users.lastName}
                                 </TableCell>
                                 <TableCell align="left">{users.userType} </TableCell>
-                                <TableCell align="left"></TableCell>
+                                <TableCell align="left">{users.assignerDisplayname ? users.assignerDisplayname : users.assignerUsername}</TableCell>
                                 <TableCell align="right">
 
                                     <Button

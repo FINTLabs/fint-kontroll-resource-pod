@@ -20,6 +20,8 @@ export interface IRole {
     "roleName": string;
     "roleType": string;
     "assignmentRef": number;
+    "assignerUsername": string,
+    "assignerDisplayname": string,
     "organisationUnitId": string,
     "organisationUnitName": string,
 }
@@ -55,6 +57,8 @@ export interface IUser {
     "lastName": string;
     "userType": string;
     "assignmentRef": number;
+    "assignerUsername": string,
+    "assignerDisplayname": string,
 }
 
 export interface IUserPage {

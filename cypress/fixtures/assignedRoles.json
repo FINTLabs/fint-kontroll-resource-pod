@@ -5,31 +5,40 @@
       "id": 34,
       "roleName": "Ansatt - VGSTOR Storskog videregående skole",
       "roleType": "ansatt",
-      "assignmentRef": 73
+      "assignmentRef": 73,
+      "assignerUsername": "linda.loftsgarden@vigoiks.no",
+      "assignerDisplayname": "Linda Test Etternavn"
     },
     {
       "id": 40,
       "roleName": "Ansatt - KOMP Område sørvest",
       "roleType": "ansatt",
-      "assignmentRef": 77
+      "assignmentRef": 77,
+      "assignerUsername": "linda.loftsgarden@vigoiks.no",
+      "assignerDisplayname": "Linda Test Etternavn"
     },
     {
       "id": 41,
       "roleName": "Ansatt - KOMP Område sørvest - Aggregert",
       "roleType": "ansatt",
-      "assignmentRef": 74
+      "assignmentRef": 74,
+      "assignerUsername": "linda.loftsgarden@vigoiks.no",
+      "assignerDisplayname": "Linda Test Etternavn"
     },
     {
       "id": 49,
       "roleName": "Ansatt - DIGIT Serviceseksjon - Aggregert",
       "roleType": "ansatt",
-      "assignmentRef": 76
+      "assignmentRef": 76,
+      "assignerUsername": "linda.loftsgarden@vigoiks.no",
+      "assignerDisplayname": "Linda Test Etternavn"
     },
     {
       "id": 51,
       "roleName": "Ansatt - DIGIT Lokasjonssupport - Aggregert",
       "roleType": "ansatt",
-      "assignmentRef": 75
+      "assignmentRef": 75,"assignerUsername": "linda.loftsgarden@vigoiks.no",
+      "assignerDisplayname": "Linda Test Etternavn"
     }
   ],
   "totalItems": 5,

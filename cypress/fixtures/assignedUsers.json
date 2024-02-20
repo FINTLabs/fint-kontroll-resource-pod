@@ -8,35 +8,45 @@
       "firstName": "Fred",
       "lastName": "Danielsen",
       "userType": "EMPLOYEE",
-      "assignmentRef": 58
+      "assignmentRef": 58,
+      "assignerUsername": "linda.loftsgarden@vigoiks.no",
+      "assignerDisplayname": "Linda Test Etternavn"
     },
     {
       "id": 1425,
       "firstName": "Berit",
       "lastName": "Andersen",
       "userType": "STUDENT",
-      "assignmentRef": 59
+      "assignmentRef": 59,
+      "assignerUsername": "linda.loftsgarden@vigoiks.no",
+      "assignerDisplayname": "Linda Test Etternavn"
     },
     {
       "id": 1412,
       "firstName": "Marianne",
       "lastName": "Andersen",
       "userType": "STUDENT",
-      "assignmentRef": 60
+      "assignmentRef": 60,
+      "assignerUsername": "linda.loftsgarden@vigoiks.no",
+      "assignerDisplayname": "Linda Test Etternavn"
     },
     {
       "id": 1147,
       "firstName": "Egil",
       "lastName": "Johnsen",
       "userType": "EMPLOYEE",
-      "assignmentRef": 61
+      "assignmentRef": 61,
+      "assignerUsername": "linda.loftsgarden@vigoiks.no",
+      "assignerDisplayname": "Linda Test Etternavn"
     },
     {
       "id": 1500,
       "firstName": "Herman",
       "lastName": "Bergersen",
       "userType": "STUDENT",
-      "assignmentRef": 66
+      "assignmentRef": 66,
+      "assignerUsername": "linda.loftsgarden@vigoiks.no",
+      "assignerDisplayname": "Linda Test Etternavn"
     }
   ],
   "currentPage": 0
